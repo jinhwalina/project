@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+.contents{
+	        height:3000px;
+            margin: 50px;
+            border: solid 1px;
+        }
+        .intro{
+            width: 1240px;
+            margin: 0 auto;
+
+        }
+        .intro-img{
+            margin: 30px 45px;
+        }
+        .slide-img{
+            height: 300px;
+            margin: 20px 20px 0;
+            
+            overflow: hidden;
+        }
+        .slide-box{
+            width: 2700px;
+           
+            height: 100%;
+            
+        }
+        .slide-box>img{
+            width: 300px;
+            height: 300px;
+            border-radius: 130px;
+            float: left;
+        }

@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
-jumbotron{
-	background-color: silver;
-}
+        .container-footer{
+            height: 200px;
+            background-color: silver;
+        }
