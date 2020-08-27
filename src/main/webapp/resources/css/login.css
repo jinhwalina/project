@@ -1,0 +1,72 @@
+@charset "UTF-8";
+
+.login{
+            margin: 50px;
+            border: solid 1px;
+            height: 400px;
+        } 
+        .login-box{
+            margin: 0 auto;
+            width: 602px;
+            height: 268px;
+            border: solid 1px;
+            padding: 35px;
+            border: 2px solid #ddd;
+            border-radius: 3px;
+            text-align: left;
+        }
+        .mail, .mail2, .sel-add{
+            width: 150px;
+            height: 40px;
+            margin: 0 0 10px;
+            border: 2px solid #ddd;
+        }
+        .pw{
+            width: 528px;
+            height: 40px;
+            margin: 0 0 10px;
+            border: 2px solid #ddd;
+        }
+        .login-signup, .login-login{
+            width: 264px;
+            height: 45px;
+            float: left;
+            background-color: bisque;
+            border: none;
+            color: rgb(133, 133, 133);
+            text-align: center;
+            line-height: 45px;
+            margin: 0 0 15px;
+            font-size: 15px;
+        }
+        .login-signup{
+            border-right: 1px solid #fff;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            text-decoration: none;
+        }
+        .login-signup:hover, .login-login:hover{
+            text-decoration: none;
+            color: rgb(95, 95, 95);
+        }
+        .pw-lost{
+            display: inline-block;
+            border: 2px solid #d5d9dd;
+            color: #9d8569;
+            border-radius: 3px;
+            padding: 7px 10px;
+            line-height: 20px;
+            background: #fff;
+            font-size: 14px;
+            float: right;
+        }
+        .pw-lost:hover{
+            text-decoration: none;
+            color: rgb(95, 95, 95);
+        }
+        .login-plz{
+            width: 1000px;
+            height: 100px;
+            margin: 0 auto;
+            margin-top: 10px;
+        }

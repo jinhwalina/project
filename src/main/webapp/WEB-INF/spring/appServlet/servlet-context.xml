@@ -35,5 +35,21 @@
 	        </beans:list>
 	    </beans:property>
 	</beans:bean>
+	
+	<beans:bean id="loginInterceptor" 
+		class="kr.green.project.interceptor.LoginIntercerptor"></beans:bean>
+	<beans:bean id="authInterceptor" 
+		class="kr.green.project.interceptor.AuthInterceptor"></beans:bean>
+	<interceptors>
+	    <interceptor>
+	        <mapping path="/user/login"/> <!-- 로그인 유지 시 유지가 될 경로! 해당 관련 내용들은 springtest2 참고해보기  -->
+	        <beans:ref bean="loginInterceptor"/>
+	    </interceptor>
+	    <interceptor>
+	        <mapping path="/"/>
+	        <beans:ref bean="authInterceptor"/>
+	    </interceptor>
+	</interceptors>
+	
 
 </beans:beans>

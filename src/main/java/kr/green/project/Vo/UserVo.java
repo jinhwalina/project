@@ -44,6 +44,11 @@ public class UserVo {
 	public void setAuth(String auth) {
 		this.auth = auth;
 	}
+	@Override
+	public String toString() {
+		return "UserVo [mail=" + mail + ", nickname=" + nickname + ", pw=" + pw + ", pnum=" + pnum + ", name=" + name
+				+ ", auth=" + auth + "]";
+	}
 	
 	
 	

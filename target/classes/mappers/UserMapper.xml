@@ -7,5 +7,10 @@
   <select id="getNickname" resultType="String">
     select nickname from user where mail = #{mail}
   </select>
+  
+  <!-- getUser라는 메서드로  -->
+  <select id="getUser" resultType="kr.green.project.Vo.UserVo">
+    select * from user where mail = #{mail}
+  </select>
 </mapper>
   
