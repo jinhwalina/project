@@ -55,11 +55,18 @@ public class HomeController {
 		return mv;
 	}
 	// 로그아웃 
-		@RequestMapping(value = "/user/signout", method = RequestMethod.GET)
-		public ModelAndView signoutGet(ModelAndView mv, HttpServletRequest request) {
-			mv.setViewName("redirect:/");
-			request.getSession().removeAttribute("user");
-			return mv;
-		}
+	@RequestMapping(value = "/user/signout", method = RequestMethod.GET)
+	public ModelAndView signoutGet(ModelAndView mv, HttpServletRequest request) {
+		mv.setViewName("redirect:/");
+		request.getSession().removeAttribute("user");
+		return mv;
+	}
+	
+	// 회원가입 
+	@RequestMapping(value = "/user/signup", method = RequestMethod.GET)
+	public ModelAndView home2(ModelAndView mv) {
+		mv.setViewName("/user/signup"); 
+		return mv;
+	}
 	
 }

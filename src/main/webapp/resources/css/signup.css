@@ -1,1 +1,95 @@
 @charset "UTF-8";
+
+.signup{
+            margin: 50px;
+            border: solid 1px;
+            height: 800px;
+        }
+        .site-info, .per-info{
+            width: 750px;
+            height: 250px;
+            border: 2px solid #ddd;
+            margin: 0 auto;
+        }
+        .site-img, .per-img{
+            width: 1000px;
+            height: 100px;
+        }
+        .signup-box, .site-img, .per-img{
+            margin: 0 auto;
+        }
+
+        /* 사이트 이용정보 입력 css */
+        .mail, .mail2{
+            width: 200px;
+            height: 40px;
+            margin: 0 0 10px;
+            border: 2px solid #ddd;
+        }
+        select{
+            width: 200px;
+            height: 40px;
+            margin: 0 0 10px;
+            border: 2px solid #ddd;
+        }
+        .site-info-id{
+            padding: 40px 50px 0;
+            margin: 0 auto;
+        }
+        .site-text-id, .site-text-pw, .site-text-pw2, .per-text-name, .per-text-phone{
+            font-size: 15px;
+            font-weight: bold;
+            
+        }
+        .site-info-pw>div{
+            margin-top: 20px;
+            margin-left: 50px;
+            float: left;
+        }
+        .pw, .pw2{
+            width: 300px;
+            height: 40px;
+            border: 2px solid #ddd;
+        }
+        .site-text-pw, .site-text-pw2{
+            margin-top: 20px;
+        }
+
+        /* 개인정보 입력 css */
+        .name, .phone{
+            width: 645px;
+            height: 40px;
+            border: 2px solid #ddd;
+        }
+        .per-info-name, .per-info-phone{
+            padding: 40px 50px 0;
+            margin: 0 auto;
+        }
+
+        /* 버튼 css */
+        .button-box{
+            margin: 0 auto;
+            width: 750px;
+            height: 50px;
+        }
+        .btn-cancel, .btn-enter{
+            border: none;
+            width: 374px;
+            height: 50px;
+            float: left;
+            margin-top: 10px;
+            background-color: bisque;
+            color: rgb(133, 133, 133);
+            font-size: 15px;
+        }
+        .btn-enter{
+            margin-left: 1px;
+        }
+        .btn-cancel{
+            text-align: center;
+            line-height: 50px;
+        }
+        .btn-cancel:hover, .btn-enter:hover{
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+        }

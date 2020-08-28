@@ -52,7 +52,8 @@
 	                //console.log($('.mail2').val());
 	            }
 			})
-
+			
+			/* 로그인 할 시, 두 개로 나눠진 메일 박스를 하나로 합쳐서 메일 형식으로 저장되어 보내지게 하는 쿼리문 */
 			$('.login-login').click(function(){
 				var email = $('.mail').val() + '@' + $('.mail2').val();
                 $('.email').val(email);
