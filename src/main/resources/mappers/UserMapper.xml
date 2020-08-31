@@ -12,5 +12,12 @@
   <select id="getUser" resultType="kr.green.project.Vo.UserVo">
     select * from user where mail = #{mail}
   </select>
+  
+  <!-- insertUser라는 메서드 -->
+  <insert id="insertUser">
+  	insert into
+  		user(mail,pw,name,nickname,pnum)
+  		values(#{user.mail},#{user.pw},#{user.name},#{user.nickname},#{user.pnum})
+  </insert>
 </mapper>
   

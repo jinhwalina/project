@@ -15,13 +15,13 @@
             border-radius: 3px;
             text-align: left;
         }
-        .mail, .mail2, .sel-add{
+        .lo-mail, .lo-mail2, .sel-add{
             width: 150px;
             height: 40px;
             margin: 0 0 10px;
             border: 2px solid #ddd;
         }
-        .pw{
+        .lo-pw{
             width: 528px;
             height: 40px;
             margin: 0 0 10px;

@@ -62,10 +62,21 @@ public class HomeController {
 		return mv;
 	}
 	
-	// 회원가입 
+	// 회원가입 GET , POST
 	@RequestMapping(value = "/user/signup", method = RequestMethod.GET)
-	public ModelAndView home2(ModelAndView mv) {
+	public ModelAndView signupGet(ModelAndView mv) {
 		mv.setViewName("/user/signup"); 
+		return mv;
+	}
+	@RequestMapping(value = "/user/signup", method = RequestMethod.POST)
+	public ModelAndView signupPost(ModelAndView mv, UserVo user) {
+		mv.setViewName("/user/signup"); 
+		if(userService.signup(user)) {
+			mv.setViewName("redirect:/");
+		} else
+			mv.setViewName("redirect:user/signup");
+		
+		System.out.println(user);
 		return mv;
 	}
 	
