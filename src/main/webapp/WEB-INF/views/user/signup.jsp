@@ -93,7 +93,7 @@
             </div>
             <div class="button-box">
                 <div class="cancel">
-                    <a href="<%=request.getContextPath()%>/" class="btn-cancel" href="#">취소</a>
+                    <a href="<%=request.getContextPath()%>/" class="btn-cancel">취소</a>
                 </div>
                 <div class="enter">
                     <button type="button" class="btn-enter">확인</button>

@@ -41,7 +41,7 @@
         			<a href="">RESERVATION</a>
         			<ul>
                         <li class="sub-menu">
-                            <a href="">예약하기</a>
+                            <a href="<%=request.getContextPath()%>/reservation/innDo">예약하기</a>
                         </li>
                         <li class="sub-menu">
                             <a href="">예약변경</a>

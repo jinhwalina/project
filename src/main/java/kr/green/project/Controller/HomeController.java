@@ -1,5 +1,8 @@
 package kr.green.project.Controller;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.green.project.Service.InnService;
 import kr.green.project.Service.UserService;
+import kr.green.project.Vo.InnVo;
+import kr.green.project.Vo.PetVo;
 import kr.green.project.Vo.UserVo;
 
 /**
@@ -20,6 +26,9 @@ public class HomeController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	InnService innService;
 	
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
@@ -75,9 +84,37 @@ public class HomeController {
 			mv.setViewName("redirect:/");
 		} else
 			mv.setViewName("redirect:user/signup");
-		
 		System.out.println(user);
 		return mv;
 	}
+	
+	// 예약하기 GET, POST
+	@RequestMapping(value = "/reservation/innDo", method = RequestMethod.GET)
+	public ModelAndView innDoGet(ModelAndView mv) {
+		mv.setViewName("/reservation/innDo"); 
+		return mv;
+	}
+	@RequestMapping(value = "/reservation/innDo", method = RequestMethod.POST)
+	public ModelAndView innDoPost(ModelAndView mv, InnVo inn, PetVo pet, HttpServletRequest request) {
+		mv.setViewName("/reservation/innDo"); 
+		innService.insertInnDo(request, inn); // 괄호 안에는 정보를 보내주려는 변수(?) 속성(?)
+		innService.insertPet(request, pet);
+		return mv;
+	}
+	
+	
+	// service.insert~~ 숙박정보 htt 숙박정보 넣기
+	// service.insert~~ 강아지정보 htt 강아지정보 넣기 ( 따로따로 ! 하지만 순서는 꼭 지키기 ) 
+	
+	/*	@RequestMapping(value = "/reservation/innDo", method = RequestMethod.POST)
+			public ModelAndView innDoPost(ModelAndView mv) {
+			mv.setViewName("/reservation/innDo"); 
+			Date date = new Date();
+			ArrayList<String> list = userService.getList(date);
+			return mv;
+		} 
+		
+		선생님이 예제로 알려주신 코드 ( 컨트롤러로 */
+
 	
 }

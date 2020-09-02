@@ -1,0 +1,210 @@
+@charset "UTF-8";
+
+/* 데이트피커쪽 css */
+        .inn{
+            margin: 50px;
+            border: solid 1px;
+            height: 1200px;
+        }
+        .inn-date-img,.inn-user-img,.inn-pet-img{
+          width: 700px;
+          height: 50px;
+          margin: 0 auto;
+        }
+        .inn-date{
+            margin: 0 auto;
+            width: 1000px;
+            height: 570px;
+            
+        }
+        .inn-date-text{
+          margin: 0 auto;
+          width: 650px;
+          height: 100px;
+        }
+        .inn-date-text>.inn-date-cnt{
+          margin-top: 20px;
+          width: 80px;
+          border: 2px solid #ddd;
+          height: 40px;
+          padding-left: 30px;
+        }
+        .inn-date-text>input{
+          margin-top: 20px;
+          width: 140px;
+          border: 2px solid #ddd;
+          height: 40px;
+          padding-left: 25px;
+        }
+        .inn-date-text>label{
+          color: grey;
+          font-size: 15px;
+          margin-right: 10px;
+        }
+        .pickup-box>label{
+          color: grey;
+          font-size: 15px;
+          margin-right: 10px;
+        }
+        .pickup{
+          margin-top: 20px;
+          width:440px;
+          height: 44px;
+          border: 2px solid #ddd;
+          
+        }
+        .inn-info-ment{
+          height: 60px;
+          margin-top: 50px;
+        }
+
+        /* 반려견정보, 보호자 정보 css */
+        .inn-user,.inn-pet{
+          margin: 0 auto;
+          width: 1000px;
+        }
+        .inn-pet{
+          padding-top: 15px;
+        }
+        
+        .inn-user-box{
+          border: 2px solid #ddd;
+          width: 700px;
+          height: 100px;
+          margin: 0 auto;
+          margin-top: 20px;
+        }
+        .inn-pet-box{
+          border: 2px solid #ddd;
+          width: 700px;
+          height: 260px;
+          margin: 0 auto;
+          margin-top: 20px;
+        }
+        .inn-user-box>input{
+          border: 2px solid #ddd;
+          width: 300px;
+          height: 40px;
+          margin: 19px;
+          margin-top: 26px;
+        }
+        .inn-pet-box>input{
+          border: 2px solid #ddd;
+          width: 300px;
+          height: 40px;
+          margin: 25px 19px 0;
+        }
+        .inn-pet-box>select{
+          border: 2px solid #ddd;
+          width: 200px;
+          height: 40px;
+        }
+        .pgender{
+          margin-left: 19px;
+          margin-top: 20px;
+        }
+        .pino,.psur{
+          margin-left: 24px;
+          margin-top: 20px;
+          margin-bottom: 20px;
+        }
+        textarea{
+          border: 2px solid #ddd;
+          margin-left: 19px;
+          
+          width: 651px;
+        }
+        label{
+          color: rgb(248, 110, 110);
+          margin-left: 10px;
+          font-weight: bold;
+          font-size: 17px;
+        }
+
+        /* 버튼 css*/
+        .inn-btn-box{
+            margin: 0 auto;
+            width: 704px;
+            height: 70px;
+        }
+        .inn-a-cancel, .inn-btn-enter{
+            border: none;
+            width: 351px;
+            height: 50px;
+            float: left;
+            margin-top: 10px;
+            background-color: bisque;
+            color: rgb(133, 133, 133);
+            font-size: 15px;
+        }
+        .inn-btn-enter{
+            margin-left: 1px;
+        }
+        .inn-a-cancel{
+            text-align: center;
+            line-height: 50px;
+            text-decoration: none;
+        }
+        .inn-a-cancel:hover, .inn-btn-enter:hover{
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+        }
+
+        /* 데이트피커 css */
+        .ui-datepicker {
+        width: 500px;
+        height: auto;
+        margin: 5px auto 0;
+        font: 13pt Arial, sans-serif;
+        }
+
+        .ui-datepicker a {
+        text-decoration: none;
+        }
+
+        .ui-datepicker table {
+        width: 100%;
+        }
+
+        .ui-datepicker-title {
+        text-align: center;
+        }
+
+        .ui-datepicker-prev {
+        float: left;
+        background-position: center -30px;
+        }
+        .ui-datepicker-next {
+        float: right;
+        background-position: center 0px;
+        }
+
+        .ui-datepicker thead {
+        background-color: #ffffff;
+        background-image: -moz-linear-gradient(top,  #ffffff 0%, #ffffff 100%);
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f7f7f7), color-stop(100%,#f1f1f1));
+        background-image: -webkit-linear-gradient(top,  #ffffff 0%,#ffffff 100%);
+        background-image: -o-linear-gradient(top,  #ffffff 0%,#ffffff 100%);
+        background-image: -ms-linear-gradient(top,  #ffffff 0%,#ffffff 100%);
+        background-image: linear-gradient(top,  #ffffff 0%,#ffffff 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#f1f1f1',GradientType=0 );
+        border-bottom: 1px solid rgb(255, 255, 255);
+        }
+
+        .ui-datepicker th {
+        text-transform: uppercase;
+        font-size: 8pt;
+        padding: 10px 0;
+        color: #a7a7a7;
+        text-shadow: 1px 0px 0px #fff;
+        
+        }
+        .ui-datepicker-header{
+            color: rgb(255, 255, 255);
+        }
+        .ui-datepicker td span, .ui-datepicker td a {
+            display: block;
+            padding: .2em;
+            text-align: center;
+            text-decoration: none;
+        }
