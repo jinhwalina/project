@@ -13,24 +13,23 @@ import kr.green.project.dao.InnDao;
 @Service
 public class InnServiceImp implements InnService {
 
+	
 	@Autowired
 	InnDao innDao;
 	
 	@Override
-	public void insertInnDo(HttpServletRequest request, InnVo inn) {
-		UserVo user = (UserVo)request.getSession().getAttribute("user");
-		// request 에 담긴 로그인 한 유저 정보 
+	public void insertInnDo(UserVo user, PetVo pet, InnVo inn) {
+		innDao.insertPet(pet);
+		// pet에 관한 정보 추가 
+		inn.setInn_petnum(pet.getPetnum());
 		
-		innDao.insertInnDo(user.getMail(),inn);
-		// dao에 user의 메일과 숙박정보를 보내줌 
-	}
+		// user의 mail을 가져와서 Inn_user_mail로 설정해주겠다.
+		inn.setInn_user_mail(user.getMail());
 
-	@Override
-	public void insertPet(HttpServletRequest request, PetVo pet) {
-		UserVo user = (UserVo)request.getSession().getAttribute("user");
-		innDao.insertPet(user.getMail(), pet);
+		// inn에 관한 내용 추가 
+		innDao.insertInn(inn);
+		
 	}
-
 
 	
 	// 퍼블릭 보이드 ( 컨트롤러에서 만든 메서드 ) ~~ htt

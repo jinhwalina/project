@@ -33,14 +33,14 @@ public class HomeController {
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
-	@RequestMapping(value="/")
-	public ModelAndView main(ModelAndView mv) throws Exception{
-	    mv.setViewName("/main/home");
-	    mv.addObject("setHeader", "타일즈");
-	    System.out.println(userService.getUser("abc123@naver.com"));
-	    return mv;
+	// 메인화면
+	@RequestMapping(value = "/")
+	public ModelAndView main(ModelAndView mv) {
+		mv.setViewName("/main/home"); 
+		return mv;
 	}
 	
+	// 로그인 get
 	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
 	public ModelAndView home(ModelAndView mv) {
 		mv.setViewName("/user/login"); 
@@ -63,6 +63,7 @@ public class HomeController {
 			mv.setViewName("/user/login"); //실패
 		return mv;
 	}
+	
 	// 로그아웃 
 	@RequestMapping(value = "/user/signout", method = RequestMethod.GET)
 	public ModelAndView signoutGet(ModelAndView mv, HttpServletRequest request) {
@@ -94,17 +95,29 @@ public class HomeController {
 		mv.setViewName("/reservation/innDo"); 
 		return mv;
 	}
+	
 	@RequestMapping(value = "/reservation/innDo", method = RequestMethod.POST)
 	public ModelAndView innDoPost(ModelAndView mv, InnVo inn, PetVo pet, HttpServletRequest request) {
 		mv.setViewName("/reservation/innDo"); 
-		innService.insertInnDo(request, inn); // 괄호 안에는 정보를 보내주려는 변수(?) 속성(?)
-		innService.insertPet(request, pet);
+		UserVo user = userService.getUser(request);
+		// sys로 로그인 한 유저 정보가 찍히는지.. (세션에 저장된 정보를 가져오는지 확인하기 )
+		innService.insertInnDo(user, pet, inn); // 괄호 안에는 정보를 보내주려는 변수(?) 속성(?)
+		// insertInnDo에 차례대로 user, pet, inn 정보 넘겨주기. 
+		
+		
+		// 어떤 경우에 실패하게 될지 결정 후, 조건을 넣어서 연결해주기
+		mv.setViewName("/reservation/innDoCom"); // 로그인 성공 시 보여줄 페이지 정보
+		
 		return mv;
 	}
 	
 	
-	// service.insert~~ 숙박정보 htt 숙박정보 넣기
-	// service.insert~~ 강아지정보 htt 강아지정보 넣기 ( 따로따로 ! 하지만 순서는 꼭 지키기 ) 
+	// 예약완료 떴을 경우 보여지는 페이지 
+	@RequestMapping(value = "/reservation/innDoCom", method = RequestMethod.GET)
+	public ModelAndView innDoCom(ModelAndView mv) {
+		mv.setViewName("/reservation/innDoCom");
+		return mv;
+	}
 	
 	/*	@RequestMapping(value = "/reservation/innDo", method = RequestMethod.POST)
 			public ModelAndView innDoPost(ModelAndView mv) {
@@ -113,8 +126,7 @@ public class HomeController {
 			ArrayList<String> list = userService.getList(date);
 			return mv;
 		} 
-		
-		선생님이 예제로 알려주신 코드 ( 컨트롤러로 */
+		선생님이 예제로 알려주신 코드 ( 해당 날짜에 예약 인원이 얼마나 있는지 확인 )*/
 
 	
 }

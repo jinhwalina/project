@@ -9,6 +9,13 @@ public class PetVo {
 	private String ptype;
 	private String pet_user_mail;
 	private String pet_inn_num;
+	private int petnum;
+	public int getPetnum() {
+		return petnum;
+	}
+	public void setPetnum(int petnum) {
+		this.petnum = petnum;
+	}
 	public String getPname() {
 		return pname;
 	}

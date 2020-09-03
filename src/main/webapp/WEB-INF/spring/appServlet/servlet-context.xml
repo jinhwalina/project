@@ -47,7 +47,7 @@
 	        <beans:ref bean="loginInterceptor"/>
 	    </interceptor>
 	    <interceptor>
-	        <mapping path="/"/>
+	        <mapping path="/reservation/innDo"/>
 	        <beans:ref bean="authInterceptor"/>
 	    </interceptor>
 	</interceptors>

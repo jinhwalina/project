@@ -111,9 +111,9 @@
             if(email != ''){
                 $('.mail2').attr('type','hidden')
                 $('.mail2').val(email);
-                $(this).animate({'width': '400px'},500);
+                $(this).animate({'width': '350px'},500);
             } else {
-                $(this).animate({'width':'200px'},1);
+                $(this).animate({'width':'150px'},1);
                 $('.mail2').attr('type','text')
                 $('.mail2').val('');
             }

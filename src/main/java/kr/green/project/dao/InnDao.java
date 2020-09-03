@@ -5,14 +5,9 @@ import org.apache.ibatis.annotations.Param;
 import kr.green.project.Vo.InnVo;
 import kr.green.project.Vo.PetVo;
 
-public class InnDao {
+public interface InnDao {
 
-	public void insertInnDo(@Param("mail")String mail, @Param("inn")InnVo inn) {
-		
-	}
+	public void insertPet(@Param("pet")PetVo pet) ;
 
-	public void insertPet(@Param("mail")String mail, @Param("pet")PetVo pet) {
-		
-	}
-
+	public void insertInn(@Param("inn")InnVo inn);
 }

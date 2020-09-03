@@ -2,5 +2,19 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 외래키는 꼭 속성안에 넣어주기 -->
 <mapper namespace="kr.green.project.dao.InnDao">
+	<!-- pet 정보를 넣어줌 ! -->
+	<insert id="insertPet" parameterType="kr.green.project.Vo.PetVo" useGeneratedKeys="true" keyProperty="pet.petnum">
+		insert into 
+				pet(pname, pgender, pino, psur, pcau, ptype) 
+				values(#{pet.pname},#{pet.pgender},#{pet.pino},#{pet.psur},#{pet.pcau},#{pet.ptype})
+	</insert>
+	<!-- inn정보를 넣어줌. 로그인 한 정보를 불러와서 자동 등록 되는거 말고도, 추가로 변경한 이른 연락처도 들어가게끔 -->
+	<insert id="insertInn">
+		insert into
+				inn(inn_st_date, inn_service, inn_time, inn_add_name, inn_add_num ,inn_user_mail, inn_petnum)
+				values(#{inn.inn_st_date},#{inn.inn_service},#{inn.inn_time},#{inn.inn_add_name},#{inn.inn_add_num},#{inn.inn_user_mail},#{inn.inn_petnum})
+	</insert>
 </mapper>

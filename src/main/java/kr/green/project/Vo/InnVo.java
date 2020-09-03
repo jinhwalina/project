@@ -5,20 +5,26 @@ public class InnVo {
 	private String inn_total_price;
 	private String inn_st_date;
 	private String inn_isRe;
-	private String inn_service;
-	private String inn_user_mail;
-	private String pname;
-	private String name;
-	
-	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	private String inn_time;
 	
+	private String inn_service;
+	private String inn_user_mail;
+	private String inn_add_name;
+	private String inn_add_num;
+	private int inn_petnum;
+	
+	public String getInn_time() {
+		return inn_time;
+	}
+	public void setInn_time(String inn_time) {
+		this.inn_time = inn_time;
+	}
+	public int getInn_petnum() {
+		return inn_petnum;
+	}
+	public void setInn_petnum(int inn_petnum) {
+		this.inn_petnum = inn_petnum;
+	}
 	public String getInn_num() {
 		return inn_num;
 	}
@@ -55,24 +61,25 @@ public class InnVo {
 	public void setInn_user_mail(String inn_user_mail) {
 		this.inn_user_mail = inn_user_mail;
 	}
-	public String getPname() {
-		return pname;
+	public String getInn_add_name() {
+		return inn_add_name;
 	}
-	public void setPname(String pname) {
-		this.pname = pname;
+	public void setInn_add_name(String inn_add_name) {
+		this.inn_add_name = inn_add_name;
 	}
-	public String getInn_time() {
-		return inn_time;
+	public String getInn_add_num() {
+		return inn_add_num;
 	}
-	public void setInn_time(String inn_time) {
-		this.inn_time = inn_time;
+	public void setInn_add_num(String inn_add_num) {
+		this.inn_add_num = inn_add_num;
 	}
 	@Override
 	public String toString() {
 		return "InnVo [inn_num=" + inn_num + ", inn_total_price=" + inn_total_price + ", inn_st_date=" + inn_st_date
 				+ ", inn_isRe=" + inn_isRe + ", inn_service=" + inn_service + ", inn_user_mail=" + inn_user_mail
-				+ ", pname=" + pname + ", name=" + name + ", inn_time=" + inn_time + "]";
+				+ ", inn_add_name=" + inn_add_name + ", inn_add_num=" + inn_add_num + "]";
 	}
+	
 	
 	
 }

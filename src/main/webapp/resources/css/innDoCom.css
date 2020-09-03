@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+        .innDoCom{
+            margin: 50px;
+            border: 1px; solid;
+            height: 380px;
+        }
+        .com-box{
+            width: 1000px;
+            margin: 0 auto;
+        }
+        .com-coment{
+            width: 915px;
+            margin: 0 auto;
+
+        }

@@ -1,5 +1,7 @@
 package kr.green.project.Service;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,12 @@ public class UserServiceImp implements UserService {
 	@Autowired 
 	BCryptPasswordEncoder passwordEncoder; 
 	
+	// user 정보를 불러오는 ( 로그인한 유저 정보는 request에 담겨있음 )
 	@Override
-	public String getUser(String mail) {
-		return userDao.getNickname(mail);
+	public UserVo getUser(HttpServletRequest request) {
+		return (UserVo)request.getSession().getAttribute("user");
 	}
-	
+
 	// 로그인 할 당시 
 	@Override
 	public UserVo isLogin(UserVo user) {
@@ -57,5 +60,8 @@ public class UserServiceImp implements UserService {
 		
 		return true;
 	}
+	
+	
+
 	
 }

@@ -1,10 +1,13 @@
 @charset "UTF-8";
 
+/* 유효성 검사 label css*/
+
+
 /* 데이트피커쪽 css */
         .inn{
             margin: 50px;
             border: solid 1px;
-            height: 1200px;
+            height: 1250px;
         }
         .inn-date-img,.inn-user-img,.inn-pet-img{
           width: 700px;
@@ -14,23 +17,27 @@
         .inn-date{
             margin: 0 auto;
             width: 1000px;
-            height: 570px;
-            
+            height: 610px;
         }
+        .pickup{
+        	margin-top: 30px;
+        }
+
         .inn-date-text{
           margin: 0 auto;
-          width: 650px;
-          height: 100px;
+          width: 700px;
+          height: 160px;
+          margin-top: 20px;
         }
         .inn-date-text>.inn-date-cnt{
-          margin-top: 20px;
+          
           width: 80px;
           border: 2px solid #ddd;
           height: 40px;
           padding-left: 30px;
         }
         .inn-date-text>input{
-          margin-top: 20px;
+          
           width: 140px;
           border: 2px solid #ddd;
           height: 40px;
@@ -40,6 +47,8 @@
           color: grey;
           font-size: 15px;
           margin-right: 10px;
+          height: 40px;
+          line-height:40px;
         }
         .pickup-box>label{
           color: grey;
@@ -47,7 +56,7 @@
           margin-right: 10px;
         }
         .pickup{
-          margin-top: 20px;
+          
           width:440px;
           height: 44px;
           border: 2px solid #ddd;
@@ -55,7 +64,7 @@
         }
         .inn-info-ment{
           height: 60px;
-          margin-top: 50px;
+          
         }
 
         /* 반려견정보, 보호자 정보 css */
@@ -208,3 +217,4 @@
             text-align: center;
             text-decoration: none;
         }
+        
