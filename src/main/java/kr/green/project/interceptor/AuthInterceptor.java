@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
-	/*@Override
+	@Override
 	public boolean preHandle(HttpServletRequest request, 
 			HttpServletResponse response, 
 			Object handler)
@@ -19,5 +19,5 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 		return true;
-	}*/
+	}
 }

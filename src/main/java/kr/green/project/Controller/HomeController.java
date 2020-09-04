@@ -1,7 +1,7 @@
 package kr.green.project.Controller;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,6 +32,9 @@ public class HomeController {
 	
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+	
+	// get, post 처리의 차이점> get 같은 경우는 중요하지 않고 짧은 정보들을 봉여줄때 사용해주고.
+	// post 같은 경우> 비밀번호가 들어가는 중요한 정보들이나 전송해야 할 정보들이 길 경우에 사용해준다.
 	
 	// 메인화면
 	@RequestMapping(value = "/")
@@ -93,6 +96,13 @@ public class HomeController {
 	@RequestMapping(value = "/reservation/innDo", method = RequestMethod.GET)
 	public ModelAndView innDoGet(ModelAndView mv) {
 		mv.setViewName("/reservation/innDo"); 
+		// 이 밑에 있는 코드같은 경우, 등록되어지는 날짜들을 취합해주기 위한 코드.
+		Calendar cal = Calendar.getInstance();
+		ArrayList<String> list = innService.getDateList(cal); //arraylist에 담아서 innService로 getDateList를 보내줌
+		
+		//list에 list를 넣어주는 코드 
+		mv.addObject("list",list);
+		System.out.println(list);
 		return mv;
 	}
 	
@@ -103,13 +113,10 @@ public class HomeController {
 		// sys로 로그인 한 유저 정보가 찍히는지.. (세션에 저장된 정보를 가져오는지 확인하기 )
 		innService.insertInnDo(user, pet, inn); // 괄호 안에는 정보를 보내주려는 변수(?) 속성(?)
 		// insertInnDo에 차례대로 user, pet, inn 정보 넘겨주기. 
-		
-		
-		// 어떤 경우에 실패하게 될지 결정 후, 조건을 넣어서 연결해주기
 		mv.setViewName("/reservation/innDoCom"); // 로그인 성공 시 보여줄 페이지 정보
-		
 		return mv;
-	}
+	} 
+	/* 선생님이 예제로 알려주신 코드 ( 해당 날짜에 예약 인원이 얼마나 있는지 확인 )*/
 	
 	
 	// 예약완료 떴을 경우 보여지는 페이지 
@@ -119,14 +126,15 @@ public class HomeController {
 		return mv;
 	}
 	
-	/*	@RequestMapping(value = "/reservation/innDo", method = RequestMethod.POST)
-			public ModelAndView innDoPost(ModelAndView mv) {
-			mv.setViewName("/reservation/innDo"); 
-			Date date = new Date();
-			ArrayList<String> list = userService.getList(date);
-			return mv;
-		} 
-		선생님이 예제로 알려주신 코드 ( 해당 날짜에 예약 인원이 얼마나 있는지 확인 )*/
+	// 예약확인 링크 > 마이페이지로
+	@RequestMapping(value = "/user/mypage", method = RequestMethod.GET)
+	public ModelAndView mypage(ModelAndView mv) {
+		mv.setViewName("/user/mypage");
+		return mv;
+	}
+	
+	
+	
 
 	
 }

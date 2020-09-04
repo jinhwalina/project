@@ -17,7 +17,7 @@
         .inn-date{
             margin: 0 auto;
             width: 1000px;
-            height: 610px;
+            height: 630px;
         }
         .pickup{
         	margin-top: 30px;
@@ -25,9 +25,18 @@
 
         .inn-date-text{
           margin: 0 auto;
-          width: 700px;
-          height: 160px;
+          width: 615px;
+          height: 155px;
           margin-top: 20px;
+        }
+        .inn-date-text label{
+          margin-left:3px;
+          color: grey;
+          font-size: 15px;
+          margin-right: 5px;
+          height: 40px;
+          line-height:40px;
+          font-weight:bold;
         }
         .inn-date-text>.inn-date-cnt{
           
@@ -43,21 +52,14 @@
           height: 40px;
           padding-left: 25px;
         }
-        .inn-date-text>label{
+        .pickup-box label{
           color: grey;
           font-size: 15px;
-          margin-right: 10px;
-          height: 40px;
-          line-height:40px;
-        }
-        .pickup-box>label{
-          color: grey;
-          font-size: 15px;
-          margin-right: 10px;
+          margin-right: 5px;
         }
         .pickup{
           
-          width:440px;
+          width:420px;
           height: 44px;
           border: 2px solid #ddd;
           
@@ -94,23 +96,24 @@
           border: 2px solid #ddd;
           width: 300px;
           height: 40px;
-          margin: 19px;
+          margin-left: 30px;
           margin-top: 26px;
         }
         .inn-pet-box>input{
           border: 2px solid #ddd;
           width: 300px;
           height: 40px;
-          margin: 25px 19px 0;
+          margin-left: 30px;
+          margin-top: 26px;
         }
         .inn-pet-box>select{
           border: 2px solid #ddd;
-          width: 200px;
+          width: 193px;
           height: 40px;
         }
         .pgender{
-          margin-left: 19px;
-          margin-top: 20px;
+          margin-left: 30px;
+          margin-top: 30px;
         }
         .pino,.psur{
           margin-left: 24px;
@@ -119,13 +122,13 @@
         }
         textarea{
           border: 2px solid #ddd;
-          margin-left: 19px;
+          margin-left: 30px;
           
-          width: 651px;
+          width: 635px;
         }
-        label{
+        .inn-pet-box .pcau-ment{
           color: rgb(248, 110, 110);
-          margin-left: 10px;
+          margin-left:13px;
           font-weight: bold;
           font-size: 17px;
         }

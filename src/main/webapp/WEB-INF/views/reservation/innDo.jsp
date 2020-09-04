@@ -161,11 +161,11 @@ $(function() {
                     cnt++; 
                 },
                 beforeShowDay: disableSomeDay,
+                minDate: 0 // 오늘날짜 이 전은 다 블록 지정하기 
                
               
 
             });
-            
 
             function disableSomeDay(date){
               var month = date.getMonth();
@@ -179,8 +179,6 @@ $(function() {
                   return [false];
                 else
                   return [true];
-                
-
             }
             
 			
