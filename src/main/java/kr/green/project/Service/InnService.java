@@ -16,6 +16,6 @@ public interface InnService {
 	void insertInnDo(UserVo user, PetVo pet, InnVo inn);
 	
 	// 예약하는 날짜들을 모아주는 리스트 ! 여기서 imp로 보내주기
-	ArrayList<String> getDateList(Calendar cal);
+	ArrayList<String> getDateList(Calendar cal, int max);
 
 }

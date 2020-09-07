@@ -112,20 +112,20 @@
 
   <!-- 예제 설명을 위한 코드 (블록 처리가 필요한 날짜 지정)
   이렇게 써준 코드를 hidden 처리해서 정보를 보내준다-->
-  
-  <input type="text" name="pname" class="tt" value="2020-9-6">
-  <input type="text" name="pname" class="tt" value="2020-9-10">
+
+  <c:forEach items="${list}" var="date">
+  	<input type="text" class="tt" value="${date}">
+  </c:forEach>
 
 
   
 <script>
-  var disabledDays = []
-$(function() {
-  // 위의 예제 코드랑 이어지는 코드 ( 블록 처리 하게끔 날짜 지정하는것 )
-  $('.tt').each(function(){
-    disabledDays.push($(this).val())
-  })
-// 한 달력에서 범위 지정해주는 코드 , 범위 선택 시 숙박일이 들어가게 하는 코드 
+var disabledDays = []
+	$(function() {
+	  // 위의 예제 코드랑 이어지는 코드 ( 블록 처리 하게끔 날짜 지정하는것 )
+	  $('.tt').each(function(){
+	    disabledDays.push($(this).val())
+	  })
  			var edd;
   			var sdd;
             var cnt = 0;
@@ -137,20 +137,61 @@ $(function() {
                     if(cnt == 0){
                     	 $("#from_value").val(dateText);
                          sdd = dateText;
+						// minDate 시작 날짜를 선택했을때, 시작 날짜 이전의 날짜들은 블록 처리 해버리고, maxDate 마지막 날짜 선택했을 때 이후 날짜들도 블록 처리 해주는 코드 .
+                        var option =  "minDate";
+						instance = $( this ).data( "datepicker" ),
+						date = $.datepicker.parseDate(
+						    instance.settings.dateFormat ||
+						    $.datepicker._defaults.dateFormat,
+						    dateText, instance.settings );
+						dates.datepicker( "option", option, date );
+						
+						var i = 1;
+						var tmp = new Date(date);
+						while(i<32){ // 32번 반복 
+							tmp.setDate(tmp.getDate()+1)
+							var tmpDay = getDates(tmp.getFullYear(),tmp.getMonth()+1,tmp.getDate());
+							if(disabledDays.indexOf(tmpDay) != -1){
+								break;
+							}
+							i++;
+						}
+						if(i<32){
+							
+							for(var j=0; j<disabledDays.length; j++)
+								disableSomeDay(new Date(disabledDays[j]))
+						 var option =  "maxDate";
+							instance = $( this ).data( "datepicker" ),
+							date = $.datepicker.parseDate(
+							    instance.settings.dateFormat ||
+							    $.datepicker._defaults.dateFormat,
+							    dateText, instance.settings );
+							dates.datepicker( "option", option, tmp );
+						}
+						cnt++;
                     }
                     else{
                     	$("#to_value").val(dateText);
                     	edd = dateText;
         	            var ar1 = sdd.split('-');
         	            var ar2 = edd.split('-');
-        	            var da1 = new Date(ar1[0], ar1[1], ar1[2]);
-        	            var da2 = new Date(ar2[0], ar2[1], ar2[2]);
+        	            var da1 = new Date(ar1[0], parseInt(ar1[1]-1), ar1[2]); // 달 같은 경우 -1 해주기.
+        	            var da2 = new Date(ar2[0], parseInt(ar2[1]-1), ar2[2]);
         	            var dif = da2 - da1;
         	            var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
-                    $("#inn-date-cnt").val(dif/cDay);
+                    	$("#inn-date-cnt").val(dif/cDay);
+                    	var option = "maxDate",
+   						instance = $( this ).data( "datepicker" ),
+   						date = $.datepicker.parseDate(
+   						    instance.settings.dateFormat ||
+   						    $.datepicker._defaults.dateFormat,
+   						    dateText, instance.settings );
+   						dates.datepicker( "option", option, date );
+   						cnt++;
                     }
                         
                     //set the min or max date
+                    /*
                     var option = cnt == 0 ? "minDate" : "maxDate",
                     instance = $( this ).data( "datepicker" ),
                     date = $.datepicker.parseDate(
@@ -158,7 +199,8 @@ $(function() {
                         $.datepicker._defaults.dateFormat,
                         dateText, instance.settings );
                     dates.datepicker( "option", option, date );
-                    cnt++; 
+                    cnt++;
+                    */ 
                 },
                 beforeShowDay: disableSomeDay,
                 minDate: 0 // 오늘날짜 이 전은 다 블록 지정하기 
@@ -166,22 +208,12 @@ $(function() {
               
 
             });
-
-            function disableSomeDay(date){
-              var month = date.getMonth();
-              var dates = date.getDate();
-              var year = date.getFullYear();
-              
-              
-                //if($.inArray(year + '-' + (month+1) + '-' + dates,disabledDays) != -1){
-                //console.log(disabledDays.indexOf(year + '-' + (month+1) + '-' + dates))
-                if(disabledDays.indexOf(year + '-' + (month+1) + '-' + dates) != -1)
-                  return [false];
-                else
-                  return [true];
-            }
             
-			
+            
+            // 블록 처리 될 날짜에 +1 해주는 쿼리문 만들기. 날! 에만 더하기 1을 해줄 경우.. 단순히 날짜가 밀리는거라 상관이 없나..? 9월 30에 1을 더해줄 경우에는 31일이 되는데 이렇게 되면 없는 날짜가 됨.. 
+			function addDay(){
+				disabledDay(dates)
+			}
 
             // var dates = $( "#from, #to" ).datepicker({
             //     dateFormat: 'yy-mm-dd',
@@ -285,9 +317,32 @@ $(function() {
         		    }, 
         		    "Please check your input." 
         		); 
+    		
+			// 데이터 형식 맞게 고쳐지게하는 코드 
             
 
         });
+		function getDates(year,month,day){
+		   if(month < 10)
+		       month = '0'+month;
+		   if(day < 10)
+		       day = '0'+day;
+		return year + '-' + month + '-' + day
+   }
+  function disableSomeDay(date){
+      var month = date.getMonth();
+      var dates = date.getDate();
+      var year = date.getFullYear();
 
+        //if($.inArray(year + '-' + (month+1) + '-' + dates,disabledDays) != -1){
+        //console.log(disabledDays.indexOf(year + '-' + (month+1) + '-' + dates))
+        if(disabledDays.indexOf( getDates(year, (month+1), dates)) != -1)
+          return [false];
+        else
+          return [true];
+    }
+  // ui-datepicker-prev , ui-datepicker-next 이전 이후 버튼
+
+  // 달이 넘어갈때 정보 받아오는 ajax ( 현재는 샘플코드 )
 
 </script>

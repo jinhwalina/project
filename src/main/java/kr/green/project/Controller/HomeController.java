@@ -97,9 +97,11 @@ public class HomeController {
 	public ModelAndView innDoGet(ModelAndView mv) {
 		mv.setViewName("/reservation/innDo"); 
 		// 이 밑에 있는 코드같은 경우, 등록되어지는 날짜들을 취합해주기 위한 코드.
-		Calendar cal = Calendar.getInstance();
-		ArrayList<String> list = innService.getDateList(cal); //arraylist에 담아서 innService로 getDateList를 보내줌
-		
+		// 하루 최대 이용 가능한 max 값. 원래는 imp에 적혀있었지만, 번거롭기 때문에 컨트롤러에서 지정해줘서 작동시키는게 편하다.
+		int max = 2;
+		ArrayList<String> list = innService.getDateList(Calendar.getInstance(),max); //arraylist에 담아서 innService로 getDateList를 보내줌
+		//ArrayList<String> list2 = innService.getDateList2(list); //arraylist에 담아서 innService로 getDateList를 보내줌
+		// 현재로는 9월달에 해당하는 값들만 작동시키지만, Calendar.getInstance()부분은 ( 현재 오늘에 해당하는 날임 ) 부분을 수정해서 10, 11, 12월 등 다른 달도 적용시킬수있어햐한다. > ajax 이용하기.
 		//list에 list를 넣어주는 코드 
 		mv.addObject("list",list);
 		System.out.println(list);

@@ -37,7 +37,7 @@ public class InnServiceImp implements InnService {
 	}
 	// 예약된 날짜들을 취합해서 보여주기 위한 코드.
 	@Override
-	public ArrayList<String> getDateList(Calendar cal) {
+	public ArrayList<String> getDateList(Calendar cal,int max) {
 		// string형식으로 res 에 결과값 저장하도록 새로 선언해줌.
 		ArrayList<String> res = new ArrayList<String>();
 		
@@ -46,89 +46,55 @@ public class InnServiceImp implements InnService {
 				new SimpleDateFormat("yyyy-MM-dd");
 		// 문자열 strdate
 		String strdate = transFormat.format(cal.getTime());
-		
-		// 지금은 테스트를 위해 db에 저장된 값으로 예를 들어 날짜 지정함. 원래는 여기서 원하는 달에 대한 날짜들을 반복문으로 처리해줘야한다. 예를 들면 9월1일~9월31일까지 반복문으로 ! 그래서 반복문 사이에 있는 날짜들에 예약 리스르를 저장하게끔!
-		//strdate = "2020-09-21"; // 이 밑으로 이제 반복문을 실행시켜주면 작동하게된다. 
-		
-		// 9월 말이 찍히게 하는 코드 추가, 테스트 하다가 말았음!
+		// 지금은 테스트를 위해 db에 저장된 값으로 예를 들어 날짜 지정함. 원래는 여기서 원하는 달에 대한 날짜들을 반복문으로 처리해줘야한다. 예를 들면 9월1일~9월31일까지 반복문으로 ! 그래서 반복문 사이에 있는 날짜들에 예약 리스르를 저장하게끔
+		// 9월 말이 찍히게 하는 코드 추가
 		cal.set(Calendar.DAY_OF_MONTH , cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+										// 해당 월이 가지고있는 마지막 일수
 		String enddate =  transFormat.format(cal.getTime());
-		
 		ArrayList<String> dateList = null;
-		
 		try {
 			dateList = getDateList(strdate,enddate);
 			for(String tmp : dateList) {
 				ArrayList<DateVo> list = innDao.getDates(tmp);
+				System.out.println("예약일:"+tmp);
+				System.out.println("예약갯수:"+list.size());
 
-				int cnt = 0; // 새로 변수 하나 선언해주고, cnt는 예약되어질 날짜들 각각의 초기값! 처음엔 당연히 0으로 선언되어지는게 맞다.
-				int max = 2; // 예를 들어 하루에 들어갈 마리수를 max로 2마리를 지정해줬을경우를 가정하고 테스트 !
-				// for 반복문. tmp에 list값 저장해서 카운트 해주기
-				for(DateVo tmp2 : list) {
-					// 숙박기간중에 시작 날짜가 포함되어있으면 true, 아니면false. 
-					System.out.println(tmp2);
-					if(tmp2.range(tmp)) {
-						cnt ++;
-					}
-				}
-				System.out.println(cnt);
-				
 				// 만약 각각의 날짜에 예약된 수가 최대로 예약되어질 수 있는 수와 같다면, res에 strdate저장해주기.
-				if(cnt == max) {
+				if(list.size() >= max) {
 					res.add(tmp);
 				}
 			}
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		ArrayList<DateVo> list = innDao.getDates(strdate);
-//
-//		int cnt = 0; // 새로 변수 하나 선언해주고, cnt는 예약되어질 날짜들 각각의 초기값! 처음엔 당연히 0으로 선언되어지는게 맞다.
-//		int max = 2; // 예를 들어 하루에 들어갈 마리수를 max로 2마리를 지정해줬을경우를 가정하고 테스트 !
-//		// for 반복문. tmp에 list값 저장해서 카운트 해주기
-//		for(DateVo tmp : list) {
-//			// 숙박기간중에 시작 날짜가 포함되어있으면 true, 아니면false. 
-//			System.out.println(tmp);
-//			if(tmp.range(strdate)) {
-//				cnt ++;
-//			}
-//		}
-//		System.out.println(cnt);
-//		
-//		// 만약 각각의 날짜에 예약된 수가 최대로 예약되어질 수 있는 수와 같다면, res에 strdate저장해주기.
-//		if(cnt == max) {
-//			res.add(strdate);
-//		}
-			
-		
 		return res;
 	}
-
+	/* getDateList의 역할. 
+	 시작 체크인 날짜와 끝 체크아웃 날짜를 스트링 형식으로 바꿔준 후, 
+	 dates 라는 리스트에 입력된 날짜들을 넣어준다. 
+	 이후 currentDate는 startDate로 새로 선언되어, 조건문을 반복한다. 
+	 currentDate가 endDate보다 0보다 작거나 같을때, 조건문 실행. currentDate로 startDate가 새로 지정된
+	 Calender c에 현재 날짜에 해당하는 날짜로 지정되어 c라는 변수에 currentDate가 저장.
+	 c.add(Calendar.DAY_OF_MONTH,1) 은 현재 날짜에 하루를 더해준다. 
+	 */  
 	public ArrayList<String> getDateList(String start, String end) throws ParseException{
 		final String DATE_PATTERN = "yyyy-MM-dd";
 		
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+		// 데이트 형식의 날짜들 스트링 형식으로 바꿔주는 코드 
 		Date startDate = sdf.parse(start);
 		Date endDate = sdf.parse(end);
+		
 		ArrayList<String> dates = new ArrayList<String>();
+		
 		Date currentDate = startDate;
-		while (currentDate.compareTo(endDate) <= 0) {
+		while (currentDate.compareTo(endDate) <= 0) { // compareTo는 결과값이 -1, 0, 1 로 나옴
 			dates.add(sdf.format(currentDate));
 			Calendar c = Calendar.getInstance();
 			c.setTime(currentDate);
 			c.add(Calendar.DAY_OF_MONTH, 1);
 			currentDate = c.getTime();
 		}
-		
 		return dates;
 	}
-	
-	
-	// 퍼블릭 보이드 ( 컨트롤러에서 만든 메서드 ) ~~ htt
-	// 	dao.insert~~ 숙박정보 + 유저~~
-	// 퍼블릭 보이드  ~~ htt 강아지 정보
-	// dao.get~~ 숙박정보 ( 유저메일을 통해 숙박번호 받아오기 ) 
-	// select max(num) from 숙박정보 where mail = 유저메일 ( 이렇게 설정해주는 이유는 제이 마지막 큰 숫자가 최근일이 되기 때문에! )
-	// dao.insert 강아지정보 + 유저 + 숙박번호 ~~ 
 }
