@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="kr.green.project.dao.BoardReviewDao">
+  	<!-- 후기게시판 목록을 가져온다. ( 밑에는 검색창 관련 쿼리문도 함께 있다) -->
+  	<!--  <select id="getBoardList" resultType="kr.green.project.Vo.ReviewBoardVo">
+  		select *
+  			from review_board
+  			where review_isDel = 'N'
+  		<if test="cri.type == 0">
+			and
+			(writer like concat('%', #{cri.search}, '%')
+			or title like concat('%', #{cri.search}, '%')
+			or content like concat('%', #{cri.search}, '%'))
+		</if>
+		<if test="cri.type == 1">
+			and writer like concat('%', #{cri.search}, '%')
+		</if>
+		<if test="cri.type == 2">
+			and title like concat('%', #{cri.search}, '%')
+		</if>
+		<if test="cri.type == 3">
+			and content like concat('%', #{cri.search}, '%')
+		</if>
+		order by num desc
+		limit #{cri.startPage}, #{cri.perPageNum}
+  	</select>-->
+
+  </mapper>

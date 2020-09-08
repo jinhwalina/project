@@ -11,8 +11,10 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/login.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/signup.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/innDoCom.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/review_board/review_list.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/review_board/review_register.css">
 
-
+<script src="https://kit.fontawesome.com/0e9b7a4ea6.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js" integrity="sha256-erF9fIMASEVmAWGdOmQi615Bmx0L/vWNixxTNDXS4FQ="crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

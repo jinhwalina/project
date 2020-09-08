@@ -118,7 +118,7 @@
         			<a href="">Q&A</a>
         		</li>
         		<li class="menu-list">
-        			<a href="">REVIEWS</a>
+        			<a href="<%=request.getContextPath()%>/review_board/review_list">REVIEWS</a>
         		</li>
             </ul>
             <div class="user-menu">

@@ -48,6 +48,9 @@
 	    </interceptor>
 	    <interceptor>
 	        <mapping path="/reservation/innDo"/>
+	        <mapping path="/review_board/register"/>
+        	<mapping path="/review_board/modify"/>
+        	<mapping path="/review_board/delete"/>
 	        <beans:ref bean="authInterceptor"/>
 	    </interceptor>
 	</interceptors>

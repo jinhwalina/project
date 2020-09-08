@@ -115,6 +115,7 @@
 
   <c:forEach items="${list}" var="date">
   	<input type="text" class="tt" value="${date}">
+  	<!-- 이부분도 원래는 hidden 처리 해주는게 맞음. -->
   </c:forEach>
 
 
@@ -124,7 +125,7 @@ var disabledDays = []
 	$(function() {
 	  // 위의 예제 코드랑 이어지는 코드 ( 블록 처리 하게끔 날짜 지정하는것 )
 	  $('.tt').each(function(){
-	    disabledDays.push($(this).val())
+	    //disabledDays.push($(this).val()) > 일단 오류 수정이 안됐기때문에 주석 처리 해두기 
 	  })
  			var edd;
   			var sdd;
