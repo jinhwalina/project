@@ -21,7 +21,6 @@
 
     }
     .review-list{
-        border: solid 1px;
         width: 800px;
         height: 400px;
         margin: 0 auto;
@@ -29,6 +28,26 @@
     .review-list>.table{
         text-align: center;
     }
+    .btn-success {
+	    color: darkgrey;
+	    background-color: white;
+	    width: 82px;
+	    height:38px;
+	    border: 2px solid #ddd;
+	}
+	.btn-success:hover{
+	    color: black;
+	    background-color:white;
+	    border: 2px solid #ddd;
+	}
+	.input-group>select {
+	    width: 200px;
+	    height: 38px;
+	    border-right: 1px solid #ddd;
+	}
+	.serplz{
+		border: 2px solid #ddd;
+	}
 
 </style>
 
@@ -58,7 +77,7 @@
                                     <tr>
                                         <td>${review_board.review_num}</td>
                                         <td>
-                                            <a href="">
+                                            <a href="<%=request.getContextPath()%>/review_board/review_detail?num=${review_board.review_num}">
                                                 ${review_board.review_title}
                                             </a>
                                         </td>
@@ -90,15 +109,15 @@
 				  	<!-- 검색 박스 start -->
                     <form action="<%=request.getContextPath()%>/review_board/review_list">
 				  	<div class="input-group mb-3">
-				  		<select class="from-control" name="type">
+				  		<select class="from-control selplz" name="type">
 				  			<option value="0" <c:if test="${pm.cri.type == 0 }">selected</c:if>>전체</option>
 				  			<option value="1" <c:if test="${pm.cri.type == 1 }">selected</c:if>>작성자</option>
 				  			<option value="2" <c:if test="${pm.cri.type == 2 }">selected</c:if>>제목</option>
 				  			<option value="3" <c:if test="${pm.cri.type == 3 }">selected</c:if>>내용</option>
 				  		</select>
-				    	<input type="text" class="form-control" placeholder="검색어를 입력해주세요 :)" name="search" value="${pm.cri.search}">
+				    	<input type="text" class="form-control serplz" placeholder="검색어를 입력해주세요 :)" name="search" value="${pm.cri.search}">
 				    	<div class="input-group-append">
-				   			<button class="btn btn-success" type="submit">검색</button>  
+				   			<button class="btn btn-success" type="submit">SERACH</button>  
 				    	</div>
 				  	</div>
 				  	</form>

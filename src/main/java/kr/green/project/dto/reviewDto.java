@@ -1,6 +1,6 @@
-package kr.green.project.Vo;
+package kr.green.project.dto;
 
-public class ReviewBoardVo {
+public class reviewDto {
 	private String review_num;
 	private String review_star;
 	private String review_title;
@@ -14,6 +14,8 @@ public class ReviewBoardVo {
 	private String review_file;
 	private int review_up;
 	private int review_like;
+	private String nickname;
+	
 	public String getReview_num() {
 		return review_num;
 	}
@@ -92,14 +94,21 @@ public class ReviewBoardVo {
 	public void setReview_like(int review_like) {
 		this.review_like = review_like;
 	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 	@Override
 	public String toString() {
-		return "ReviewBoardVo [review_num=" + review_num + ", review_star=" + review_star + ", review_title="
-				+ review_title + ", review_content=" + review_content + ", review_view=" + review_view
-				+ ", review_regi=" + review_regi + ", review_del=" + review_del + ", review_isDel=" + review_isDel
-				+ ", review_file_num=" + review_file_num + ", review_u_mail=" + review_u_mail + ", review_file="
-				+ review_file + ", review_up=" + review_up + ", review_like=" + review_like + "]";
+		return "reviewDto [review_num=" + review_num + ", review_star=" + review_star + ", review_title=" + review_title
+				+ ", review_content=" + review_content + ", review_view=" + review_view + ", review_regi=" + review_regi
+				+ ", review_del=" + review_del + ", review_isDel=" + review_isDel + ", review_file_num="
+				+ review_file_num + ", review_u_mail=" + review_u_mail + ", review_file=" + review_file + ", review_up="
+				+ review_up + ", review_like=" + review_like + ", nickname=" + nickname + "]";
 	}
+	
 	
 	
 	

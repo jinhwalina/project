@@ -119,6 +119,11 @@
         		</li>
         		<li class="menu-list">
         			<a href="<%=request.getContextPath()%>/review_board/review_list">REVIEWS</a>
+        			<ul class="review-modal">
+	                    <li class="sub-menu">
+	                         <a class="modal-re" href="<%=request.getContextPath()%>/review_board/review_register">후기작성</a>
+	                    </li>
+                    </ul>
         		</li>
             </ul>
             <div class="user-menu">
@@ -181,7 +186,6 @@
             <!-- 클릭했을때 링크 연결되서 페이지로 안넘어가고 , 이 상태에서 로그인 모달창 띄워주기 -->
             return false;
         })
-        
         		var modal = document.getElementById('myModal');
 	            var span = document.getElementsByClassName("close")[0];          
 	            span.onclick = function() {
@@ -209,6 +213,39 @@
 	            no_close($('#no')); 
 	            
 			}
+
+	            $('.menu-list>.modal-re').click(function(){
+	           	 modal.style.display = "block";
+	               <!-- 클릭했을때 링크 연결되서 페이지로 안넘어가고 , 이 상태에서 로그인 모달창 띄워주기 -->
+	               return false;
+	           })
+	           		var modal = document.getElementById('myModal');
+	   	            var span = document.getElementsByClassName("close")[0];          
+	   	            span.onclick = function() {
+	   	                modal.style.display = "none";
+	   	            
+
+	   	            function yes_close(obj){
+	   	                obj.click(function(){
+	   	                   modal.style.display = "none";
+	   	                })
+	   	            }
+	   	            function no_close(obj){
+	   	                obj.click(function(){
+	   	                   modal.style.display = "none";
+	   	                })
+	   	            }
+	   	             /* 윈도우 창에 아무곳이나 클릭하면 창 닫혀지는. */
+	   	            window.onclick = function(event) {
+	   	                 if (event.target == modal) {
+	   	                     modal.style.display = "none";
+	   	                 }
+	   	             }
+
+	   	            yes_close($('#yes'));
+	   	            no_close($('#no')); 
+	   	            
+	   			}
 	    </script>
     </c:if>
 

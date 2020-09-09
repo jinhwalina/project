@@ -4,27 +4,83 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="kr.green.project.dao.BoardReviewDao">
   	<!-- 후기게시판 목록을 가져온다. ( 밑에는 검색창 관련 쿼리문도 함께 있다) -->
-  	<!--  <select id="getBoardList" resultType="kr.green.project.Vo.ReviewBoardVo">
+  	<select id="getBoardList" resultType="kr.green.project.Vo.ReviewBoardVo">
   		select *
   			from review_board
   			where review_isDel = 'N'
   		<if test="cri.type == 0">
 			and
-			(writer like concat('%', #{cri.search}, '%')
-			or title like concat('%', #{cri.search}, '%')
-			or content like concat('%', #{cri.search}, '%'))
+			(review_u_mail like concat('%', #{cri.search}, '%')
+			or review_title like concat('%', #{cri.search}, '%')
+			or review_content like concat('%', #{cri.search}, '%'))
 		</if>
 		<if test="cri.type == 1">
-			and writer like concat('%', #{cri.search}, '%')
+			and review_u_mail like concat('%', #{cri.search}, '%')
 		</if>
 		<if test="cri.type == 2">
-			and title like concat('%', #{cri.search}, '%')
+			and review_title like concat('%', #{cri.search}, '%')
 		</if>
 		<if test="cri.type == 3">
-			and content like concat('%', #{cri.search}, '%')
+			and review_content like concat('%', #{cri.search}, '%')
 		</if>
-		order by num desc
+		order by review_num desc
 		limit #{cri.startPage}, #{cri.perPageNum}
-  	</select>-->
-
+  	</select>
+  	
+  	<!-- 검색 기능에 필요한  -->
+  	<select id="getTotalCountByBoard" resultType="int">
+	  	select count(*)
+	  		from review_board
+	  		where review_isDel = 'N'
+	  		<if test="cri.type == 0">
+				and
+				(review_u_mail like concat('%', #{cri.search}, '%')
+				or review_title like concat('%', #{cri.search}, '%')
+				or review_content like concat('%', #{cri.search}, '%'))
+			</if>
+			<if test="cri.type == 1">
+				and review_u_mail like concat('%', #{cri.search}, '%')
+			</if>
+			<if test="cri.type == 2">
+				and review_title like concat('%', #{cri.search}, '%')
+			</if>
+			<if test="cri.type == 3">
+				and review_content like concat('%', #{cri.search}, '%')
+			</if>
+  	</select>
+  	
+  	<!-- 게시판에 글을 등록할때 필요한  -->
+	<insert id="insertBoard">
+		insert into
+			review_board(review_title, review_content, review_u_mail, review_file, review_star)
+			values(#{review_board.review_title},#{review_board.review_content},#{review_board.review_u_mail},#{review_board.review_file},#{review_board.review_star})
+	</insert>
+	
+	<select id="getBoard" resultType="kr.green.project.Vo.ReviewBoardVo">
+		select *
+			from review_board
+			where review_num = #{num} <!--  param 안에 있는 num 같은 이름은 mapper에서도 똑같이 맞춰서 써야한다 !  --> 
+	</select>
+	
+	<update id="updateBoard">
+		update review_board
+			set
+				review_title = #{board.review_title},
+				review_isDel = #{board.review_isDel},
+				review_del = #{board.review_del},
+				review_file = #{board.review_file},
+				review_view = #{board.review_view},
+				review_star = #{board.review_star}
+			where
+				review_num = #{board.review_num}
+	</update>
+	
+	<select id="getDto" resultType="kr.green.project.dto.reviewDto">
+		select * from 
+				review_board
+					join user
+						on review_board.review_u_mail = user.mail
+	                    where review_num = #{num};
+	</select>
+	
   </mapper>
