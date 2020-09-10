@@ -21,6 +21,12 @@ public interface BoardReviewDao {
 	void updateBoard(@Param("board")ReviewBoardVo board);
 
 	reviewDto getDto(@Param("num")Integer num);
+
+	int selectUp(@Param("boNum")int num, @Param("mail")String mail);
+
+	void insertUp(@Param("boNum")int num, @Param("mail")String mail);
+
+	void updateBoardByUp(@Param("num")int num);
 	
 
 }

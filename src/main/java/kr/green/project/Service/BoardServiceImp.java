@@ -1,7 +1,7 @@
 package kr.green.project.Service;
 
 import java.util.ArrayList;
-
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,10 +69,35 @@ public class BoardServiceImp implements BoardService {
 		boardReviewDao.updateBoard(board);
 	}
 	
-	
+	// 새로 만든 dto 메서드
 	@Override
 	public reviewDto dto(Integer num) {
 		return boardReviewDao.getDto(num);
+	}
+	// 후기게시판 게시글 삭제
+	@Override
+	public void deleteBoard(Integer num, UserVo user) {
+		ReviewBoardVo board = boardReviewDao.getBoard(num);
+		if(board == null)
+			return;
+		// 조건문 써줄때는 리턴값 꼭 확인하고 실행할 코드들은 괄호로 묶어주기 
+		if(board.getReview_u_mail().equals(user.getMail())) {
+			board.setReview_isDel('Y');
+			board.setReview_del(new Date());
+			boardReviewDao.updateBoard(board);
+			System.out.println(1);
+		} 
+
+	}
+	// 후기게시판 추천
+	@Override
+	public int updateUp(int num, String mail) {
+		if(boardReviewDao.selectUp(num,mail) != 0)
+			return -1; // 이미 추천했다면 -1을 리턴시켜주고, 
+		boardReviewDao.insertUp(num,mail); // 추천 테이블에 추천 등록
+		boardReviewDao.updateBoardByUp(num); // 게시글의 추천 수! 만 업데이트
+		ReviewBoardVo board = boardReviewDao.getBoard(num); // 게시글의 정보를 가져온다.
+		return board.getReview_up();
 	}
 	
 

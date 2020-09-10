@@ -1,23 +1,25 @@
 package kr.green.project.Vo;
 
+import java.util.Date;
+
 public class ReviewBoardVo {
-	private String review_num;
+	private int review_num;
 	private String review_star;
 	private String review_title;
 	private String review_content;
 	private int review_view;
 	private String review_regi;
-	private String review_del;
+	private Date review_del;
 	private char review_isDel;
 	private String review_file_num;
 	private String review_u_mail;
 	private String review_file;
 	private int review_up;
 	private int review_like;
-	public String getReview_num() {
+	public int getReview_num() {
 		return review_num;
 	}
-	public void setReview_num(String review_num) {
+	public void setReview_num(int review_num) {
 		this.review_num = review_num;
 	}
 	public String getReview_star() {
@@ -50,11 +52,11 @@ public class ReviewBoardVo {
 	public void setReview_regi(String review_regi) {
 		this.review_regi = review_regi;
 	}
-	public String getReview_del() {
+	public Date getReview_del() {
 		return review_del;
 	}
-	public void setReview_del(String review_del) {
-		this.review_del = review_del;
+	public void setReview_del(Date date) {
+		this.review_del = date;
 	}
 	public char getReview_isDel() {
 		return review_isDel;
@@ -101,6 +103,15 @@ public class ReviewBoardVo {
 				+ review_file + ", review_up=" + review_up + ", review_like=" + review_like + "]";
 	}
 	
+	// vo에 만들어진 이 oriFile 같은 경우, 디비에 저장될 때는 날짜+파일명 이런식으로 저장이 되는데, 수정을 하기 위해서는 디비에 저장된 내용을 가져오게 되면 날짜까지 합쳐져서 온전한 파일이름이 아니기때문에, 이런식으로 따로 만들어준다.
+	public String getOriFile() {
+		// 파일 이름보면 /월/일/ 이런식으로 표현되는데 , 뒤에 파일명만 보여야하는데 이 본래 파일명만 보여주게함
+		// DB에 저장된 file이름은 /년도/월/일/uuid_파일명.확장자 로 되어있는데, 사용자는 파일명.확장자 만 보여줘야하기 때문에 getOriFile을 통해 원본 파일명을 알려준다.
+		if(review_file == null)
+			return ""; // 여기서 조건을 붙여준 이유는, 첨부파일이 안들어가있을수도 있는데 그렇다면 null값으로 지정된다. 하지만 널값인 경우 처리해주는 코드가 없기때문에 리턴으로 ""을 주면 수정할때 첨부파일은 공백으로 처리된다 !
+		int index = review_file.indexOf("_");
+		return review_file.substring(index+1); 
+	}
 	
 	
 }

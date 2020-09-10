@@ -75,6 +75,7 @@
 				review_num = #{board.review_num}
 	</update>
 	
+	<!-- dto를 만들어준건 디테일에서 로그인 한 상태와 안한 상태에 작성자가 유지가 안되서 해결하기 위해 만들었음. -->
 	<select id="getDto" resultType="kr.green.project.dto.reviewDto">
 		select * from 
 				review_board
@@ -82,5 +83,20 @@
 						on review_board.review_u_mail = user.mail
 	                    where review_num = #{num};
 	</select>
+	
+	<select id="selectUp" resultType="int">
+		select count(*) from up where boNum = #{boNum} and like_mail = #{mail}
+	</select>
+	
+	<insert id="insertUp">
+		insert into up(like_mail,boNum) values(#{mail},#{boNum})
+	</insert>
+	
+	<update id="updateBoardByUp">
+		update review_board
+			set
+				review_up = (select count(*) from up where boNum = #{num})
+			where review_num = #{num}
+	</update>
 	
   </mapper>

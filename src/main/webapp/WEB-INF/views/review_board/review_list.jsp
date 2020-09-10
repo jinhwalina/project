@@ -47,7 +47,102 @@
 	}
 	.serplz{
 		border: 2px solid #ddd;
+		border-right: 1px;
+		
 	}
+		.l-write{
+		border: 2px solid #ddd;
+		height: 38px;
+		color: darkgrey;
+		background-color: white;
+		border-left: 1px;
+		font-size: 1rem;
+	}
+	.l-write:hover{
+		border: 2px solid #ddd;
+		height: 38px;
+		color: black;
+		background-color: white;
+		border-left: 1px;
+		font-size: 1rem;
+	}
+	
+	/* 모달창 관련 css */
+	/* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+    
+    /* Modal Content/Box */
+    .modal-content {
+         position:relative;
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 10px;
+        border: 4px solid silver;
+        width: 30%; /* Could be more or less, depending on screen size */
+        min-height: 120px;                     
+    }
+    .modal-login p{
+    	font-size: 25px;
+    	font-weight: bold;
+    	color: rosybrown;
+    	text-align: center;
+    }
+    .modal-go{
+    	padding-bottom: 10px;
+    }
+    .modal-go p{
+    	font-size: 17px;
+    	font-weight: bold;
+    	text-align: center;
+    	color: #757575;
+    	
+    }
+    
+    .close {
+          position:absolute;
+        color: #555555;
+        right:30px;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .modal-content button{
+          width: 100px;
+          background-color: transparent;
+          position: absolute;
+          bottom:10px;
+    }
+   .modal-content button:hover{
+      background-color: rgb(33,51,87);
+      color: white;
+   }
+   .modal-content a{
+   	color: darkgrey;
+   	width: 100%;
+   	text-align: center;
+   	float:left;
+   }
+   .modal-content a:hover{
+   		text-decoration: none;
+   		color: black;
+   }
+
 
 </style>
 
@@ -66,6 +161,7 @@
                             <th>작성자</th>
                             <th>등록일</th>
                             <th>조회수</th>
+							<th>LIKE <i class="far fa-thumbs-up"></i></th>
                           </tr>
                         </thead>
 
@@ -82,8 +178,10 @@
                                             </a>
                                         </td>
                                         <td>${review_board.review_u_mail}</td>
+                                        
                                         <td>${review_board.review_regi}</td>
                                         <td>${review_board.review_view}</td>
+                                        <td>${review_board.review_up}</td>
                                     </tr>
                                 </c:forEach>
                             </c:if>
@@ -108,21 +206,82 @@
 				  	
 				  	<!-- 검색 박스 start -->
                     <form action="<%=request.getContextPath()%>/review_board/review_list">
-				  	<div class="input-group mb-3">
-				  		<select class="from-control selplz" name="type">
-				  			<option value="0" <c:if test="${pm.cri.type == 0 }">selected</c:if>>전체</option>
-				  			<option value="1" <c:if test="${pm.cri.type == 1 }">selected</c:if>>작성자</option>
-				  			<option value="2" <c:if test="${pm.cri.type == 2 }">selected</c:if>>제목</option>
-				  			<option value="3" <c:if test="${pm.cri.type == 3 }">selected</c:if>>내용</option>
-				  		</select>
-				    	<input type="text" class="form-control serplz" placeholder="검색어를 입력해주세요 :)" name="search" value="${pm.cri.search}">
-				    	<div class="input-group-append">
-				   			<button class="btn btn-success" type="submit">SERACH</button>  
-				    	</div>
-				  	</div>
+					  	<div class="input-group mb-3">
+					  		<select class="from-control selplz" name="type">
+					  			<option value="0" <c:if test="${pm.cri.type == 0 }">selected</c:if>>전체</option>
+					  			<option value="1" <c:if test="${pm.cri.type == 1 }">selected</c:if>>작성자</option>
+					  			<option value="2" <c:if test="${pm.cri.type == 2 }">selected</c:if>>제목</option>
+					  			<option value="3" <c:if test="${pm.cri.type == 3 }">selected</c:if>>내용</option>
+					  		</select>
+					    	<input type="text" class="form-control serplz" placeholder="검색어를 입력해주세요 :)" name="search" value="${pm.cri.search}">
+					    	<div class="input-group-append">
+					   			<button class="btn btn-success" type="submit">SERACH</button>
+					   			
+					   			<a href="<%=request.getContextPath()%>/review_board/review_register" ><button class="l-write" type="button" >WRITE <i class="fas fa-pencil-alt"></i></button></a>
+					   			
+					    	</div>
+					  	</div>
 				  	</form>
 				  	<!-- 검색 박스 end -->
 				  	
                 </div>
             </div>
         </div>
+        
+        <!-- ------------------------------------------------------------------------------------------------------------------------------- -->      
+		    <!-- The Modal -->
+			<div id="myModal" class="modal">
+		 
+		    <!-- Modal content -->
+		    <div class="modal-content">
+		        <span class="close" onclick="close()">&times;</span>
+		        <div class="modal-login">
+		           <p>로그인 후 이용해주세요 :)</p>
+		        </div>
+		        <div class="modal-go">                                                         
+		           <p>로그인 창으로 이동하시겠습니까?</p>
+		        </div>
+			<!-- 링크로 보낼거면 링크로 넘겨주고, 권한 제어만 풀어줄 경우에는 없어도 되는코드. --> 
+		        <a href="<%=request.getContextPath()%>/user/login">YES</a>
+		       <a href="<%=request.getContextPath()%>/">CLOSE</a>
+			   </div>
+			</div>
+		<!-- ------------------------------------------------------------------------------------------------------------------------------- -->    
+        <c:if test="${user == null }" >
+	        <script>
+				/* 글쓰기 버튼 눌렀을때 로그인 해달라는 모달 창! */
+				
+			 $('.input-group-append>a').click(function(){
+	       	 	modal.style.display = "block";
+	           <!-- 클릭했을때 링크 연결되서 페이지로 안넘어가고 , 이 상태에서 로그인 모달창 띄워주기 -->
+	           return false;
+	         })
+	        		var modal = document.getElementById('myModal');
+		            var span = document.getElementsByClassName("close")[0];          
+		            span.onclick = function() {
+		                modal.style.display = "none";
+		            }
+	
+		            function yes_close(obj){
+		                obj.click(function(){
+		                   modal.style.display = "none";
+		                })
+		            }
+		            function no_close(obj){
+		                obj.click(function(){
+		                   modal.style.display = "none";
+		                })
+		            }
+		             /* 윈도우 창에 아무곳이나 클릭하면 창 닫혀지는. */
+		            window.onclick = function(event) {
+		                 if (event.target == modal) {
+		                     modal.style.display = "none";
+		                 }
+		             }
+	
+		            yes_close($('#yes'));
+		            no_close($('#no')); 
+		           
+		       
+	        </script>
+        </c:if>

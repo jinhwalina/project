@@ -1,15 +1,26 @@
 package kr.green.project.Controller;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -66,6 +77,7 @@ public class BoardController {
 		return mv;
 	}
 	// 후기 게시판 디테일 get
+	// dto 패키지를 새로 만들어서 조인이 필요한 정보들을 담아줬다. 이후 매퍼에서 조인해준 후 사용했음! 
 	@RequestMapping(value = "/review_board/review_detail", method = RequestMethod.GET)
 	public ModelAndView boardDetailGet(ModelAndView mv, Integer num, Criteria cri) {
 		mv.setViewName("/review_board/review_detail"); 
@@ -75,6 +87,76 @@ public class BoardController {
 		mv.addObject("cri",cri);
 		return mv;
 	}
+	
+	// 후기 게시판 삭제! 
+	@RequestMapping(value = "/review_board/review_delete", method = RequestMethod.GET)
+	public ModelAndView boardDeleteGet(ModelAndView mv, HttpServletRequest r, Integer num) {
+		mv.setViewName("redirect:/review_board/review_list"); 
+		boardService.deleteBoard(num,userService.getUser(r));
+		return mv;
+	}
+	
+	// 업로드 한 파일 다운로드 관련 코드
+	@ResponseBody
+	@RequestMapping(value="review_board/review_download") // 다운로드는 복붙 후 경로 지정해주면 된다.
+	public ResponseEntity<byte[]> downloadFile(String fileName)throws Exception{
+	    InputStream in = null;
+	    ResponseEntity<byte[]> entity = null;
+	    try{
+	    	// HttpHeaders 객체 생성
+	        HttpHeaders headers = new HttpHeaders();
+	        // 다운로드 할 파일을 읽어옴
+	        in = new FileInputStream(uploadPath+fileName);
+	        // 다운로드시 저장 할 때 파일명 ! =을 통해서 덮어씀
+	        fileName = fileName.substring(fileName.indexOf("_")+1);
+	        // 헤더에 컨텐츠 타입을 설정
+	        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+	        // 헤더 정보를 추가
+	        headers.add("Content-Disposition",  "attachment; filename=\"" 
+				+ new String(fileName.getBytes("UTF-8"), "ISO-8859-1")+"\"");
+	        // ResponseEntity 객체 생성, 전송할 파일, 헤더정보, 헤더 상태
+	        entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),headers,HttpStatus.CREATED);
+	    }catch(Exception e) {
+	        e.printStackTrace();
+	        entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST); // 파일을 못읽어 왔을 때 
+	    }finally {
+	        in.close();
+	    }
+	    return entity;
+	}
+	// 추천 기능
+	@RequestMapping(value ="/review_board/review_up", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<Object, Object> boardUp(@RequestBody int num, HttpServletRequest r){
+	    Map<Object, Object> map = new HashMap<Object, Object>();
+	    // 현재 로그인 중인 유저 정보
+	    UserVo user = userService.getUser(r);
+	    if(user == null) {
+	    	map.put("isUser",false);
+	    }else {
+	    	map.put("isUser",true);
+	    	int up = boardService.updateUp(num, user.getMail());
+	    	map.put("up",up);
+	    }
+
+	    return map;
+	}
+	// 후기 게시판 수정 get,post
+	@RequestMapping(value = "/review_board/review_modify", method = RequestMethod.GET)
+	public ModelAndView boardModifyGet(ModelAndView mv, Integer num, HttpServletRequest r, Criteria cri) { 
+    // jsp 정보를 넘겨줄때, list 같은 경우 페이지 넘버와 등등 정보들을 보내줘야하지만, cri 설정을 안해주게되면 보내주는 정보가 없어서 오류가 생기게 된다
+		mv.setViewName("/review_board/review_modify"); 
+		ReviewBoardVo board = boardService.getBoard(num);
+		System.out.println(board);
+		UserVo user = userService.getUser(r);
+		if(board==null || !user.getMail().equals(board.getReview_u_mail()))
+			mv.setViewName("redirect:/review_board/review_list");
+		mv.addObject("review_board", boardService.dto(num));
+		mv.addObject("cri", cri);
+		return mv;
+	}
+	
+	
 }
 
 

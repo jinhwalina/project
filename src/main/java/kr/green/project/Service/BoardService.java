@@ -23,4 +23,8 @@ public interface BoardService {
 
 	reviewDto dto(Integer num);
 
+	void deleteBoard(Integer num, UserVo user);
+
+	int updateUp(int num, String mail);
+
 }

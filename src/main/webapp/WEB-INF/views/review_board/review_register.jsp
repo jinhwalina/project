@@ -135,7 +135,7 @@
             </div>
 
             <div class="filebox">
-                <input class="upload-name" value="파일선택" disabled="disabled">
+                <input class="upload-name" value="파일을 선택해주세요 :)" disabled="disabled">
                 <label for="ex_file">upload</label>
                 <input type="file" id="ex_file" name="file2" class="form-control upload-hidden">
             </div>
