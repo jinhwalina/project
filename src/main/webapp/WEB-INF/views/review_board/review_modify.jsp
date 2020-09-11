@@ -24,8 +24,8 @@
             border-bottom-color: #e2e2e2; 
             border-radius: .25em; 
             margin: 0;
+            margin-top: 10px;;
 			/*margin-right: 117px;*/
-			
         } 
         .filebox input[type="file"] { 
             /* 파일 필드 숨기기 */ 
@@ -39,7 +39,7 @@
             border: 0; 
         }
         /* named upload */ 
-        .filebox .upload-name { 
+         .filebox .upload-name { 
             display: inline-block; 
             padding: .5em .75em; 
             /* label의 패딩값과 일치 */ 
@@ -55,6 +55,7 @@
             /* 네이티브 외형 감추기 */ 
             -moz-appearance: none; 
             appearance: none;
+            margin-top: 10px;
         }
         /* 별점평가 관련 css*/
         .far{
@@ -108,6 +109,9 @@
 			border: 2px solid #ddd;
 			height: 40px;
 			float: left;
+			text-align:center;
+			font-size:15px;
+			font-weight:600;
 		}
 		.r-view-img,.r-up-img{
 			margin-left: 11px;
@@ -123,12 +127,18 @@
 			border: 2px solid #ddd;
 			height: 40px;
 			float: left;
+			text-align:center;
+			font-size:15px;
+			font-weight:600;
 		}
 		.r-regi{
 			width: 200px;
 			border: 2px solid #ddd;
 			height: 40px;
 			float: left;
+			text-align:center;
+			font-size:15px;
+			font-weight:600;
 		}
 		.r-mail{
 			width: 150px;
@@ -146,6 +156,7 @@
 		.r-content{
 			width: 100%;
 			border: 2px solid #ddd;
+			padding: 10px;
 		}
 
 		/* 버튼 쪽 css*/
@@ -157,23 +168,93 @@
 			color: rgb(255, 255, 255);
 			font-size: 20px;
 		}
-		.r-list,.r-write{
+		/*집*/
+		.r-list,.r-write,.r-modi{
 			line-height: 30px;
 			height: 39px;
-			width: 130px;
+			width: 100px;
 			border: none;
 			font-size: 15px;
 			background-color: rgb(255, 228, 196);
     		color: rgb(170, 170, 170);
 			float: right;
+            margin-top: 10px;
 		}
+        .r-modi{
+            margin-right: 1px;
+        }
 		.r-list{
 			margin-left: 1px;
 		}
-		.r-list:hover,.r-write:hover{
+		.r-list:hover,.r-write:hover,.r-modi:hover{
 			color: rgb(109, 109, 109);
 			
 		}
+        .r-file-del{
+            float: left;
+            margin-top:8px;
+            border: none;
+            padding-left: 4px;
+            background-color: white;
+        }
+        .fa-window-close{
+            color: #dddddd;
+            font-size: 20px;
+        }
+        .fa-window-close:hover{
+			font-size: 20px;
+			color: grey;
+		}
+		/**/
+		.r-file{
+			width: 150px;
+			border: 2px solid #ddd;
+			height: 40px;
+		}
+		.r-file-img{
+			width:200px;
+			height:40px;
+			float:left;
+			margin-top:10px;
+			margin-right:5px;
+			margin-left: 20px;
+
+		}
+		.r-file-box{
+			margin-top:10px;
+			height:40px;
+			width:150px;
+			border:2px solid #ddd;
+			float: left;
+			overflow: hidden;
+			margin-left:5px;
+		}
+		.r-file-d{
+			margin:10px;
+			font-size:12px;
+			line-height:40px;
+			color:grey;
+		}
+		.r-file-d:hover{
+			margin:10px;
+			font-size:12px;
+			line-height:40px;
+			color:black;
+		}
+		.r-file-none{
+			border: none;
+		    font-size: 15px;
+		    line-height: 35px;
+		    margin-left: 52px;
+		    color:#ddd;
+		    font-weight:bold;
+		}
+		.r-file-name{
+			width:200px;
+			border:1px solid black;
+			height:40px;
+		}
+
 	
 </style>
 
@@ -184,12 +265,12 @@
 	</c:if>
 	
 		<c:if test="${review_board.review_isDel == 'N'.charAt(0)}">
-		    <form action="<%=request.getContextPath() %>/review_board/review_modify" method="get" enctype="multipart/form-data">
+		    <form action="<%=request.getContextPath() %>/review_board/review_modify" method="post" enctype="multipart/form-data">
 		
 		        <div class="review-regi">
 		        
 					<div class="r-detail-box">
-						<img src="<%=request.getContextPath()%>/resources/css/image/게시글상세보기.jpg" alt="">
+						<img src="<%=request.getContextPath()%>/resources/css/image/게시글수정하기.jpg" alt="">
 						<img src="<%=request.getContextPath()%>/resources/css/image/절취선2.jpg" alt="">
 					</div>
 					
@@ -227,9 +308,14 @@
 								<img src="<%=request.getContextPath()%>/resources/css/image/만족도2.jpg" alt="">
 							</div>				
 							<div class="starRev">
-								<input class="starRev-cnt" name="starRev-cnt" value="0" type="hidden">
+								<!-- 여기서 실수 하지 않기 위한 중요한 문제 ! 
+								첫번째 input과 두번째 input의 차이는 첫번째 같은 경우 클래스가 지정되어있고, name은 없다. 
+								두번째는 이와 반대 인데 첫번째와같이 수정하기 버튼을 눌러서 데이터가 전송이 되면 name값이 지정되지 않아서 reivew_star에 null값이 
+								뜨게 된다. 이렇기 때문에 꼭 name을 설정해주고 데이터를 전송해준다. -->
+								<input class="star" value="${review_board.review_star}" type="hidden"> 
+								<input type="hidden" name="review_star" value="${review_board.review_star }">
 							</div>
-							<input class="star" value="${review_board.review_star}" type="hidden">
+							
 						</div>
 					</div>
 					
@@ -239,7 +325,7 @@
 							<div class="r-title-img">
 								<img src="<%=request.getContextPath()%>/resources/css/image/제목2.jpg" alt="">
 							</div>
-							<input type="text" class="r-title" name="review_title" value= "${review_board.review_title }" readonly>
+							<input type="text" class="r-title" name="review_title" value= "${review_board.review_title }">
 						</div>
 
 						<div class="r-regi-box">
@@ -258,25 +344,30 @@
 					</div>
 
 					<!-- 그룹박스 4-->
+					<div class="filebox">
+		                <input class="upload-name" value="수정할 파일 선택 :)" disabled="disabled">
+		                <label for="ex_file">upload</label>
+		                <input type="file" id="ex_file" name="file2" class="form-control upload-hidden">
+		            </div>
+
 					<c:if test="${review_board.review_file != null }">
-						<div class="group4">
-							<div class="filebox">
-								<input class="upload-name" value="파일을 선택해주세요 :)" disabled="disabled">
-								<label for="ex_file">upload</label>
-								<input type="file" id="ex_file" name="file2" value="${review_board.review_file }" class="form-control upload-hidden">
-							</div>
+						<div class="r-file-img">
+							<img src="<%=request.getContextPath()%>/resources/css/image/첨부파일수정.jpg" alt="">
 						</div>
+						<div class="r-file-box">
+							<a class="r-file-d" href="<%=request.getContextPath()%>/review_board/review_download?fileName=${review_board.review_file}">${review_board.oriFile}</a>
+							<input type="hidden" name="review_file"  value="${review_board.review_file }">
+						</div>
+						<span class="r-file-del"><i class="far fa-window-close"></i></span>
+						
 					</c:if>
-					
-					
 					<a href="<%=request.getContextPath()%>/review_board/review_list?page=${cri.page}&search=${cri.search}&type=${cri.type}"><button type="button" class="r-list">LIST <i class="fas fa-stream"></i></button></a>
 					<c:if test="${user != null }">
 						<a href="<%=request.getContextPath()%>/review_board/review_register"><button type="button" class="r-write">WRITE <i class="fas fa-pencil-alt"></i></button></a>
-						<c:if test="${user.mail == review_board.review_u_mail}">
-							<a href="<%=request.getContextPath()%>/review_board/review_"><button type="button" class="r-modi">수정</button></a>
-						</c:if> 
+						<button type="submit" class="r-modi">수정</button>
 					</c:if>
 				</div>
+				
 		</form>
 		
 	
@@ -303,8 +394,21 @@
 		}
 		// 이렇게 설정해주게되면 색칠된 별 + 아닌 별 > 전체 별이 완성된다. 
 
-		
-        /* 파일 업로드 관련 
+
+		// 첨부파일 수정 하는 스크립트
+        $('.r-file-del').click(function(){
+			$('.r-file-box').empty();
+		})
+		$('input[name=file]').change(function(){
+			if($('input[name=review_file]').val() == '' ||
+				$('input[name=review_file]').val() == null ||
+				typeof($('input[name=review_file]').val()) == 'undefined') 
+				return;
+			$(this).val('');
+			alert('첨부파일은 하나만 추가해야 합니다. 기존 첨부 파일을 삭제하세요!')
+		})
+
+		// 파일 업로드 관련 
         $(document).ready(function(){ 
             var fileTarget = $('.filebox .upload-hidden'); 
             fileTarget.on('change', function(){ // 값이 변경되면 
@@ -316,7 +420,7 @@
             } // 추출한 파일명 삽입 
                 $(this).siblings('.upload-name').val(filename);
             }); 
-        });*/
+        });
 		
 	})
 </script>

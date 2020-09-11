@@ -60,6 +60,10 @@
 			border: 2px solid #ddd;
 			height: 40px;
 			float: left;
+			text-align:center;
+			font-size:15px;
+			font-weight:600;
+			
 		}
 		.r-view-img,.r-up-img{
 			margin-left: 11px;
@@ -75,12 +79,18 @@
 			border: 2px solid #ddd;
 			height: 40px;
 			float: left;
+			text-align:center;
+			font-size:15px;
+			font-weight:600;
 		}
 		.r-regi{
 			width: 200px;
 			border: 2px solid #ddd;
 			height: 40px;
 			float: left;
+			text-align:center;
+			font-size:15px;
+			font-weight:600;
 		}
 		.r-mail{
 			width: 150px;
@@ -98,6 +108,7 @@
 		.r-content{
 			width: 100%;
 			border: 2px solid #ddd;
+			padding:10px;
 		}
 
 		/* 버튼 쪽 css*/
@@ -109,10 +120,10 @@
 			color: rgb(255, 255, 255);
 			font-size: 20px;
 		}
-		.r-list,.r-write{
+		.r-list,.r-write,.r-modi,.r-del{
 			line-height: 30px;
 			height: 39px;
-			width: 130px;
+			width: 100px;
 			border: none;
 			font-size: 15px;
 			background-color: rgb(255, 228, 196);
@@ -120,10 +131,22 @@
 			float: right;
 			margin-top:10px;
 		}
-		.r-list{
+        .r-modi,.r-del{
+			line-height: 30px;
+			height: 39px;
+			width: 65px;
+			border: none;
+			font-size: 15px;
+			background-color: rgb(255, 228, 196);
+    		color: rgb(170, 170, 170);
+			float: right;
+			margin-top:10px;
+		}
+
+		.r-list,.r-modi,.r-write{
 			margin-left: 1px;
 		}
-		.r-list:hover,.r-write:hover{
+		.r-list:hover,.r-write:hover,.r-modi:hover,.r-del:hover{
 			color: rgb(109, 109, 109);
 		}
 		

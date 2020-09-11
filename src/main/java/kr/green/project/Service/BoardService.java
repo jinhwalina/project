@@ -27,4 +27,6 @@ public interface BoardService {
 
 	int updateUp(int num, String mail);
 
+	void updateBoard(ReviewBoardVo board);
+
 }

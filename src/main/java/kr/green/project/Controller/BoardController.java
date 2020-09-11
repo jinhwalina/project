@@ -155,20 +155,26 @@ public class BoardController {
 		mv.addObject("cri", cri);
 		return mv;
 	}
+	@RequestMapping(value = "/review_board/review_modify", method = RequestMethod.POST)
+	public ModelAndView boardModifyPost(ModelAndView mv, HttpServletRequest r, ReviewBoardVo board, MultipartFile file2) throws IOException, Exception {
+		mv.setViewName("redirect:/review_board/review_list");
+		board.setReview_u_mail(userService.getUser(r).getMail());
+		// 수정 페이지에서 기존 파일을 삭제하고 새로운 첨부파일이 추가가 되면, 
+		if(!file2.getOriginalFilename().contentEquals("")) {
+			String fileName = UploadFileUtils.uploadFile(uploadPath, file2.getOriginalFilename(), file2.getBytes());
+			board.setReview_file(fileName);
+		}else if(board.getReview_file() == null || board.getReview_file().equals("")) {
+			board.setReview_file(null);
+		}
+		
+		boardService.updateBoard(board);
+		System.out.println(board);
+		return mv;
+		
+	}
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

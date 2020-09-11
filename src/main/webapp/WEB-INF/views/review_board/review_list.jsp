@@ -142,7 +142,33 @@
    		text-decoration: none;
    		color: black;
    }
-
+    th{
+    	color:rgb(131, 131, 131);
+    }
+	td>a{
+		color: rgb(85, 85, 85);
+	    font-size: 16;
+	    line-height: 1.5;
+	    font-weight: 700;
+	}
+	td>a:hover{
+		color:black;
+		text-decoration: none;
+	}
+	.td-num{
+		color:darkgrey;
+		font-weight:bold;
+	}
+	.th-like{
+		color:rgb(228, 146, 102);
+	}
+	.fa-thumbs-up{
+		color:rgb(237, 72, 72);
+	}
+	.td-like{
+		font-weight:bold;
+		color: rgb(255, 189, 108);
+	}
 
 </style>
 
@@ -161,7 +187,7 @@
                             <th>작성자</th>
                             <th>등록일</th>
                             <th>조회수</th>
-							<th>LIKE <i class="far fa-thumbs-up"></i></th>
+							<th class="th-like">LIKE <i class="far fa-thumbs-up"></i></th>
                           </tr>
                         </thead>
 
@@ -171,7 +197,7 @@
                                   <!--  var의 역할은 list에서 꺼내왔을때 뭐라고 부를 지 붙여 줄 이름  -->
                                 <c:forEach var="review_board" items="${list}">
                                     <tr>
-                                        <td>${review_board.review_num}</td>
+                                        <td class="td-num">${review_board.review_num}</td>
                                         <td>
                                             <a href="<%=request.getContextPath()%>/review_board/review_detail?num=${review_board.review_num}">
                                                 ${review_board.review_title}
@@ -181,7 +207,7 @@
                                         
                                         <td>${review_board.review_regi}</td>
                                         <td>${review_board.review_view}</td>
-                                        <td>${review_board.review_up}</td>
+                                        <td class="td-like">${review_board.review_up}</td>
                                     </tr>
                                 </c:forEach>
                             </c:if>
