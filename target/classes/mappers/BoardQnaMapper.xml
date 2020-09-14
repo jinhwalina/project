@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="kr.green.project.dao.BoardQnaDao">
+  
+  	<!-- 질문게시판 목록을 가져온다. ( 밑에는 검색창 관련 쿼리문도 함께 있다) -->
+  	<select id="getBoardList2" resultType="kr.green.project.Vo.QnaBoardVo">
+  		select *
+  			from qna_board
+  			where qna_isDel = 'N'
+  		<if test="cri.type == 0">
+			and
+			(qna_u_mail like concat('%', #{cri.search}, '%')
+			or qna_title like concat('%', #{cri.search}, '%')
+			or qna_content like concat('%', #{cri.search}, '%'))
+		</if>
+		<if test="cri.type == 1">
+			and qna_u_mail like concat('%', #{cri.search}, '%')
+		</if>
+		<if test="cri.type == 2">
+			and qna_title like concat('%', #{cri.search}, '%')
+		</if>
+		<if test="cri.type == 3">
+			and qna_content like concat('%', #{cri.search}, '%')
+		</if>
+		order by qna_num desc
+		limit #{cri.startPage}, #{cri.perPageNum}
+  	</select>
+  
+  <!-- 검색 기능에 필요한  -->
+  	<select id="getTotalCountByBoard2" resultType="int">
+	  	select count(*)
+	  		from qna_board
+	  		where qna_isDel = 'N'
+	  		<if test="cri.type == 0">
+				and
+				(qna_u_mail like concat('%', #{cri.search}, '%')
+				or qna_title like concat('%', #{cri.search}, '%')
+				or qna_content like concat('%', #{cri.search}, '%'))
+			</if>
+			<if test="cri.type == 1">
+				and qna_u_mail like concat('%', #{cri.search}, '%')
+			</if>
+			<if test="cri.type == 2">
+				and qna_title like concat('%', #{cri.search}, '%')
+			</if>
+			<if test="cri.type == 3">
+				and qna_content like concat('%', #{cri.search}, '%')
+			</if>
+  	</select>
+  	
+  	<!-- 질문 게시판 글 작성 -->
+  	<insert id="insertBoard2">
+  		insert into
+			qna_board(qna_title, qna_content, qna_u_mail, qna_select)
+			values(#{qna.qna_title},#{qna.qna_content},#{qna.qna_u_mail},#{qna.qna_select})
+  	</insert>
+  	
+  	<select id="getBoard2" resultType="kr.green.project.Vo.QnaBoardVo">
+		select *
+			from qna_board
+			where qna_num = #{num} <!--  param 안에 있는 num 같은 이름은 mapper에서도 똑같이 맞춰서 써야한다 !  --> 
+	</select>
+	
+	<!-- dto를 만들어준건 디테일에서 로그인 한 상태와 안한 상태에 작성자가 유지가 안되서 해결하기 위해 만들었음. -->
+	<select id="getDto2" resultType="kr.green.project.dto.qnaDto">
+		select * from 
+				qna_board
+					join user
+						on qna_board.qna_u_mail = user.mail
+	                    where qna_num = #{num};
+	</select>
+  	
+  	<update id="updateBoard2">
+		update qna_board
+			set
+				qna_title = #{qna.qna_title},
+				qna_isDel = #{qna.qna_isDel},
+				qna_del = #{qna.qna_del},
+				qna_view = #{qna.qna_view}
+			where
+				qna_num = #{qna.qna_num}
+	</update>
+  	
+  </mapper>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

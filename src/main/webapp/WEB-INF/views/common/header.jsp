@@ -43,7 +43,6 @@
     	font-weight: bold;
     	text-align: center;
     	color: #757575;
-    	
     }
     
     /* The Close Button */
@@ -104,7 +103,7 @@
                             <a href="<%=request.getContextPath()%>/reservation/innDo">예약하기</a>
                         </li>
                         <li class="sub-menu">
-                            <a href="">예약변경</a>
+                            <a href="<%=request.getContextPath()%>/qna_board/qna_register">예약변경</a>
                         </li>
                         <li class="sub-menu">
                             <a href="">예약취소</a>
@@ -115,7 +114,7 @@
                     </ul>
         		</li>
         		<li class="menu-list">
-        			<a href="">Q&A</a>
+        			<a class="qna-modal" href="<%=request.getContextPath()%>/qna_board/qna_list">Q&A</a>
         		</li>
         		<li class="menu-list">
         			<a href="<%=request.getContextPath()%>/review_board/review_list">REVIEWS</a>
@@ -213,7 +212,7 @@
 	            no_close($('#no')); 
 	            
 			}
-
+				
 	            $('.menu-list>.modal-re').click(function(){
 	           	 modal.style.display = "block";
 	               <!-- 클릭했을때 링크 연결되서 페이지로 안넘어가고 , 이 상태에서 로그인 모달창 띄워주기 -->
@@ -246,14 +245,42 @@
 	   	            no_close($('#no')); 
 	   	            
 	   			}
+
+   	         $('.menu-list>.qna-modal').click(function(){
+	           	 modal.style.display = "block";
+	               <!-- 클릭했을때 링크 연결되서 페이지로 안넘어가고 , 이 상태에서 로그인 모달창 띄워주기 -->
+	               return false;
+	           })
+	           		var modal = document.getElementById('myModal');
+	   	            var span = document.getElementsByClassName("close")[0];          
+	   	            span.onclick = function() {
+	   	                modal.style.display = "none";
+	   	            
+
+	   	            function yes_close(obj){
+	   	                obj.click(function(){
+	   	                   modal.style.display = "none";
+	   	                })
+	   	            }
+	   	            function no_close(obj){
+	   	                obj.click(function(){
+	   	                   modal.style.display = "none";
+	   	                })
+	   	            }
+	   	             /* 윈도우 창에 아무곳이나 클릭하면 창 닫혀지는. */
+	   	            window.onclick = function(event) {
+	   	                 if (event.target == modal) {
+	   	                     modal.style.display = "none";
+	   	                 }
+	   	             }
+
+	   	            yes_close($('#yes'));
+	   	            no_close($('#no')); 
+	   	            
+	   			}
+
+		   			
 	    </script>
     </c:if>
 
-
-    <c:if test="${user != null }">
-    	<script>
-			
-    	</script>
-    </c:if>
-    
     

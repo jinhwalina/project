@@ -85,7 +85,6 @@ public class BoardServiceImp implements BoardService {
 			board.setReview_isDel('Y');
 			board.setReview_del(new Date());
 			boardReviewDao.updateBoard(board);
-			System.out.println(1);
 		} 
 
 	}

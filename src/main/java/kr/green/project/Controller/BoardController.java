@@ -27,7 +27,9 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.green.project.Controller.utils.UploadFileUtils;
 import kr.green.project.Service.BoardService;
 import kr.green.project.Service.InnService;
+import kr.green.project.Service.QnaService;
 import kr.green.project.Service.UserService;
+import kr.green.project.Vo.QnaBoardVo;
 import kr.green.project.Vo.ReviewBoardVo;
 import kr.green.project.Vo.UserVo;
 import kr.green.project.pagination.Criteria;
@@ -37,6 +39,9 @@ import kr.green.project.pagination.PageMaker;
 public class BoardController {
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
+	QnaService qnaService;
 	
 	@Autowired
 	UserService userService;
@@ -57,6 +62,18 @@ public class BoardController {
 		mv.addObject("pm",pm);
 		return mv;
 	}
+	// 질문 게시판 리스트 get
+	@RequestMapping(value = "/qna_board/qna_list", method = RequestMethod.GET)
+	public ModelAndView qnaListGet(ModelAndView mv, Criteria cri) {
+		mv.setViewName("/qna_board/qna_list");
+		// 페이지네이션, 게시판 목록 불러오는거 ( 아직 게시물이 없기때문에 나중으로 )
+		PageMaker pm = qnaService.getPageMakerByBoard2(cri);
+		ArrayList<QnaBoardVo> list = qnaService.getBoardList2(cri);
+		mv.addObject("list",list);
+		mv.addObject("pm",pm);
+		return mv;
+	}
+	
 	// 후기 게시판 글쓰기 get, post
 	@RequestMapping(value = "/review_board/review_register", method = RequestMethod.GET)
 	public ModelAndView boardRegisterGet(ModelAndView mv) {
@@ -76,6 +93,24 @@ public class BoardController {
 		boardService.insertBoard(board,user);
 		return mv;
 	}
+	
+	// 질문게시판 글쓰기 get, post
+	@RequestMapping(value = "/qna_board/qna_register", method = RequestMethod.GET)
+	public ModelAndView qnaRegisterGet(ModelAndView mv, Criteria cri) {
+		mv.addObject("cri",cri);
+		mv.setViewName("/qna_board/qna_register"); 
+		return mv;
+	}
+	@RequestMapping(value = "/qna_board/qna_register", method = RequestMethod.POST)
+	public ModelAndView qnaRegisterPost(ModelAndView mv, QnaBoardVo qna, HttpServletRequest r) {
+		mv.setViewName("redirect:/qna_board/qna_list"); // 등록하면 리스트로 보냄
+		UserVo user = userService.getUser(r);
+		qna.setQna_u_mail(userService.getUser(r).getMail());
+		qnaService.insertBoard2(qna,user);
+		return mv;
+	}
+	
+	
 	// 후기 게시판 디테일 get
 	// dto 패키지를 새로 만들어서 조인이 필요한 정보들을 담아줬다. 이후 매퍼에서 조인해준 후 사용했음! 
 	@RequestMapping(value = "/review_board/review_detail", method = RequestMethod.GET)
@@ -88,6 +123,17 @@ public class BoardController {
 		return mv;
 	}
 	
+	// 질문 게시판 디테일 get
+	@RequestMapping(value = "/qna_board/qna_detail", method = RequestMethod.GET)
+	public ModelAndView qnaDetailGet(ModelAndView mv, Integer num, Criteria cri) {
+		mv.setViewName("/qna_board/qna_detail"); 
+		QnaBoardVo qna = qnaService.view2(num); // 조회수 증가 시켜주기 위해서 쓰는 코드
+		// 새로만든 dto메서드를 활용한 방법.
+		mv.addObject("qna_board", qnaService.dto(num));
+		mv.addObject("cri",cri);
+		return mv;
+	}
+	
 	// 후기 게시판 삭제! 
 	@RequestMapping(value = "/review_board/review_delete", method = RequestMethod.GET)
 	public ModelAndView boardDeleteGet(ModelAndView mv, HttpServletRequest r, Integer num) {
@@ -95,6 +141,15 @@ public class BoardController {
 		boardService.deleteBoard(num,userService.getUser(r));
 		return mv;
 	}
+	
+	// 질문 게시판 삭제 !
+	@RequestMapping(value = "/qna_board/qna_delete", method = RequestMethod.GET)
+	public ModelAndView qnaDeleteGet(ModelAndView mv, HttpServletRequest r, Integer num) {
+		mv.setViewName("redirect:/qna_board/qna_list"); 
+		qnaService.deleteBoard2(num,userService.getUser(r));
+		return mv;
+	}
+	
 	
 	// 업로드 한 파일 다운로드 관련 코드
 	@ResponseBody
@@ -166,11 +221,30 @@ public class BoardController {
 		}else if(board.getReview_file() == null || board.getReview_file().equals("")) {
 			board.setReview_file(null);
 		}
-		
 		boardService.updateBoard(board);
-		System.out.println(board);
 		return mv;
-		
+	}
+	
+	// 질문 게시판 수정 get, post
+	@RequestMapping(value = "/qna_board/qna_modify", method = RequestMethod.GET)
+	public ModelAndView qnaModifyGet(ModelAndView mv, Integer num, HttpServletRequest r, Criteria cri) { 
+    // jsp 정보를 넘겨줄때, list 같은 경우 페이지 넘버와 등등 정보들을 보내줘야하지만, cri 설정을 안해주게되면 보내주는 정보가 없어서 오류가 생기게 된다
+		mv.setViewName("/qna_board/qna_modify"); 
+		QnaBoardVo qna = qnaService.getBoard2(num);
+		UserVo user = userService.getUser(r);
+		if(qna == null || !user.getMail().equals(qna.getQna_u_mail()))
+			mv.setViewName("redirect:/qna_board/qna_list");
+		mv.addObject("qna_board", qnaService.dto(num));
+		mv.addObject("cri", cri);
+		return mv;
+	}
+	
+	@RequestMapping(value = "/qna_board/qna_modify", method = RequestMethod.POST)
+	public ModelAndView qnaModifyPost(ModelAndView mv, HttpServletRequest r, QnaBoardVo qna) {
+		mv.setViewName("redirect:/qna_board/qna_list");
+		qna.setQna_u_mail(userService.getUser(r).getMail());
+		qnaService.updateBoard2(qna);
+		return mv;
 	}
 	
 	

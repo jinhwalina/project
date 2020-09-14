@@ -51,6 +51,9 @@
 	        <mapping path="/review_board/review_register"/>
         	<mapping path="/review_board/review_modify"/>
         	<mapping path="/review_board/review_delete"/>
+        	<mapping path="/qna_board/qna_delete"/>
+        	<mapping path="/qna_board/qna_register"/>
+        	<mapping path="/qna_board/qna_modify"/>
 	        <beans:ref bean="authInterceptor"/>
 	    </interceptor>
 	</interceptors>
