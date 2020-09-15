@@ -2,30 +2,50 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<style>
-	.review-regi{
+    <style>
+        .review-regi{
             width: 700px;
             margin: 0 auto;
-            
             height: 800px;
-	    }
-
-        .review-regi input {
-            border: 2px solid #ddd; 
         }
-        .form-group4 textarea{
-            border: 2px solid #ddd; 
+        .review-regi-box{
+            margin-bottom: 10px;
         }
-        .form-group input{
-            font-size: 15px;
+        .r-mail-img,.r-title-img{
+			width: 100px;
+			height: 40px;
+			margin: 0;
+			float: left;
+            margin-bottom: 10px;
+		}
+        .r-mail{
+			width: 180px;
+			border: 2px solid #ddd;
+			height: 40px;
+			float: left;
+			text-align:center;
+			font-size:15px;
+			font-weight:600;
+		}
+        .r-title{
+			width: 317px;
+			border: 2px solid #ddd;
+			height: 40px;
+			float: left;
+			text-align:center;
+			font-size:15px;
+			font-weight:600;
+		}   
+        .r-content{
+			width: 100%;
+			border: 2px solid #ddd;
+			padding:10px;
+		}
+    
+        .filebox{
+            float: left;
+            margin-top: 10px;
         }
-        .form-group3 .starRev{
-            padding: 13px;
-            margin: 0 auto;
-            width: 319px;
-        }
-
-
         .filebox label { 
             display: inline-block; 
             padding: .5em .75em; 
@@ -69,6 +89,7 @@
             -moz-appearance: none; 
             appearance: none;
         }
+
         /* 별점평가 관련 css*/
         .far{
             font-size: 25px;
@@ -77,22 +98,66 @@
         .fas{
             color: rgb(255, 74, 74);
         }
-</style>
+        .starRev{
+            padding: 13px;
+            margin: 0 auto;
+            width: 319px;
+        }
+            /* 버튼 쪽 css*/
+		.fa-pencil-alt{
+			color: rgb(255, 255, 255);
+			font-size: 20px;
+		}
+		.fa-stream{
+			color: rgb(255, 255, 255);
+			font-size: 20px;
+		}
+		.r-list,.r-write{
+			line-height: 30px;
+			height: 39px;
+			width: 88px;
+			border: none;
+			font-size: 15px;
+			background-color: rgb(255, 228, 196);
+    		color: rgb(170, 170, 170);
+			float: right;
+			margin-top:10px;
+        }
 
+		.r-list,.r-write{
+			margin-left: 1px;
+		}
+		.r-list:hover,.r-write:hover{
+			color: rgb(109, 109, 109);
+		}
+
+    </style>
 
 <form action="<%=request.getContextPath() %>/review_board/review_register" method="post" enctype="multipart/form-data">
 
         <div class="review-regi">
-            <div class="form-group1">
-                 <img src="<%=request.getContextPath()%>/resources/css/image/제목.jpg" alt="">
-                 <input type="text" class="form-control" name="review_title" value= "${review_board.review_title }">
+            <div class="review-regi-box">
+                <img src="<%=request.getContextPath()%>/resources/css/image/게시글작성하기.jpg" alt="">
+                <img src="<%=request.getContextPath()%>/resources/css/image/절취선2.jpg" alt="">
             </div>
-            <div class="form-group2">
-                <img src="<%=request.getContextPath()%>/resources/css/image/작성자.jpg" alt=""><!-- 로그인 구현을 했다면 필요 없지만, 지금은 아직 안한 상태기때문에 적어준다!  -->
-                <input type="text" class="form-control" name="review_u_mail" value= "${user.nickname }" readonly>
+            
+            <div class="r-group">
+                <div class="r-mail-box">
+                    <div class="r-mail-img">
+                        <img src="<%=request.getContextPath()%>/resources/css/image/작성자2.jpg" alt="">
+                    </div>
+                    <input type="text" class="r-mail" name="review_u_mail" value= "${user.nickname } " readonly>
+                </div>
+
+                <div class="r-title-box">
+                    <div class="r-title-img">
+                        <img src="<%=request.getContextPath()%>/resources/css/image/제목2.jpg" alt="">
+                    </div>
+                    <input type="text" class="r-title" name="review_title" value= "${review_board.review_title }" >
+                </div>
             </div>
 
-            <div class="form-group3">
+            <div class="r-group2">
                 <img src="<%=request.getContextPath()%>/resources/css/image/만족도.jpg" alt="">
                 <div class="starRev">
                     <i class="far fa-heart starR "></i>
@@ -129,20 +194,25 @@
                 </div>
             </div>
 
-            <div class="form-group4">
-                <img src="<%=request.getContextPath()%>/resources/css/image/내용.jpg" alt="">
-                <textarea name="review_content" class="form-control" rows="4" id="comment">${review_board.review_content}</textarea>
+            <div class="r-content-box">
+                <div class="r-content-img">
+                    <img src="<%=request.getContextPath()%>/resources/css/image/내용.jpg" alt="">
+                    <img src="<%=request.getContextPath()%>/resources/css/image/절취선2.jpg" alt="">
+                </div>
+                <textarea name="review_content" class="r-content" rows="4" id="comment" >${review_board.review_content}</textarea>
             </div>
 
             <div class="filebox">
+                <img src="<%=request.getContextPath()%>/resources/css/image/첨부파일요청.jpg" alt="">
                 <input class="upload-name" value="파일을 선택해주세요 :)" disabled="disabled">
                 <label for="ex_file">upload</label>
                 <input type="file" id="ex_file" name="file2" class="form-control upload-hidden">
             </div>
             
-            <a href="<%=request.getContextPath()%>/review_board/review_list" class="review-regi-del" type="submit">취소</a>
-            <button class="review-regi-btn" type="submit">등록</button> 
-            <button type="submit" hidden="" class="enter3"></button>
+
+            <a href="<%=request.getContextPath()%>/review_board/review_list?page=${cri.page}&search=${cri.search}&type=${cri.type}"><button type="button" class="r-list">LIST <i class="fas fa-stream"></i></button></a>
+			<button type="submit" class="r-write">WRITE <i class="fas fa-pencil-alt"></i></button>
+      		<button type="submit" hidden="" class="r-write">WRITE <i class="fas fa-pencil-alt"></i></button>
         </div>
 </form>
 

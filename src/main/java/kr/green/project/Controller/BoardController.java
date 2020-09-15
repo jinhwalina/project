@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,12 +18,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.green.project.Controller.utils.UploadFileUtils;
 import kr.green.project.Service.BoardService;
@@ -30,6 +33,7 @@ import kr.green.project.Service.InnService;
 import kr.green.project.Service.QnaService;
 import kr.green.project.Service.UserService;
 import kr.green.project.Vo.QnaBoardVo;
+import kr.green.project.Vo.QnaReplyVo;
 import kr.green.project.Vo.ReviewBoardVo;
 import kr.green.project.Vo.UserVo;
 import kr.green.project.pagination.Criteria;
@@ -125,12 +129,16 @@ public class BoardController {
 	
 	// 질문 게시판 디테일 get
 	@RequestMapping(value = "/qna_board/qna_detail", method = RequestMethod.GET)
-	public ModelAndView qnaDetailGet(ModelAndView mv, Integer num, Criteria cri) {
+	public ModelAndView qnaDetailGet(ModelAndView mv, Integer num, Criteria cri) throws Exception {
+		
+		List<QnaReplyVo> replyList = qnaService.readReply(num);
+		
 		mv.setViewName("/qna_board/qna_detail"); 
 		QnaBoardVo qna = qnaService.view2(num); // 조회수 증가 시켜주기 위해서 쓰는 코드
 		// 새로만든 dto메서드를 활용한 방법.
 		mv.addObject("qna_board", qnaService.dto(num));
 		mv.addObject("cri",cri);
+		mv.addObject("replyList", replyList);
 		return mv;
 	}
 	
@@ -246,6 +254,31 @@ public class BoardController {
 		qnaService.updateBoard2(qna);
 		return mv;
 	}
+	
+	// 질문게시판 댓글 
+	@RequestMapping(value = "/readReply", method = RequestMethod.GET)
+	public String readReplyGet(ModelAndView mv, QnaReplyVo qna, Model model) throws Exception {
+		List<QnaReplyVo> replyList = qnaService.readReply(qna.getReply_qna_num());
+		model.addAttribute("replyList", replyList); // 리스트에 담긴건 확인 했음 ! 
+		return "qna_board/readReply";
+	}
+	
+	// 질문게시판 댓글 쓰기
+	@RequestMapping(value = "/writeReply", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> writeReplyPost(@RequestBody QnaReplyVo reply, HttpServletRequest r ) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		UserVo user = userService.getUser(r);
+		//reply를 등록
+		reply.setReply_writer(user.getNickname());
+		qnaService.writeReply(reply);
+		//해당 게시글 번호와 일치하는 모든 댓글을 가져옴
+		ArrayList<QnaReplyVo> list = (ArrayList<QnaReplyVo>) qnaService.readReply(reply.getReply_qna_num());
+
+		map.put("list", list);
+		return map;
+	}
+
 	
 	
 }

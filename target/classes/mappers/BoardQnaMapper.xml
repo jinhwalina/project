@@ -83,6 +83,21 @@
 				qna_num = #{qna.qna_num}
 	</update>
   	
+  	<!-- 댓글 관련 -->
+  	<select id="readReply" resultType="kr.green.project.Vo.QnaReplyVo">
+  		select *
+  				from qna_reply
+  				where reply_qna_num = #{reply_num}
+  	</select>
+  	
+  	<insert id="writeReply">
+  		insert into qna_reply ( reply_qna_num, reply_content, reply_writer, reply_num)
+  					values(#{qna.reply_qna_num},#{qna.reply_content},#{qna.reply_writer}, #{qna.reply_num})
+  	</insert>
+  	
+  	<select id="getCount" resultType="int">
+  		select count(*)+1 from qna_reply where reply_qna_num = #{reply_qna_num}
+  	</select>
   </mapper>
   
   

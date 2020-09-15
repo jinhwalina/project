@@ -7,7 +7,7 @@
             width: 700px;
             margin: 0 auto;
 
-            height: 500px;
+            height: 700px;
 	    }
         .q-group1{
             height: 40px;
@@ -138,7 +138,7 @@
 		<h1>해당 게시물은 삭제 되었습니다.</h1>
 	</c:if>
 		<c:if test="${qna_board.qna_isDel == 'N'.charAt(0)}">
-			<form action="<%=request.getContextPath() %>/qna_board/qna_register" method="post">
+
 					
 			  <div class="qna-regi">
 			  
@@ -191,10 +191,9 @@
 			              <div class="q-select-img">
 			                  <img src="<%=request.getContextPath()%>/resources/css/image/말머리.jpg" alt=""> <!--말머리 이미지 만들어서 추가하기-->
 			              </div>
-			              <select class="q-select" name="qna_select" readonly> 
-			                  <option value="" selected>질문글과 예약변경</option>
-			                  <option value="질문있어요!">질문있어요!</option>
-			                  <option value="예약변경할래요!">예약변경요청</option>
+			              <select class="q-select" name="qna_select" > 
+			                  <option value="" selected>${qna_board.qna_select }</option>
+
 			                </select>
 			          </div>
 			
@@ -221,8 +220,87 @@
 						  <a href="<%=request.getContextPath()%>/qna_board/qna_delete?num=${qna_board.qna_num}"><button type="button" class="q-del">삭제</button></a>
 					  </c:if> 
 				  </c:if>
+				  
+				   <!-- 댓글 관련 jsp -->
+				    <c:if test="${replyList.size() == 0 }"> <!-- 조건 써줄 때 list 같은 경우는 그냥 속성 명으로 써주는게 아니라 size() 로 설정해줘야한다. -->
+						<div>
+							<img src="<%=request.getContextPath()%>/resources/css/image/절취선2.jpg">
+						</div>
+					</c:if>
+					
+					<c:if test="${replyList.size() != 0 }">
+						<!-- 댓글 -->
+						 <div id="readReply">
+							 <div>
+								<img src="<%=request.getContextPath()%>/resources/css/image/절취선2.jpg">
+							</div>
+						  
+						    <c:forEach items="${replyList}" var="replyList">
+						      
+						      ${replyList.reply_num }
+						        <p>
+								        작성자 : ${replyList.reply_writer}<br />
+								        작성 날짜 : ${replyList.reply_regi}
+						        </p>
+						
+						        <p>${replyList.reply_content}</p>
+						      
+						    </c:forEach> <!-- list는 배열이라고 생각하자. 배열은 forEach로 풀어준다고 (?) 풀어써주는 역할을 한다. -->
+						  
+						</div> 
+					</c:if>	
+					
+					<!-- 댓글 쓰기  -->
+					  <input type="hidden" id="reply_qna_num" name="reply_qna_num" value="${qna_board.qna_num}" /> 
+					  <div>
+					    <label for="reply_writer">댓글 작성자</label><input type="text" id="reply_writer" name="reply_writer" value= "${qna_board.nickname }" readonly />
+					    <br/>
+					    <label for="reply_content">댓글 내용</label><input type="text" id="reply_content" name="reply_content" />
+					  </div>
+					  <div>
+					 	 <button type="button" class="replyWriteBtn">작성</button>
+					  </div>
+
 			  </div>
-			            
-			</form>
 		</c:if>
 </c:if>
+
+
+<script>
+	$(".replyWriteBtn").on("click", function(){
+		  var formObj = $("form[name='replyForm']");
+		  formObj.attr("action", "/qna_board/replyWrite");
+		  formObj.submit();
+	});
+
+	// 댓글 관련 ajax 처리 
+	$('.replyWriteBtn').click(function(){
+		var reply_content = $('#reply_content').val()
+		var data = {"reply_qna_num": $('#reply_qna_num').val(), "reply_content": reply_content} 
+		console.log(data)
+		$.ajax({
+	        async:true,
+	        type:'POST',
+	        data:JSON.stringify(data),
+	        url:"<%=request.getContextPath()%>/writeReply",
+	        dataType:"json",
+	        contentType:"application/json; charset=UTF-8",
+	        success : function(data){
+		        var str = '';
+				for(var i = 0; i<data["list"].length; i++){
+					str += 
+					'<li>'+
+				        '<p>'+
+					        '작성자 : '+ data["list"][i]["reply_writer"] + '<br />'+
+					        '작성 날짜 : '+data["list"][i]["reply_regi"]+
+			        	'</p>'+
+			        	'<p>'+data["list"][i]["reply_content"]+'</p>'+
+			      	'</li>'
+				}
+				$('.replyList').html(str);
+	        }
+	    });
+	})
+
+	
+</script>

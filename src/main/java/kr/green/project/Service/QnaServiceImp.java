@@ -2,11 +2,13 @@ package kr.green.project.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.green.project.Vo.QnaBoardVo;
+import kr.green.project.Vo.QnaReplyVo;
 import kr.green.project.Vo.UserVo;
 import kr.green.project.dao.BoardQnaDao;
 import kr.green.project.dao.UserDao;
@@ -89,5 +91,23 @@ public class QnaServiceImp implements QnaService {
 		qna.setQna_isDel('N');
 		boardQnaDao.updateBoard2(qna);
 	}
+	
+	// 댓글 리스트
+	@Override
+	public List<QnaReplyVo> readReply(int reply_num) throws Exception {
+		return boardQnaDao.readReply(reply_num);
+	}
+	
+	// 댓글 작성
+	@Override
+	public void writeReply(QnaReplyVo qna) throws Exception {
+		int prim = boardQnaDao.getCount(qna.getReply_qna_num());
+		qna.setReply_num(prim);
+		boardQnaDao.writeReply(qna);
+		
+	}
+
+	
+
 
 }

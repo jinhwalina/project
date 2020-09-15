@@ -10,7 +10,16 @@ public class qnaDto {
 	private char qna_isDel;
 	private String nickname;
 	private String qna_u_mail;
+	private String qna_select;
 	
+	
+	
+	public String getQna_select() {
+		return qna_select;
+	}
+	public void setQna_select(String qna_select) {
+		this.qna_select = qna_select;
+	}
 	public String getQna_num() {
 		return qna_num;
 	}

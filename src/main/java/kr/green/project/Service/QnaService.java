@@ -1,10 +1,13 @@
 package kr.green.project.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import kr.green.project.Vo.QnaBoardVo;
+import kr.green.project.Vo.QnaReplyVo;
 import kr.green.project.Vo.UserVo;
 import kr.green.project.dto.qnaDto;
 import kr.green.project.pagination.Criteria;
@@ -28,5 +31,10 @@ public interface QnaService {
 	QnaBoardVo getBoard2(Integer num);
 
 	void updateBoard2(QnaBoardVo qna);
+	
+	public List<QnaReplyVo> readReply(int num) throws Exception;
+	
+	public void writeReply (QnaReplyVo qna) throws Exception;
+
 
 }
