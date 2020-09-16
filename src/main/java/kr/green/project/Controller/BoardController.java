@@ -75,6 +75,7 @@ public class BoardController {
 		ArrayList<QnaBoardVo> list = qnaService.getBoardList2(cri);
 		mv.addObject("list",list);
 		mv.addObject("pm",pm);
+		
 		return mv;
 	}
 	
@@ -274,13 +275,21 @@ public class BoardController {
 		qnaService.writeReply(reply);
 		//해당 게시글 번호와 일치하는 모든 댓글을 가져옴
 		ArrayList<QnaReplyVo> list = (ArrayList<QnaReplyVo>) qnaService.readReply(reply.getReply_qna_num());
-
 		map.put("list", list);
 		return map;
 	}
-
-	
-	
+	// 질문게시판 댓글 삭제
+	@RequestMapping(value = "/deleteReply", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> deleteReplyGet(@RequestBody Integer data, HttpServletRequest r ) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		qnaService.deleteReply(data);
+		
+		return map;
+		
+		
+	}
 }
 
 

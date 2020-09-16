@@ -130,13 +130,19 @@
                 	<a href="<%=request.getContextPath()%>/user/login">login</a>
                 </c:if>
                 
-                <c:if test="${user != null }">
+                <c:if test="${user.auth == 'USER' }">
                 	<a href="<%=request.getContextPath()%>/user/mypage">my page</a>
                 </c:if>
                 
                 <c:if test="${user == null }">
                 	<a href="<%=request.getContextPath()%>/user/signup">sign up</a>
             	</c:if>
+            	
+            	<c:if test="${user.auth == 'ADMIN' }">
+            		<a href="<%=request.getContextPath()%>/admin/admin">*admin*</a>
+            	</c:if>
+            	
+            	
                 <c:if test="${user != null }">
                 	<a href="<%=request.getContextPath()%>/user/signout">sign out</a>
                 	<!-- 이때 적어주는 signout 페이지는 사실 화면에는 없는 경로! 컨트롤러에서 로그아웃 처리 해줄때 

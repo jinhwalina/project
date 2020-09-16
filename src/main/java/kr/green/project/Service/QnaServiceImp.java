@@ -38,7 +38,12 @@ public class QnaServiceImp implements QnaService {
 	// 질문 게시판 글 목록
 	@Override
 	public ArrayList<QnaBoardVo> getBoardList2(Criteria cri) {
-		return boardQnaDao.getBoardList2(cri);
+		ArrayList<QnaBoardVo> replycnt = boardQnaDao.getBoardList2(cri);
+		System.out.println(replycnt);
+		for(QnaBoardVo tmp : replycnt) {// 향상된 for 문 (배열쓸때 사용하면 편하다)
+			tmp.setQna_recnt(boardQnaDao.replycnt(tmp.getQna_num()));
+		}
+		return replycnt;
 	}
 	
 	// 질문게시판 글 등록 
@@ -101,10 +106,14 @@ public class QnaServiceImp implements QnaService {
 	// 댓글 작성
 	@Override
 	public void writeReply(QnaReplyVo qna) throws Exception {
-		int prim = boardQnaDao.getCount(qna.getReply_qna_num());
-		qna.setReply_num(prim);
 		boardQnaDao.writeReply(qna);
 		
+	}
+	
+	// 댓글 삭제 
+	@Override
+	public void deleteReply(Integer data) {
+		boardQnaDao.deleteReply(data);
 	}
 
 	

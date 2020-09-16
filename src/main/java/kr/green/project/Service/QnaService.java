@@ -36,5 +36,7 @@ public interface QnaService {
 	
 	public void writeReply (QnaReplyVo qna) throws Exception;
 
+	void deleteReply(Integer data);
+
 
 }

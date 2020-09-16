@@ -29,4 +29,8 @@ public interface BoardQnaDao {
 	public void writeReply (@Param("qna")QnaReplyVo qna) throws Exception;
 
 	int getCount(@Param("reply_qna_num")int reply_qna_num);
+
+	void deleteReply(@Param("data")Integer data);
+
+	int replycnt(@Param("num")String qna_num);
 }

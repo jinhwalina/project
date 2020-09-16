@@ -6,8 +6,6 @@
 		.qna-regi{
             width: 700px;
             margin: 0 auto;
-
-            height: 700px;
 	    }
         .q-group1{
             height: 40px;
@@ -126,7 +124,110 @@
 			color: rgb(109, 109, 109);
 		}
 			
-		}
+		 /*집에서 한 코드*/
+        .no-reply-img{
+            height: 70px;
+        }
+        .reply-num-img,.reply-num,.reply-writer-img,.reply-writer,.reply-regi-img,.reply-regi{
+            float: left;
+        }
+        .reply-num-img{
+            margin-left: 19px;
+        }
+        .reply-num{
+            border: none;
+            border-bottom: 2px solid #ddd;
+            width: 60px;
+            margin-left: 12px;
+            margin-right: 30px;
+            text-align: center;
+        }
+        .reply-writer{
+            border: none;
+            border-bottom: 2px solid #ddd;
+            width: 130px;
+            margin-left: 12px;
+            margin-right: 30px;
+            text-align: center;
+            
+        }
+        .reply-regi{
+            border-bottom: 2px solid #ddd;
+            width: 180px;
+            margin-left: 12px;
+            text-align: center;
+        }
+        .reply-content-img>img{
+            margin-top: 10px;
+        }
+        .reply-list2{
+            margin-top: 10px;
+        }
+        .reply-content{
+			border: 2px solid #ddd;
+			padding:10px;
+            margin-top: 10px;
+            margin-left: 19px;
+            width: 570px;
+            float: left;
+        }  
+        .reply-qna-num{
+            border: none;
+           
+        }
+
+        /*댓글 쓰기*/
+        .reply-writer-img2{
+            margin-left: 19px;
+            margin-top:25px;
+            
+        }
+        .reply-writer2{
+            border: none;
+            border-bottom: 2px solid #ddd;
+            width: 150px;
+            margin-left: 12px;
+            margin-right: 195px;
+            text-align: center;
+        }
+        .reply-content2{
+            border: 2px solid #ddd;
+			padding:10px;
+            margin-top: 10px;
+            margin-left: 19px;
+            width: 658px;
+        }
+        .replyWriteBtn{
+            float: right;
+            margin-top: 5px;
+            margin-right: 23px;
+            border:none;
+            width: 88px;
+			font-size: 15px;
+			background-color: rgb(255, 228, 196);
+    		color: rgb(170, 170, 170);
+            cursor: pointer;
+        }
+        .replyDeleteBtn2{
+            margin-top: 10px;
+            margin-right: 23px;
+            border:none;
+            width: 88px;
+			font-size: 15px;
+			height: 48px;
+			background-color: rgb(255, 228, 196);
+    		color: rgb(170, 170, 170);
+            cursor: pointer;
+
+        }
+        
+        .replyWriteBtn:hover,.replyDeleteBtn2:hover{
+            color: rgb(109, 109, 109);
+        }
+        .replyBtn-box{
+        	margin-bottom: 50px;
+        }
+		
 </style>
 
 <c:if test="${qna_board eq null }">
@@ -222,44 +323,75 @@
 				  </c:if>
 				  
 				   <!-- 댓글 관련 jsp -->
-				    <c:if test="${replyList.size() == 0 }"> <!-- 조건 써줄 때 list 같은 경우는 그냥 속성 명으로 써주는게 아니라 size() 로 설정해줘야한다. -->
-						<div>
-							<img src="<%=request.getContextPath()%>/resources/css/image/절취선2.jpg">
-						</div>
-					</c:if>
-					
+				    <!-- 조건 써줄 때 list 같은 경우는 그냥 속성 명으로 써주는게 아니라 size() 로 설정해줘야한다. -->
+						<!-- 댓글 없을 때-->
+		            <div class="no-reply-img">
+		                <img src="<%=request.getContextPath()%>/resources/css/image/절취선2.jpg">
+		            </div>
+
+
 					<c:if test="${replyList.size() != 0 }">
 						<!-- 댓글 -->
-						 <div id="readReply">
-							 <div>
-								<img src="<%=request.getContextPath()%>/resources/css/image/절취선2.jpg">
-							</div>
-						  
-						    <c:forEach items="${replyList}" var="replyList">
-						      
-						      ${replyList.reply_num }
-						        <p>
-								        작성자 : ${replyList.reply_writer}<br />
-								        작성 날짜 : ${replyList.reply_regi}
-						        </p>
-						
-						        <p>${replyList.reply_content}</p>
-						      
-						    </c:forEach> <!-- list는 배열이라고 생각하자. 배열은 forEach로 풀어준다고 (?) 풀어써주는 역할을 한다. -->
-						  
-						</div> 
+						 <div id="readReply" class="readReply">
+			              <div class="reply-wrap">
+				              <c:forEach items="${replyList}" var="replyList" varStatus="status">
+				                  <div class="reply-list">
+				                       <div class="reply-list1">
+				                           <div class="reply-num-img">
+				                               <img src="<%=request.getContextPath()%>/resources/css/image/댓글번호.jpg" alt="">
+				                           </div>
+				                           <div class="reply-num">
+				                               ${status.count} <!-- 이 속성은 원래 기본으로 있는 속성에서 사용해준것!  -->
+				                           </div>
+				   
+				                           <div class="reply-writer-img">
+				                               <img src="<%=request.getContextPath()%>/resources/css/image/댓글작성자.jpg" alt="">
+				                           </div>
+				                           <div class="reply-writer">
+				                              ${replyList.reply_writer}
+				                           </div>
+				   
+				                           <div class="reply-regi-img">
+				                               <img src="<%=request.getContextPath()%>/resources/css/image/댓글작성일.jpg" alt="">
+				                           </div>
+				                           <div class="reply-regi">
+				                               ${replyList.reply_regi}
+				                           </div>
+				                       </div>
+				                       <div class="reply-list2">
+				                           <div>
+				                               <textarea class="reply-content" name="reply-content" rows="1" readonly>${replyList.reply_content}</textarea>
+				                           </div>
+				                           
+				                           <div>
+								        		<input type="hidden" value="${replyList.reply_num }"><button class="<c:if test="${user.nickname == replyList.reply_writer}">replyDeleteBtn</c:if> replyDeleteBtn2 " type="button">DELETE</button>
+								        		
+								        	</div>
+								        	
+				                       </div>
+								        
+				                       
+				                  </div>   
+				              </c:forEach> <!-- list는 배열이라고 생각하자. 배열은 forEach로 풀어준다고 (?) 풀어써주는 역할을 한다. -->
+			              </div>
+			           </div> 
 					</c:if>	
 					
+					
 					<!-- 댓글 쓰기  -->
-					  <input type="hidden" id="reply_qna_num" name="reply_qna_num" value="${qna_board.qna_num}" /> 
-					  <div>
-					    <label for="reply_writer">댓글 작성자</label><input type="text" id="reply_writer" name="reply_writer" value= "${qna_board.nickname }" readonly />
-					    <br/>
-					    <label for="reply_content">댓글 내용</label><input type="text" id="reply_content" name="reply_content" />
-					  </div>
-					  <div>
-					 	 <button type="button" class="replyWriteBtn">작성</button>
-					  </div>
+				        <input type="hidden" id="reply_qna_num" name="reply_qna_num" value="${qna_board.qna_num}" /> 
+				
+				        <div class="reply-writer-img2">
+				            <img src="<%=request.getContextPath()%>/resources/css/image/댓글작성자.jpg" alt="">
+				            <input class="reply-writer2" type="text" id="reply_writer" name="reply_writer" value= "${user.nickname }" readonly />
+				            
+				            <img src="<%=request.getContextPath()%>/resources/css/image/댓글내용.jpg" alt="">
+				        </div>
+				        <input class="reply-content2" type="text" id="reply_content" name="reply_content" />
+				
+				        <div class="replyBtn-box">
+				            <button type="button" class="replyWriteBtn">REPLY</button>
+				        </div>
 
 			  </div>
 		</c:if>
@@ -267,6 +399,9 @@
 
 
 <script>
+	var reply_qna_num = $('#reply_qna_num').val();
+	
+	
 	$(".replyWriteBtn").on("click", function(){
 		  var formObj = $("form[name='replyForm']");
 		  formObj.attr("action", "/qna_board/replyWrite");
@@ -277,7 +412,7 @@
 	$('.replyWriteBtn').click(function(){
 		var reply_content = $('#reply_content').val()
 		var data = {"reply_qna_num": $('#reply_qna_num').val(), "reply_content": reply_content} 
-		console.log(data)
+		
 		$.ajax({
 	        async:true,
 	        type:'POST',
@@ -286,21 +421,87 @@
 	        dataType:"json",
 	        contentType:"application/json; charset=UTF-8",
 	        success : function(data){
-		        var str = '';
+		        alert("* 댓글 등록이 완료되었습니다 *")
+		       <%--  var str = '';
 				for(var i = 0; i<data["list"].length; i++){
 					str += 
-					'<li>'+
-				        '<p>'+
-					        '작성자 : '+ data["list"][i]["reply_writer"] + '<br />'+
-					        '작성 날짜 : '+data["list"][i]["reply_regi"]+
-			        	'</p>'+
-			        	'<p>'+data["list"][i]["reply_content"]+'</p>'+
-			      	'</li>'
+						'<div class="reply-num-img">' +
+					        '<img src="<%=request.getContextPath()%>/resources/css/image/댓글번호.jpg" alt="">' +
+					    '</div>' +
+	
+					    '<div class="reply-num">' + 
+					        data["list"][i]["reply_num"] +
+					    '</div>' + 
+	
+					    '<div class="reply-writer-img">' +
+					        '<img src="<%=request.getContextPath()%>/resources/css/image/댓글작성자.jpg" alt="">' +
+					    '</div>' +
+					    '<div class="reply-writer">' +
+					        data["list"][i]["reply_writer"] +
+					    '</div>' + 
+	
+					    '<div class="reply-regi-img">' +
+					        '<img src="<%=request.getContextPath()%>/resources/css/image/댓글작성일.jpg" alt="">' +
+					    '</div>' +
+					    '<div class="reply-regi">' + 
+					        data["list"][i]["reply_regi"] +
+					    '</div>' + 
+					    '<div>' +
+					        '<textarea class="reply-content" name="reply-content" rows="1">' + data["list"][i]["reply_content"] + '</textarea>' +
+					    '</div>' +
+					    '<div>' +
+	        				'<button type="button" class="replyDeleteBtn">DELETE</button>' +
+	        			'</div>'
+		        	
 				}
-				$('.replyList').html(str);
+				$('.reply-wrap').html(str + '');
+				$('.reply-content2').val(''); --%>
+				location.reload(); // 화면 자체를 새로고침 해주는 역할. 
 	        }
 	    });
 	})
+	// 댓글 삭제 
+	/* function del(obj){
+		obj.click(function(e){
+			e.preventDefault();
+			var input = confirm('삭제하시겠습니까?');
+			if (input == true){
+				alert('삭제하였습니다');
+				console.log($(obj).parents('.reply-list').find('.reply-num').text());
+				console.log(reply_qna_num);
+			}
+		})
+	}
+	del($('.replyDeleteBtn')); */
 
+	$('.replyDeleteBtn').click(function(e){
+		e.preventDefault();
+		var input = confirm('댓글을 삭제하시겠습니까?');
+		var data = $(this).prev().val(); 
+
+		if (input == true){
+
+			console.log(data);
+			$.ajax({
+		        async:true,
+		        type:'POST',
+		        data: data,
+		        url:"<%=request.getContextPath()%>/deleteReply",
+		        dataType:"json",
+		        contentType:"application/json; charset=UTF-8",
+		        success : function(data){
+		        	alert('삭제하였습니다 :)');
+		        	location.reload();
+		        }
+	        	
+		    });
+		}
+		
+
+		
+	})
+	
+	
 	
 </script>
+

@@ -162,6 +162,16 @@
 		color: rgb(255, 189, 108);
 		font-weight:bold;
 	}
+	
+	span>i{
+		color: coral;
+		font-size: 13px;
+	}
+	.reply-cnt{
+		color: darkgrey;
+		font-size:13px;
+		font-weight: bold;
+	}
 
 </style>
 
@@ -177,6 +187,7 @@
                             <th>글번호</th>
                             <th>말머리</th>
                             <th>제목</th>
+                            <!-- <th>댓글<i class="fas fa-pencil-alt"></i></th> -->
                             <th>작성자</th>
                             <th>등록일</th>
                             <th>조회수</th>
@@ -192,14 +203,15 @@
                                         <td class="td-num2">${qna_board.qna_num}</td>
                                         <td class="td-select">${qna_board.qna_select}</td>
                           
-                                        <td <c:if test="${user.mail != qna_board.qna_u_mail }">class="qna-title-modal"</c:if>>
+                                        <td <c:if test="${user.mail != qna_board.qna_u_mail && user.auth != 'ADMIN'}">class="qna-title-modal"</c:if>>
                                         	<!-- td안에 들어가있는 c:if가 안에서 제어를 해준다.  -->
                                         	
                                             <a href="<%=request.getContextPath()%>/qna_board/qna_detail?num=${qna_board.qna_num}">
-                                                ${qna_board.qna_title}
+                                                ${qna_board.qna_title} 
                                             </a>
+                                            <span class="reply-cnt"><i class="fas fa-pencil-alt"></i>__${qna_board.qna_recnt }</span>
                                         </td>
-                                        
+                                        <%-- <td>${qna_board.qna_recnt }</td>  --%>
                                         <td>${qna_board.qna_u_mail}</td>                                
                                         <td>${qna_board.qna_regi}</td>
                                         <td>${qna_board.qna_view}</td>

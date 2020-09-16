@@ -141,7 +141,7 @@
 			  <div class="qna-regi">
 			  
 			      <div class="q-detail-box">
-			          <img src="<%=request.getContextPath()%>/resources/css/image/질문글상세보기.jpg" alt="">
+			          <img src="<%=request.getContextPath()%>/resources/css/image/질문글수정하기.jpg" alt="">
 			          <img src="<%=request.getContextPath()%>/resources/css/image/절취선2.jpg" alt="">
 			      </div>
 				
@@ -213,7 +213,7 @@
 			      <a href="<%=request.getContextPath()%>/qna_board/qna_list?page=${cri.page}&search=${cri.search}&type=${cri.type}"><button type="button" class="q-list">LIST <i class="fas fa-stream"></i></button></a>
 			      <c:if test="${user != null }">
 				  	<c:if test="${user != null }">
-						<a href="<%=request.getContextPath()%>/review_board/review_register"><button type="button" class="q-write">WRITE <i class="fas fa-pencil-alt"></i></button></a>
+						<a href="<%=request.getContextPath()%>/qna_board/qna_register"><button type="button" class="q-write">WRITE <i class="fas fa-pencil-alt"></i></button></a>
 						<button type="submit" class="q-modi">수정</button>
 					</c:if>
 				  </c:if>

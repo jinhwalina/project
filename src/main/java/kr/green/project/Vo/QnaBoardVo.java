@@ -12,6 +12,14 @@ public class QnaBoardVo {
 	private String qna_u_mail;
 	private char qna_isDel;
 	private String qna_select;
+	private int qna_recnt;
+	
+	public int getQna_recnt() {
+		return qna_recnt;
+	}
+	public void setQna_recnt(int qna_recnt) {
+		this.qna_recnt = qna_recnt;
+	}
 	private int qna_ori;
 	
 	
@@ -79,9 +87,10 @@ public class QnaBoardVo {
 	public String toString() {
 		return "QnaBoardVo [qna_num=" + qna_num + ", qna_title=" + qna_title + ", qna_content=" + qna_content
 				+ ", qna_view=" + qna_view + ", qna_regi=" + qna_regi + ", qna_del=" + qna_del + ", qna_u_mail="
-				+ qna_u_mail + ", qna_isDel=" + qna_isDel + ", qna_select=" + qna_select + ", qna_ori=" + qna_ori + "]";
+				+ qna_u_mail + ", qna_isDel=" + qna_isDel + ", qna_select=" + qna_select + ", qna_recnt=" + qna_recnt
+				+ ", qna_ori=" + qna_ori + "]";
 	}
-
+	
 	
 	
 

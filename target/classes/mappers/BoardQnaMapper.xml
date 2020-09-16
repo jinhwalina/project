@@ -91,13 +91,22 @@
   	</select>
   	
   	<insert id="writeReply">
-  		insert into qna_reply ( reply_qna_num, reply_content, reply_writer, reply_num)
-  					values(#{qna.reply_qna_num},#{qna.reply_content},#{qna.reply_writer}, #{qna.reply_num})
+  		insert into qna_reply ( reply_qna_num, reply_content, reply_writer)
+  					values(#{qna.reply_qna_num},#{qna.reply_content},#{qna.reply_writer})
   	</insert>
   	
-  	<select id="getCount" resultType="int">
-  		select count(*)+1 from qna_reply where reply_qna_num = #{reply_qna_num}
+  	<delete id="deleteReply">
+  		delete from
+  				qna_reply
+  					where reply_num = #{data} 
+  	</delete>
+  	
+  	<select id="replycnt" resultType="int" >
+  		select count(*) 
+  					from qna_reply
+  							where reply_qna_num = #{num}
   	</select>
+  	
   </mapper>
   
   
