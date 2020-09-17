@@ -18,4 +18,10 @@ public interface InnService {
 	// 예약하는 날짜들을 모아주는 리스트 ! 여기서 imp로 보내주기
 	ArrayList<String> getDateList(Calendar cal, int max);
 
+	InnVo getMyInn(String mail);
+
+	PetVo getMyPet(int inn_petnum);
+
+
+
 }

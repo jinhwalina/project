@@ -16,4 +16,10 @@ public interface InnDao {
 	public void insertInn(@Param("inn")InnVo inn);
 
 	public ArrayList<DateVo> getDates(@Param("strdate")String strdate);
+
+	public int getMyInn(@Param("mail")String mail);
+
+	public InnVo getMyInninfo(@Param("num")int num);
+
+	public PetVo getMyPet(@Param("inn_petnum")int inn_petnum);
 }

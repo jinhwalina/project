@@ -15,12 +15,27 @@
 	<!-- inn정보를 넣어줌. 로그인 한 정보를 불러와서 자동 등록 되는거 말고도, 추가로 변경한 이른 연락처도 들어가게끔 -->
 	<insert id="insertInn">
 		insert into
-				inn(inn_st_date, inn_service, inn_time, inn_add_name, inn_add_num ,inn_user_mail, inn_petnum)
-				values(#{inn.inn_st_date},#{inn.inn_service},#{inn.inn_time},#{inn.inn_add_name},#{inn.inn_add_num},#{inn.inn_user_mail},#{inn.inn_petnum})
+				inn(inn_st_date, inn_service, inn_time, inn_add_name, inn_add_num ,inn_user_mail, inn_petnum, inn_total_price)
+				values(#{inn.inn_st_date},#{inn.inn_service},#{inn.inn_time},#{inn.inn_add_name},#{inn.inn_add_num},#{inn.inn_user_mail},#{inn.inn_petnum},#{inn.inn_total_price})
 	</insert>
 	
 	<select id="getDates" resultType="kr.green.project.Vo.DateVo">
 	
 		SELECT inn_st_date as st_date, DATE_ADD(inn_st_date, INTERVAL (inn_time-1) DAY) as end_date  FROM hotel.inn where (select DATE_ADD(inn_st_date, INTERVAL (inn_time-1) DAY)) >= #{strdate} and  #{strdate} >= inn_st_date  	
 	</select>
+	
+	<select id="getMyInn" resultType="int">
+		select max(inn_num) from inn where inn_user_mail = #{mail}
+	</select>
+	
+	<select id="getMyInninfo" resultType="kr.green.project.Vo.InnVo">
+		select * from inn where inn_num = #{num}
+	</select>
+	
+	<select id="getMyPet" resultType="kr.green.project.Vo.PetVo">
+		select * from pet where petnum = #{inn_petnum}
+	</select>
+	
+	
+	
 </mapper>

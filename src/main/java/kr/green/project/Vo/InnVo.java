@@ -12,7 +12,14 @@ public class InnVo {
 	private String inn_add_name;
 	private String inn_add_num;
 	private int inn_petnum;
+	private String inn_pay;
 	
+	public String getInn_pay() {
+		return inn_pay;
+	}
+	public void setInn_pay(String inn_pay) {
+		this.inn_pay = inn_pay;
+	}
 	public String getInn_time() {
 		return inn_time;
 	}
@@ -76,8 +83,9 @@ public class InnVo {
 	@Override
 	public String toString() {
 		return "InnVo [inn_num=" + inn_num + ", inn_total_price=" + inn_total_price + ", inn_st_date=" + inn_st_date
-				+ ", inn_isRe=" + inn_isRe + ", inn_service=" + inn_service + ", inn_user_mail=" + inn_user_mail
-				+ ", inn_add_name=" + inn_add_name + ", inn_add_num=" + inn_add_num + "]";
+				+ ", inn_isRe=" + inn_isRe + ", inn_time=" + inn_time + ", inn_service=" + inn_service
+				+ ", inn_user_mail=" + inn_user_mail + ", inn_add_name=" + inn_add_name + ", inn_add_num=" + inn_add_num
+				+ ", inn_petnum=" + inn_petnum + ", inn_pay=" + inn_pay + "]";
 	}
 	
 	

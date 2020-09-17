@@ -413,7 +413,7 @@
 		var reply_content = $('#reply_content').val()
 		var data = {"reply_qna_num": $('#reply_qna_num').val(), "reply_content": reply_content} 
 		
-		$.ajax({
+		$.ajax({ 
 	        async:true,
 	        type:'POST',
 	        data:JSON.stringify(data),

@@ -11,4 +11,6 @@ public interface UserDao {
 	public UserVo getUser(@Param("mail")String mail);
 
 	public void insertUser(@Param("user")UserVo user);
+
+	public void updateUser(@Param("user")UserVo user);
 }

@@ -281,7 +281,7 @@ public class BoardController {
 	// 질문게시판 댓글 삭제
 	@RequestMapping(value = "/deleteReply", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> deleteReplyGet(@RequestBody Integer data, HttpServletRequest r ) throws Exception {
+	public Map<String,Object> deleteReplyPost(@RequestBody Integer data, HttpServletRequest r ) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		qnaService.deleteReply(data);

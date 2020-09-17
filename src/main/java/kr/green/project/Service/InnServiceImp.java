@@ -97,4 +97,17 @@ public class InnServiceImp implements InnService {
 		}
 		return dates;
 	}
+	
+	@Override
+	public InnVo getMyInn(String mail) {
+		int num = innDao.getMyInn(mail) ;
+		return innDao.getMyInninfo(num);
+	}
+	@Override
+	public PetVo getMyPet(int inn_petnum) {
+		return innDao.getMyPet(inn_petnum);
+		
+	}
+
+	
 }

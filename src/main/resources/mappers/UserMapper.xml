@@ -19,5 +19,18 @@
   		user(mail,pw,name,nickname,pnum)
   		values(#{user.mail},#{user.pw},#{user.name},#{user.nickname},#{user.pnum})
   </insert>
+  
+  <update id="updateUser">
+		update user
+			set 
+				nickname = #{user.nickname},
+				pw = #{user.pw},
+				pnum = #{user.pnum},
+				name = #{user.name},
+				auth = #{user.auth}
+			where
+				mail = #{user.mail}	
+	</update>
+  
 </mapper>
   

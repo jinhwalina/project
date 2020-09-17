@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import kr.green.project.Vo.InnVo;
 import kr.green.project.Vo.UserVo;
 import kr.green.project.dao.UserDao;
 
@@ -62,6 +63,27 @@ public class UserServiceImp implements UserService {
 		userDao.insertUser(user);
 		
 		return true;
+	}
+
+	@Override
+	public void updateUser(UserVo user, UserVo mypageUser) {
+		user.setMail(mypageUser.getMail());
+		if(user.getPw().equals("")) {
+			user.setPw(mypageUser.getPw());
+		} else {
+			String encodePw = passwordEncoder.encode(user.getPw());
+			user.setPw(encodePw);
+		}
+		if(user.getNickname().equals("")) {
+			user.setNickname(mypageUser.getNickname());
+		}
+		if(user.getPnum().equals("")) {
+			user.setPnum(mypageUser.getPnum());
+		}
+		user.setName(mypageUser.getName());
+		user.setAuth(mypageUser.getAuth());
+		System.out.println(user);
+		userDao.updateUser(user);
 	}
 
 	

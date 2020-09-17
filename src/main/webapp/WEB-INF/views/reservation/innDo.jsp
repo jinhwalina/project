@@ -32,11 +32,12 @@
                 <label for="">부가서비스(픽업)이용여부</label>
                 <select class="pickup" name="inn_service"> 
                   <option value="" selected>선택해주세요</option>
-                  <option value="20000">이용하겠습니다</option>
-                  <option value="0">괜찮습니다 :)</option>
+                  <option value="이용">이용하겠습니다</option>
+                  <option value="미이용">괜찮습니다 :)</option>
                 </select>
               </div>
               
+              <input type="hidden" class="innPrice" name="inn_total_price" >
               
             </div>
             <div class="inn-info-ment">
@@ -78,15 +79,15 @@
             
             <select class="pino" name="pino"> 
               <option value="" selected>접종유무</option>
-              <option value="1">유</option>
-              <option value="0">무</option>
+              <option value="유">유</option>
+              <option value="무">무</option>
             </select>
             
             
             <select class="psur" name="psur"> 
               <option value="" selected>중성화유무</option>
-              <option value="1">유</option>
-              <option value="0">무</option>
+              <option value="유">유</option>
+              <option value="무">무</option>
             </select>
             <label for="" id="" class="inn_error"></label>
             <br>
@@ -345,5 +346,43 @@ var disabledDays = []
   // ui-datepicker-prev , ui-datepicker-next 이전 이후 버튼
 
   // 달이 넘어갈때 정보 받아오는 ajax ( 현재는 샘플코드 )
+  
+  // 숙박 금액3 / 숙박 일수 inn_time / 부가서비스 이용 여부 inn_service / 토탈 금액 
+  // 예약하기 버튼을 호버할때 최종 금액에 대한 계산을 해주고 hidden으로 정보 보내줌.
+  // 
+  
+  $('.inn-btn-enter').hover(function(){
+		var inn_price, inn_service, inn_total_price;
+		inn_price=30000;
+		inn_service=20000;
+		if($('.pickup').val() != "이용"){
+			 inn_service = 0;
+		}
+		inn_total_price = inn_service + (inn_price * $('.inn-date-cnt').val());
+		
+		$('.innPrice').val(inn_total_price);
+  })
+  
+  
 
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

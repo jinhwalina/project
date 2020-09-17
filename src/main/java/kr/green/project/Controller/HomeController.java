@@ -2,14 +2,18 @@ package kr.green.project.Controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.green.project.Service.InnService;
@@ -105,6 +109,7 @@ public class HomeController {
 		//list에 list를 넣어주는 코드 
 		mv.addObject("list",list);
 		System.out.println(list);
+		
 		return mv;
 	}
 	
@@ -113,7 +118,7 @@ public class HomeController {
 		mv.setViewName("/reservation/innDo"); 
 		UserVo user = userService.getUser(request);
 		// sys로 로그인 한 유저 정보가 찍히는지.. (세션에 저장된 정보를 가져오는지 확인하기 )
-		innService.insertInnDo(user, pet, inn); // 괄호 안에는 정보를 보내주려는 변수(?) 속성(?)
+		 innService.insertInnDo(user, pet, inn); // 괄호 안에는 정보를 보내주려는 변수(?) 속성(?)
 		// insertInnDo에 차례대로 user, pet, inn 정보 넘겨주기. 
 		mv.setViewName("/reservation/innDoCom"); // 로그인 성공 시 보여줄 페이지 정보
 		return mv;
@@ -130,13 +135,38 @@ public class HomeController {
 	
 	// 예약확인 링크 > 마이페이지로
 	@RequestMapping(value = "/user/mypage", method = RequestMethod.GET)
-	public ModelAndView mypage(ModelAndView mv) {
+	public ModelAndView readMypage(ModelAndView mv, HttpServletRequest r) {
 		mv.setViewName("/user/mypage");
+		UserVo myUser = userService.getUser(r); 
+		InnVo myInn = innService.getMyInn(myUser.getMail());
+		PetVo myPet = innService.getMyPet(myInn.getInn_petnum());
+		mv.addObject("myInn", myInn);
+		mv.addObject("myPet",myPet);
+		return mv;
+		
+	}
+	
+	// 관리자 페이지 get
+	@RequestMapping(value = "/admin/admin", method = RequestMethod.GET)
+	public ModelAndView adminGet(ModelAndView mv, HttpServletRequest r) {
+		mv.setViewName("/admin/admin"); 
 		return mv;
 	}
 	
+	// 회원정보 수정 get
 	
-	
+	@RequestMapping(value = "/mypageModi", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> mypageModiGet(@RequestBody UserVo user, HttpServletRequest r ) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		UserVo mypageUser = userService.getUser(r);
+		userService.updateUser(user, mypageUser);
+		// 세션에 있는 유저 정보도 덮어쓰기.
+		r.getSession().setAttribute("user", user);
+		return map;
+		
+		
+	}
 
 	
 }
