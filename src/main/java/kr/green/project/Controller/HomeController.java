@@ -21,6 +21,7 @@ import kr.green.project.Service.UserService;
 import kr.green.project.Vo.InnVo;
 import kr.green.project.Vo.PetVo;
 import kr.green.project.Vo.UserVo;
+import kr.green.project.dto.mypageDto;
 
 /**
  * Handles requests for the application home page.
@@ -138,10 +139,12 @@ public class HomeController {
 	public ModelAndView readMypage(ModelAndView mv, HttpServletRequest r) {
 		mv.setViewName("/user/mypage");
 		UserVo myUser = userService.getUser(r); 
-		InnVo myInn = innService.getMyInn(myUser.getMail());
-		PetVo myPet = innService.getMyPet(myInn.getInn_petnum());
+		ArrayList<mypageDto> myInn = innService.getMyInn(myUser.getMail());
+		for(mypageDto tmp : myInn) {
+			System.out.println(tmp);
+		}
 		mv.addObject("myInn", myInn);
-		mv.addObject("myPet",myPet);
+		
 		return mv;
 		
 	}
@@ -153,8 +156,7 @@ public class HomeController {
 		return mv;
 	}
 	
-	// 회원정보 수정 get
-	
+	// 회원정보 수정	
 	@RequestMapping(value = "/mypageModi", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Object> mypageModiGet(@RequestBody UserVo user, HttpServletRequest r ) throws Exception {
@@ -164,9 +166,20 @@ public class HomeController {
 		// 세션에 있는 유저 정보도 덮어쓰기.
 		r.getSession().setAttribute("user", user);
 		return map;
+
+	}
+	
+	// 예약취소
+	@RequestMapping(value = "/deleteInn", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> deleteInnPost(@RequestBody InnVo inn, HttpServletRequest r ) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		return map;
 		
 		
 	}
+
 
 	
 }

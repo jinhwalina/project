@@ -14,6 +14,7 @@ import kr.green.project.Vo.InnVo;
 import kr.green.project.Vo.PetVo;
 import kr.green.project.Vo.UserVo;
 import kr.green.project.dao.InnDao;
+import kr.green.project.dto.mypageDto;
 
 @Service
 public class InnServiceImp implements InnService {
@@ -98,16 +99,23 @@ public class InnServiceImp implements InnService {
 		return dates;
 	}
 	
+	// 숙박에 대한 정보
 	@Override
-	public InnVo getMyInn(String mail) {
-		int num = innDao.getMyInn(mail) ;
-		return innDao.getMyInninfo(num);
+	public ArrayList<mypageDto> getMyInn(String mail) {
+		final String DATE_PATTERN = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+		Date date = new Date();
+		String today = sdf.format(date);
+		return innDao.getMyInn(mail, today);
 	}
+	
+	// 반려견에 대한 정보 
 	@Override
 	public PetVo getMyPet(int inn_petnum) {
 		return innDao.getMyPet(inn_petnum);
 		
 	}
+
 
 	
 }
