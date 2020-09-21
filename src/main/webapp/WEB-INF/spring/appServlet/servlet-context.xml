@@ -54,6 +54,8 @@
         	<mapping path="/qna_board/qna_delete"/>
         	<mapping path="/qna_board/qna_register"/>
         	<mapping path="/qna_board/qna_modify"/>
+        	<mapping path="/admin/admin"/>
+        	
 	        <beans:ref bean="authInterceptor"/>
 	    </interceptor>
 	</interceptors>

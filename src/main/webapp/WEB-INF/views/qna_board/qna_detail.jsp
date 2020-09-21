@@ -208,6 +208,19 @@
     		color: rgb(170, 170, 170);
             cursor: pointer;
         }
+        .innmodiBtn{
+        	float: right;
+            margin-top: 5px;
+            margin-right: 1px;
+            border:none;
+            width: 120px;
+			font-size: 15px;
+			background-color: rgb(255, 228, 196);
+    		color: rgb(170, 170, 170);
+            cursor: pointer;
+        }
+        
+        
         .replyDeleteBtn2{
             margin-top: 10px;
             margin-right: 23px;
@@ -221,7 +234,7 @@
 
         }
         
-        .replyWriteBtn:hover,.replyDeleteBtn2:hover{
+        .replyWriteBtn:hover,.innmodiBtn:hover.replyDeleteBtn2:hover{
             color: rgb(109, 109, 109);
         }
         .replyBtn-box{
@@ -391,7 +404,12 @@
 				
 				        <div class="replyBtn-box">
 				            <button type="button" class="replyWriteBtn">REPLY</button>
+				            <c:if test="${user.auth == 'ADMIN' }">
+				            	<a href="<%=request.getContextPath()%>/admin/admin"><button type="button" class="innmodiBtn" >관리자 페이지 </button></a>
+				            </c:if>  
 				        </div>
+				        
+				        
 
 			  </div>
 		</c:if>

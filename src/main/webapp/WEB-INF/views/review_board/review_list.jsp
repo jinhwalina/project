@@ -168,6 +168,19 @@
 		font-weight:bold;
 		color: rgb(255, 189, 108);
 	}
+		/* 페이지 네이션 */
+       	.page-link{
+       		color:darkgrey;
+       		font-size:13px;
+       	}
+       	.page-link:hover{
+       		background-color:white;
+       		color:black;
+       	}
+       	.page-item.active .page-link{
+       	    background-color: silver;
+    		border-color: silver;
+       	}
 
 </style>
 

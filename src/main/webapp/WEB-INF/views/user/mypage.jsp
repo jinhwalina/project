@@ -35,7 +35,7 @@
         .mypage-status{
             padding: 15px;
             width: 1100px;
-            height: 400px;
+            height: 710px;
             margin: 0 auto;
         }
         .price-box{
@@ -105,6 +105,9 @@
             height: 30spx;
             margin: 0 auto;
         }
+        .mypage-status-pet{
+        	height:90px;
+        }
         .mypage-status-no-img{
             width: 350px;
             height: 25px;
@@ -162,7 +165,7 @@
             height: 80px;
             border: 3px solid rgb(255, 165, 165);
             float: left;
-            margin-top: 20px;
+            margin-bottom:25px;
         }
         .status-pet-price{
             border-bottom: 3px solid #ddd;
@@ -199,13 +202,40 @@
 			background-color: rgb(255, 228, 196);
     		color: rgb(170, 170, 170);
 			float: right;
-			margin-top:20px;
             margin-right: 3px;
         }
         .mypage-status-btn:hover,.mypage-pay-btn:hover{
             color: rgb(109, 109, 109);
         }
+        .pet-info{
+        	color: ff5f64;
+        }
+        .pet-info:hover{
+        	cursor:pointer;
+        	color:red;
+        }
+        .mypage-status-pet{
+       		display:none;
+       	}
+       	.page-box{
+       	margin-top:15px;
+       	}
+       	
+       	/* 페이지 네이션 */
+       	.page-link{
+       		color:darkgrey;
+       		font-size:13px;
+       	}
+       	.page-link:hover{
+       		background-color:white;
+       		color:black;
+       	}
+       	.page-item.active .page-link{
+       	    background-color: silver;
+    		border-color: silver;
+       	}
         
+
     </style>
     <div class="mypage">
         <div class="mypage-img">
@@ -227,7 +257,7 @@
                 <div class="info-id-box">
                     <label>아이디</label>
                     <div class="info-id">
-                        ${myInn.inn_user_mail}
+                        ${user.mail}
                     </div>	
                 </div>
 
@@ -260,7 +290,7 @@
                 </div> 
 
                 <div class="info-btn">
-                    <button class="info-btn-modi" type="button">수정하기</button>
+                    <button class="info-btn-modi" type="button">변경하기</button>
                 </div>
             </div>
         </div>
@@ -273,19 +303,30 @@
             <div class="mypage-status-img">
                 <img src="<%=request.getContextPath()%>/resources/css/image/예약현황.jpg" alt="">
             </div>
-            <c:if test="${myInn.inn_isRe == 'N'}">
+            <c:if test="${myInn.size() == 0}">
             	<div class="mypage-status-no-img">
                     <img src="<%=request.getContextPath()%>/resources/css/image/예약내역노.jpg" alt="">
                 </div>
             </c:if>
-			<c:if test="${myInn.inn_isRe == 'Y'}">
-			<c:forEach items="${myInn}" >
+			<c:if test="${myInn.size() != 0}">
+			<div class="page-box">
+			<ul class="pagination justify-content-center">
+			    <li class="page-item <c:if test="${!pm.prev }">disabled</c:if>" ><a class="page-link" href="<%=request.getContextPath()%>/user/mypage?page=${pm.startPage-1}&type=${pm.cri.type}&search=${pm.cri.search}">Previous</a></li>
+			    <c:forEach var= "index" begin="${pm.startPage}" end="${pm.endPage}">
+			    	<li class="page-item <c:if test="${pm.cri.page == index}">active</c:if> "><a class="page-link" href="<%=request.getContextPath()%>/user/mypage?page=${index}&type=${pm.cri.type}&search=${pm.cri.search}">${index}</a></li>
+			    </c:forEach>
+			    <li class="page-item <c:if test="${!pm.next }">disabled</c:if>" ><a class="page-link" href="<%=request.getContextPath()%>/user/mypage?page=${pm.endPage+1}&type=${pm.cri.type}&search=${pm.cri.search}">Next</a></li>
+		  	</ul>
+		  	</div>
+			
+			<c:forEach items="${myInn}" var= "myInn" varStatus="status">
 	            <div class="table-responsive">
+	            <img src="<%=request.getContextPath()%>/resources/css/image/반려견정보호버.jpg">
 	                <table class="table table-bordered">
 	                    <thead>
 	                    <tr>
 	                        <th>숙박번호</th>
-	                        <th>반려견정보</th>
+	                        <th class="pet-info"><input class="pet-info-input" type="hidden" value="${myInn.inn_num }" >반려견정보</th>
 	                        <th>체크인</th>   
 	                        <th>숙박일수</th>
 	                        <th>부가서비스</th>
@@ -296,8 +337,8 @@
 	                    </thead>
 	                    <tbody>
 	                    <tr>
-	                        <td>${myInn.inn_num }</td>
-	                        <td><button type="button" class="pet-btn">${myPet.petnum }</button></td>
+	                        <td><%-- ${status.count} --%>${myInn.inn_num }</td>
+	                        <td>${myInn.petnum }</td>
 	                        <td>${myInn.inn_st_date }</td>
 	                        <td>${myInn.inn_time }</td>
 	                        <td>${myInn.inn_service }</td>
@@ -307,31 +348,40 @@
 	                    </tr>
 	                    </tbody>
 	                </table>
+	               	
 	            </div>
                 
-                <div class="mypage-status-pet">
+                <div class="mypage-status-pet display-none ${myInn.inn_num }" >
                     <div class="status-pet-num-box">
                         <label>반려견번호</label>
                         <div class="status-pet-num">
-                            ${myPet.petnum }
+                            ${myInn.petnum }
                         </div>
                     </div>
                     <div class="status-pet-name-box"> 
                         <label>반려견이름</label>
                         <div class="status-pet-name">
-                            ${myPet.pname }
+                            ${myInn.pname }
                         </div>
                     </div>
                     <div class="status-pet-pcau-box">
                         <label>* 주의사항 *</label>
                         <div class="status-pet-pcau">
-                            ${myPet.pcau }
+                            ${myInn.pcau }
                         </div>
                     </div>
                 </div>
-            </c:forEach>
                 
-                <div class="status-pet-price-box">
+                
+                <div class="mypage-pay-btn-box">
+	                <button class="mypage-pay-btn" type="button">결제하기</button>
+	            </div>
+	            
+                <div class="mypage-status-btn-box">
+	                <input type="hidden" class="delete_inn_num" value="${myInn.inn_num }"><button class="mypage-status-btn" type="button">예약취소</button>
+	            </div>
+
+  				<div class="status-pet-price-box">
                     <div class="status-pet-price-img">
                         <img src="<%=request.getContextPath()%>/resources/css/image/결제금액1.jpg" alt="">
                     </div>
@@ -346,18 +396,15 @@
                         <img src="<%=request.getContextPath()%>/resources/css/image/결제금액안내.jpg" alt="">
                     </div>    
                 </div>
-                
+				
+            </c:forEach>
 
-	            <div class="mypage-status-btn-box">
-	                <button class="mypage-status-btn" type="button">예약취소</button>
-	            </div>
-	            <div class="mypage-pay-btn-box">
-	                <button class="mypage-pay-btn" type="button">결제하기</button>
-	            </div>
             </c:if>
         </div>
-${myInn }
-${myPet }
+        
+        
+         
+		
     
     <script>
     // 회원정보 수정 
@@ -392,14 +439,13 @@ ${myPet }
 			
 		}
 	})
-	 					
-	                        
+	 					                     
 	
 	// 예약 취소 
 	$('.mypage-status-btn').click(function(e){
 		e.preventDefault();
-		var input = confirm('예약을 취소하시겠습니까?');
-		var data = {}
+		var input = confirm('* 예약을 정말 취소하시겠습니까? *');
+		var data = $(this).prev().val();
 
 		if (input == true){
 
@@ -407,7 +453,7 @@ ${myPet }
 			$.ajax({
 		        async:true,
 		        type:'POST',
-		        data: JSON.stringify(data),
+		        data: data,
 		        url:"<%=request.getContextPath()%>/deleteInn",
 		        dataType:"json",
 		        contentType:"application/json; charset=UTF-8",
@@ -420,9 +466,11 @@ ${myPet }
 		}
 	})
 	
-	$('.pet-btn,.btn-close').click(function(){
-		var target = $(this).attr('data-target');
-		$(target).toggleClass('display-none')
+	// 호버 했을 때 반려견 정보 불러오는 토글 
+	$('.pet-info').hover(function(){
+		var target = '.' + $(this).children().val(); // div각각에 숙박번호에 관한 고유 번호에 대해 변수 설정을 위한 target!
+		$(target).slideToggle(500);
+		
 	})
     </script>
     

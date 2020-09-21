@@ -22,6 +22,8 @@ import kr.green.project.Vo.InnVo;
 import kr.green.project.Vo.PetVo;
 import kr.green.project.Vo.UserVo;
 import kr.green.project.dto.mypageDto;
+import kr.green.project.pagination.Criteria;
+import kr.green.project.pagination.PageMaker;
 
 /**
  * Handles requests for the application home page.
@@ -134,26 +136,22 @@ public class HomeController {
 		return mv;
 	}
 	
-	// 예약확인 링크 > 마이페이지로
+	// 예약확인 링크 > 마이페이지
 	@RequestMapping(value = "/user/mypage", method = RequestMethod.GET)
-	public ModelAndView readMypage(ModelAndView mv, HttpServletRequest r) {
+	public ModelAndView readMypage(ModelAndView mv, HttpServletRequest r, Criteria cri) {
 		mv.setViewName("/user/mypage");
 		UserVo myUser = userService.getUser(r); 
-		ArrayList<mypageDto> myInn = innService.getMyInn(myUser.getMail());
+		cri.setPerPageNum(2); // 페이지에 보여질 예약 내역 갯수 지정 ! 2개로 지정함
+		ArrayList<mypageDto> myInn = innService.getMyInn(myUser.getMail(),cri);
 		for(mypageDto tmp : myInn) {
-			System.out.println(tmp);
+			System.out.println(tmp); // 향상된 for문으로 오늘날짜 기준 이후 list 불러옴 
 		}
+		PageMaker pm = innService.getPageMakerByMypage(cri,myUser.getMail());
+		
 		mv.addObject("myInn", myInn);
-		
+		mv.addObject("pm", pm);
 		return mv;
 		
-	}
-	
-	// 관리자 페이지 get
-	@RequestMapping(value = "/admin/admin", method = RequestMethod.GET)
-	public ModelAndView adminGet(ModelAndView mv, HttpServletRequest r) {
-		mv.setViewName("/admin/admin"); 
-		return mv;
 	}
 	
 	// 회원정보 수정	
@@ -172,14 +170,27 @@ public class HomeController {
 	// 예약취소
 	@RequestMapping(value = "/deleteInn", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> deleteInnPost(@RequestBody InnVo inn, HttpServletRequest r ) throws Exception {
+	public Map<String,Object> deleteInnPost(@RequestBody Integer data, HttpServletRequest r ) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
-	
+		innService.deleteInn(data);
 		return map;
-		
-		
+
 	}
 
-
+	// 관리자 페이지 get
+		@RequestMapping(value = "/admin/admin", method = RequestMethod.GET)
+		public ModelAndView adminGet(ModelAndView mv, HttpServletRequest r, Criteria cri) {
+			mv.setViewName("/admin/admin"); 
+			cri.setPerPageNum(4);
+			ArrayList<mypageDto> adminInn = innService.getAdminInn(cri);
+			if(adminInn != null)
+				for(mypageDto tmp:adminInn) {
+					
+				}
+			PageMaker pm = innService.getPageMakerByAdmin(cri);
+			mv.addObject("adminInn",adminInn);
+			mv.addObject("pm", pm);
+			return mv;
+		}
 	
 }

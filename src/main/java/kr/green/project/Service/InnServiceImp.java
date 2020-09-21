@@ -15,6 +15,8 @@ import kr.green.project.Vo.PetVo;
 import kr.green.project.Vo.UserVo;
 import kr.green.project.dao.InnDao;
 import kr.green.project.dto.mypageDto;
+import kr.green.project.pagination.Criteria;
+import kr.green.project.pagination.PageMaker;
 
 @Service
 public class InnServiceImp implements InnService {
@@ -98,24 +100,67 @@ public class InnServiceImp implements InnService {
 		}
 		return dates;
 	}
-	
-	// 숙박에 대한 정보
-	@Override
-	public ArrayList<mypageDto> getMyInn(String mail) {
-		final String DATE_PATTERN = "yyyy-MM-dd";
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
-		Date date = new Date();
-		String today = sdf.format(date);
-		return innDao.getMyInn(mail, today);
-	}
-	
+
 	// 반려견에 대한 정보 
 	@Override
 	public PetVo getMyPet(int inn_petnum) {
 		return innDao.getMyPet(inn_petnum);
 		
 	}
+	
+	// 숙박에 대한 정보
+	@Override
+	public ArrayList<mypageDto> getMyInn(String mail, Criteria cri) {
+		final String DATE_PATTERN = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+		Date date = new Date();
+		String today = sdf.format(date);
+		return innDao.getMyInn(mail, today, cri);
+	}
+	
+	// 페이지네이션
+	@Override public PageMaker getPageMakerByMypage(Criteria cri,String mail ) { 
+		final String DATE_PATTERN = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+		Date date = new Date();
+		String today = sdf.format(date);
+		PageMaker pm = new PageMaker(); 
+		pm.setCri(cri);
+		pm.setTotalCount(innDao.getTotalCountByMypage(cri ,mail,today));
+		return pm; 
+	}
+	
+	// 예약 취소  
+	@Override
+	public void deleteInn(Integer data) {
+		innDao.deleteInn(data);
+	}
+	
+	// 관리자 페이지 예약 목록
+	@Override
+	public ArrayList<mypageDto> getAdminInn(Criteria cri) {
+		final String DATE_PATTERN = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+		Date date = new Date();
+		String today = sdf.format(date);
+		return innDao.getAdminInn(today,cri);
+	}
+	
+	@Override
+	public PageMaker getPageMakerByAdmin(Criteria cri) {
+		final String DATE_PATTERN = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+		Date date = new Date();
+		String today = sdf.format(date);
+		PageMaker pm = new PageMaker(); 
+		pm.setCri(cri);
+		pm.setTotalCount(innDao.getTotalCountByAdmin(cri,today));
+		return pm;
+	}
+	
+	
 
+	
 
 	
 }

@@ -32,8 +32,47 @@
 						where inn_user_mail = #{mail}
 							and inn_st_date >= #{today}
 							order by inn_st_date asc
-													
+							limit  #{cri.startPage}, #{cri.perPageNum} <!-- 시작 페이지와 끝 페이지를 제한을 둔다 -->			
 	</select>
-
+	
+	<!-- 페이지 네이션에서 마지막 페이지를 위한 쿼리문 -->
+	<select id="getTotalCountByMypage" resultType="int">
+		select count(*) 
+			from 
+				inn
+					join pet
+						on inn.inn_petnum = pet.petnum
+						where inn_user_mail = #{mail}
+							and inn_st_date >= #{today}
+							order by inn_st_date asc					
+	</select>
+	
+	<!-- 예약 취소 -->
+	<delete id="deleteInn">
+		delete from
+				inn	
+					where inn_num = #{data}
+	</delete>
+	
+	<select id="getAdminInn" resultType="kr.green.project.dto.mypageDto">
+		select * from 
+				inn
+					join pet
+						on inn.inn_petnum = pet.petnum
+						where inn_st_date >= #{today}
+							order by inn_st_date asc
+							limit  #{cri.startPage}, #{cri.perPageNum}
+	</select>
+	
+	<select id="getTotalCountByAdmin" resultType="int">
+		select count(*) 
+			from 
+				inn
+					join pet
+						on inn.inn_petnum = pet.petnum
+						where inn_st_date >= #{today}
+							order by inn_st_date asc					
+	</select>
+	
 	
 </mapper>

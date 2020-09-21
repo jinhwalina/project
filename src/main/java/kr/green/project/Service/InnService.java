@@ -10,6 +10,8 @@ import kr.green.project.Vo.InnVo;
 import kr.green.project.Vo.PetVo;
 import kr.green.project.Vo.UserVo;
 import kr.green.project.dto.mypageDto;
+import kr.green.project.pagination.Criteria;
+import kr.green.project.pagination.PageMaker;
 
 public interface InnService {
 
@@ -21,9 +23,15 @@ public interface InnService {
 
 	PetVo getMyPet(int inn_petnum);
 
-	ArrayList<mypageDto> getMyInn(String mail);
+	ArrayList<mypageDto> getMyInn(String mail, Criteria cri);
 
+	PageMaker getPageMakerByMypage(Criteria cri,String mail);
 
+	void deleteInn(Integer data);
+
+	ArrayList<mypageDto> getAdminInn(Criteria cri);
+
+	PageMaker getPageMakerByAdmin(Criteria cri);
 
 
 }

@@ -1,5 +1,7 @@
 package kr.green.project.dto;
 
+import kr.green.project.pagination.Criteria;
+
 public class mypageDto {
 	private String pname;
 	private String pgender;
@@ -150,6 +152,7 @@ public class mypageDto {
 				+ ", inn_service=" + inn_service + ", inn_user_mail=" + inn_user_mail + ", inn_add_name=" + inn_add_name
 				+ ", inn_add_num=" + inn_add_num + ", inn_petnum=" + inn_petnum + ", inn_pay=" + inn_pay + "]";
 	}
+
 	
 	
 }

@@ -45,7 +45,7 @@ public class Criteria {
 		return perPageNum;
 	}
 	public void setPerPageNum(int perPageNum) { // 한 페이지에 컨텐츠 갯수! 보여줄 컨텐츠를 설정해준다
-		if(perPageNum < 10) { // 최소 컨텐츠가 10개가 나오도록!
+		if(perPageNum < 1) { // 최소 컨텐츠가 10개가 나오도록!
 			this.perPageNum = 10;
 		} else
 			this.perPageNum = perPageNum;
