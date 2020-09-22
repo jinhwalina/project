@@ -27,11 +27,17 @@ public interface InnService {
 
 	PageMaker getPageMakerByMypage(Criteria cri,String mail);
 
-	void deleteInn(Integer data);
+	void deleteInn(InnVo inn);
 
 	ArrayList<mypageDto> getAdminInn(Criteria cri);
 
 	PageMaker getPageMakerByAdmin(Criteria cri);
+
+	void getUpdatePay(InnVo inn);
+
+	ArrayList<InnVo> getRefund(Criteria cri);
+
+	PageMaker getPageMakerByRefund(Criteria cri);
 
 
 }

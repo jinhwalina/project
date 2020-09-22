@@ -13,7 +13,21 @@ public class InnVo {
 	private String inn_add_num;
 	private int inn_petnum;
 	private String inn_pay;
+	private String inn_pay_type;
+	private String inn_reIsRe;
 	
+	public String getInn_reIsRe() {
+		return inn_reIsRe;
+	}
+	public void setInn_reIsRe(String inn_reIsRe) {
+		this.inn_reIsRe = inn_reIsRe;
+	}
+	public String getInn_pay_type() {
+		return inn_pay_type;
+	}
+	public void setInn_pay_type(String inn_pay_type) {
+		this.inn_pay_type = inn_pay_type;
+	}
 	public String getInn_pay() {
 		return inn_pay;
 	}
@@ -85,7 +99,8 @@ public class InnVo {
 		return "InnVo [inn_num=" + inn_num + ", inn_total_price=" + inn_total_price + ", inn_st_date=" + inn_st_date
 				+ ", inn_isRe=" + inn_isRe + ", inn_time=" + inn_time + ", inn_service=" + inn_service
 				+ ", inn_user_mail=" + inn_user_mail + ", inn_add_name=" + inn_add_name + ", inn_add_num=" + inn_add_num
-				+ ", inn_petnum=" + inn_petnum + ", inn_pay=" + inn_pay + "]";
+				+ ", inn_petnum=" + inn_petnum + ", inn_pay=" + inn_pay + ", inn_pay_type=" + inn_pay_type
+				+ ", inn_reIsRe=" + inn_reIsRe + "]";
 	}
 	
 	

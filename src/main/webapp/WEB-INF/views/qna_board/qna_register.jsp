@@ -12,7 +12,7 @@
         .q-group1{
             height: 40px;
             float: left;
-            width: 610px;
+            width:610px;
             margin-bottom: 10px;
         }
 		
@@ -63,6 +63,11 @@
 			width: 190px;
 			border: 2px solid #ddd;
 			height: 40px;
+		}
+		
+		.q-re-img{
+			margin-left: 38px;
+	    	margin-top: 7px;
 		}
 		.q-content{
 			width: 100%;
@@ -117,7 +122,9 @@
               </div>
               <input type="text" class="q-mail" name="qna_u_mail" value= "${user.nickname }" readonly>
           </div>  
+          
       </div>
+      
       
       <!-- 그룹박스 2 -->
       <div class="q-group2">

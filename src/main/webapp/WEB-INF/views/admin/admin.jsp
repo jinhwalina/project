@@ -146,6 +146,7 @@
 	                        <th>예약자이름</th>
 	                        <th>휴대전화</th>
 	                        <th>결제유무</th>
+	                        <th>환불유무</th>
 	                    </tr>
 	                    </thead>
 	                    <tbody>
@@ -158,6 +159,7 @@
 	                        <td>${adminInn.inn_add_name }</td>
 	                        <td>${adminInn.inn_add_num }</td>
 	                        <td>${adminInn.inn_pay }</td>
+	                        <td>${adminInn.inn_reIsRe }</td>
 	                    </tr>
 	                    </tbody>
 	                </table>

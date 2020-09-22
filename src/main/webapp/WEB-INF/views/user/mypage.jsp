@@ -193,7 +193,7 @@
         }
 
         /* 버튼 */
-        .mypage-status-btn,.mypage-pay-btn{
+        .mypage-status-btn,.mypage-pay-btn,.mypage-re-btn{
             line-height: 30px;
 			height: 39px;
 			width: 88px;
@@ -204,7 +204,7 @@
 			float: right;
             margin-right: 3px;
         }
-        .mypage-status-btn:hover,.mypage-pay-btn:hover{
+        .mypage-status-btn:hover,.mypage-pay-btn:hover,.mypage-re-btn:hover{
             color: rgb(109, 109, 109);
         }
         .pet-info{
@@ -221,6 +221,23 @@
        	margin-top:15px;
        	}
        	
+       	.pay-type-img{
+       		margin-left:20px;
+       		margin-top: -4px;
+       	}
+       	.pay-type-img2{
+       		margin-left:-48px;
+       		margin-top: -10px;
+       	}
+       	.pay-type-img3{
+       		margin-left: 220px;
+       		margin-top: -13px;
+       	}
+       	.pay-type-img4{
+       		margin-left: 500px;
+       		margin-top: -8px;
+       	}
+       	
        	/* 페이지 네이션 */
        	.page-link{
        		color:darkgrey;
@@ -233,6 +250,14 @@
        	.page-item.active .page-link{
        	    background-color: silver;
     		border-color: silver;
+       	}
+       	
+       	/* 체크박스 */
+       	.custom-checkbox{
+     		    float: left;
+			    width: 300;
+			    font-size: 15px;
+			    margin-left: 15;
        	}
         
 
@@ -320,83 +345,117 @@
 		  	</div>
 			
 			<c:forEach items="${myInn}" var= "myInn" varStatus="status">
-	            <div class="table-responsive">
-	            <img src="<%=request.getContextPath()%>/resources/css/image/반려견정보호버.jpg">
-	                <table class="table table-bordered">
-	                    <thead>
-	                    <tr>
-	                        <th>숙박번호</th>
-	                        <th class="pet-info"><input class="pet-info-input" type="hidden" value="${myInn.inn_num }" >반려견정보</th>
-	                        <th>체크인</th>   
-	                        <th>숙박일수</th>
-	                        <th>부가서비스</th>
-	                        <th>예약자이름</th>
-	                        <th>휴대전화</th>
-	                        <th>결제유무</th>
-	                    </tr>
-	                    </thead>
-	                    <tbody>
-	                    <tr>
-	                        <td><%-- ${status.count} --%>${myInn.inn_num }</td>
-	                        <td>${myInn.petnum }</td>
-	                        <td>${myInn.inn_st_date }</td>
-	                        <td>${myInn.inn_time }</td>
-	                        <td>${myInn.inn_service }</td>
-	                        <td>${myInn.inn_add_name }</td>
-	                        <td>${user.pnum }</td>
-	                        <td>${myInn.inn_pay }</td>
-	                    </tr>
-	                    </tbody>
-	                </table>
-	               	
-	            </div>
-                
-                <div class="mypage-status-pet display-none ${myInn.inn_num }" >
-                    <div class="status-pet-num-box">
-                        <label>반려견번호</label>
-                        <div class="status-pet-num">
-                            ${myInn.petnum }
-                        </div>
-                    </div>
-                    <div class="status-pet-name-box"> 
-                        <label>반려견이름</label>
-                        <div class="status-pet-name">
-                            ${myInn.pname }
-                        </div>
-                    </div>
-                    <div class="status-pet-pcau-box">
-                        <label>* 주의사항 *</label>
-                        <div class="status-pet-pcau">
-                            ${myInn.pcau }
-                        </div>
-                    </div>
-                </div>
-                
-                
-                <div class="mypage-pay-btn-box">
-	                <button class="mypage-pay-btn" type="button">결제하기</button>
-	            </div>
-	            
-                <div class="mypage-status-btn-box">
-	                <input type="hidden" class="delete_inn_num" value="${myInn.inn_num }"><button class="mypage-status-btn" type="button">예약취소</button>
-	            </div>
-
-  				<div class="status-pet-price-box">
-                    <div class="status-pet-price-img">
-                        <img src="<%=request.getContextPath()%>/resources/css/image/결제금액1.jpg" alt="">
-                    </div>
-                    <div class="status-pet-price">
-                        ${myInn.inn_total_price }
-                    </div>
-                    <div class="status-pet-price-img2">
-                        <img src="<%=request.getContextPath()%>/resources/css/image/결제금액2.jpg" alt="">
-                    </div>
-
-                    <div class="status-pet-price-img3">
-                        <img src="<%=request.getContextPath()%>/resources/css/image/결제금액안내.jpg" alt="">
-                    </div>    
-                </div>
-				
+				<div class="div-box">
+		            <div class="table-responsive">
+		            <img src="<%=request.getContextPath()%>/resources/css/image/반려견정보호버.jpg">
+		                <table class="table table-bordered">
+		                    <thead>
+		                    <tr>
+		                        <th><input class="inn_num" name="inn_num" type="hidden" value="${myInn.inn_num }">숙박번호</th>
+		                        <th class="pet-info"><input class="pet-info-input" type="hidden" value="${myInn.inn_num }" >반려견정보</th>
+		                        <th>체크인</th>   
+		                        <th>숙박일수</th>
+		                        <th>부가서비스</th>
+		                        <th>예약자이름</th>
+		                        <th>휴대전화</th>
+		                        <th>결제유무</th>
+		                    </tr>
+		                    </thead>
+		                    <tbody>
+		                    <tr>
+		                        <td><%-- ${status.count} --%>${myInn.inn_num }</td>
+		                        <td>${myInn.petnum }</td>
+		                        <td>${myInn.inn_st_date }</td>
+		                        <td>${myInn.inn_time }</td>
+		                        <td>${myInn.inn_service }</td>
+		                        <td>${myInn.inn_add_name }</td>
+		                        <td>${user.pnum }</td>
+		                        <td>${myInn.inn_pay }</td>
+		                    </tr>
+		                    </tbody>
+		                </table>
+		               	
+		            </div>
+	                
+	                <div class="mypage-status-pet display-none ${myInn.inn_num }" >
+	                    <div class="status-pet-num-box">
+	                        <label>반려견번호</label>
+	                        <div class="status-pet-num">
+	                            ${myInn.petnum }
+	                        </div>
+	                    </div>
+	                    <div class="status-pet-name-box"> 
+	                        <label>반려견이름</label>
+	                        <div class="status-pet-name">
+	                            ${myInn.pname }
+	                        </div>
+	                    </div>
+	                    <div class="status-pet-pcau-box">
+	                        <label>* 주의사항 *</label>
+	                        <div class="status-pet-pcau">
+	                            ${myInn.pcau }
+	                        </div>
+	                    </div>
+	                </div>
+	                
+	
+	                 <div class="mypage-status-btn-box">
+		                <input type="hidden" class="delete_inn_num" value="${myInn.inn_num }"><button class="mypage-status-btn" type="button">예약취소</button>
+		            </div>
+	                
+	  				<c:if test="${myInn.inn_pay == 'N'}">
+		  				 <div class="mypage-pay-btn-box">
+			                <button class="mypage-pay-btn" type="button">결제하기</button>
+			            </div>
+	  				</c:if>
+	  				
+	               	<c:if test="${myInn.inn_pay == 'Y'}">
+			            <div class="mypage-re-btn-box">
+			            	<a href="<%=request.getContextPath()%>/admin/refund"><button class="mypage-re-btn" type="button">환불요청</button></a>
+			            </div >
+		            </c:if>
+	               
+	               
+					<c:if test="${myInn.inn_pay == 'N'}">
+		  				<div class="status-pet-price-box">
+		                    <div class="status-pet-price-img">
+		                        <img src="<%=request.getContextPath()%>/resources/css/image/결제금액1.jpg" alt="">
+		                    </div>
+		                    <div class="status-pet-price">
+		                        ${myInn.inn_total_price }
+		                    </div>
+		                    <div class="status-pet-price-img2">
+		                        <img src="<%=request.getContextPath()%>/resources/css/image/결제금액2.jpg" alt="">
+		                    </div>
+		
+		                    <div class="status-pet-price-img3">
+		                        <img src="<%=request.getContextPath()%>/resources/css/image/결제금액안내.jpg" alt="">
+		                    </div>    
+		                </div>
+		                
+		                
+		                <img class="pay-type-img" alt="" src="<%=request.getContextPath()%>/resources/css/image/결제방식.jpg">
+		                
+		                
+		                
+						<div class="custom-control custom-checkbox mb-3">
+					      <input name="method" type="checkbox" class="custom-control-input1 inn_pay_type" id="customCheck" value="카카오페이" >
+					      <label class="custom-control-label1">카카오페이</label>
+					      
+					      <input name="method" type="checkbox" class="custom-control-input2 inn_pay_type" id="customCheck2" value="카드결제">
+					      <label class="custom-control-label2">카드결제</label>
+					      
+					      <input name="method" type="checkbox" class="custom-control-input3 inn_pay_type" id="customCheck3" value="무통장입금">
+					      <label class="custom-control-label3">무통장입금</label>
+					    </div>
+	                </c:if>
+	                
+	                <c:if test="${myInn.inn_pay == 'Y'}">
+	                	<img class="pay-type-img2" src="<%=request.getContextPath()%>/resources/css/image/결제완료.jpg">
+	                	<img class="pay-type-img3" alt="" src="<%=request.getContextPath()%>/resources/css/image/환불요청.jpg">
+	                	<img class="pay-type-img4" alt="" src="<%=request.getContextPath()%>/resources/css/image/환불요청2.jpg">
+	                </c:if>
+				</div>
             </c:forEach>
 
             </c:if>
@@ -439,21 +498,62 @@
 			
 		}
 	})
+	
+	// 결제완료로 바꿔주는 // parents > 조상 / parent > 부모 / find > 자손 / children > 자식 / prev,next > 형제 
+	
+	// 체크박스 설정 시 중복 체크를 막게해주는 코드 . 첫줄부터 쓰자면, 체크 박스를 선택할 때 전체 선택이 불가하게 해두고, 선택당한 this만 true값을 가지도록!
+	$('.inn_pay_type').click(function(){
+		$('.inn_pay_type').prop("checked",false);
+		$(this).prop("checked",true);
+	});
+
+	
+	$('.mypage-pay-btn').click(function(e){
+		e.preventDefault();
+		var method = $('input[name="method"]:checked').val();
+		var input = confirm('* 선택한 결제방식으로 결제를 진행하시겠습니까? *');
+		var data = {"inn_pay_type" : method, "inn_num" : $(this).parents('.div-box').find('.inn_num').val()}
+
+		// foreach 안에서 구조적으로 파악하기 쉽게 생각하려면 (하나의 버튼만 생각할게 아니라 화면에서 보여지는 구조를 생각해야한다.)
+		// 리스트로 불러오게되면 동일한 클래스가 여러개가 될 수 있기때문에 해당하는 클래스를 지정하기 위해서는 부모와 자식 관계를 잘 생각해야한다. 
+		if(method == null) {
+			alert(" * 결제방법을 선택하지 않으셨습니다! * ")
+		}
+
+			if (input == true){ // 선택 되는거 
+	
+				$.ajax({
+			        async:true,
+			        type:'POST',
+			        data: JSON.stringify(data),
+			        url:"<%=request.getContextPath()%>/updatePay",
+			        dataType:"json",
+			        contentType:"application/json; charset=UTF-8",
+			        success : function(data){
+			        	alert('결제가 완료되었습니다');
+			        	location.reload();
+			        }
+		        	
+			    }); 
+			}
+		
+	})
+	
 	 					                     
 	
 	// 예약 취소 
 	$('.mypage-status-btn').click(function(e){
 		e.preventDefault();
 		var input = confirm('* 예약을 정말 취소하시겠습니까? *');
-		var data = $(this).prev().val();
+		var inn_num = $(this).prev().val();
 
 		if (input == true){
 
-			console.log(data);
+			console.log(inn_num);
 			$.ajax({
 		        async:true,
 		        type:'POST',
-		        data: data,
+		        data: JSON.stringify({'inn_num':inn_num}),
 		        url:"<%=request.getContextPath()%>/deleteInn",
 		        dataType:"json",
 		        contentType:"application/json; charset=UTF-8",
@@ -472,6 +572,10 @@
 		$(target).slideToggle(500);
 		
 	})
+	
+	
+	
+	
     </script>
     
     

@@ -28,11 +28,17 @@ public interface InnDao {
 
 	public int getTotalCountByMypage(@Param("cri")Criteria cri, @Param("mail")String mail, @Param("today")String today);
 
-	public void deleteInn(@Param("data")Integer data);
+	public void deleteInn(@Param("inn")InnVo inn);
 
 	public ArrayList<mypageDto> getAdminInn(@Param("today")String today, @Param("cri")Criteria cri);
 
 	public int getTotalCountByAdmin(@Param("cri")Criteria cri, @Param("today")String today);
+
+	public void getUpdatePay(@Param("inn")InnVo inn);
+
+	public int getTotalCountByRefund(@Param("cri")Criteria cri, @Param("today")String today);
+
+	public ArrayList<InnVo> getRefund(@Param("cri")Criteria cri, @Param("today")String today);
 
 
 

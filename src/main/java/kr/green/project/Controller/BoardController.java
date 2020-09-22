@@ -32,6 +32,7 @@ import kr.green.project.Service.BoardService;
 import kr.green.project.Service.InnService;
 import kr.green.project.Service.QnaService;
 import kr.green.project.Service.UserService;
+import kr.green.project.Vo.InnVo;
 import kr.green.project.Vo.QnaBoardVo;
 import kr.green.project.Vo.QnaReplyVo;
 import kr.green.project.Vo.ReviewBoardVo;
@@ -130,7 +131,7 @@ public class BoardController {
 	
 	// 질문 게시판 디테일 get
 	@RequestMapping(value = "/qna_board/qna_detail", method = RequestMethod.GET)
-	public ModelAndView qnaDetailGet(ModelAndView mv, Integer num, Criteria cri) throws Exception {
+	public ModelAndView qnaDetailGet(ModelAndView mv, Integer num, Criteria cri ) throws Exception {
 		
 		List<QnaReplyVo> replyList = qnaService.readReply(num);
 		

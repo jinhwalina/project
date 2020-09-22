@@ -153,6 +153,15 @@ public class HomeController {
 		return mv;
 		
 	}
+	// 결제유무 변경
+	@RequestMapping(value = "/updatePay", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> updatePayPost(@RequestBody InnVo inn, HttpServletRequest r ) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		innService.getUpdatePay(inn);
+		return map;
+
+	}
 	
 	// 회원정보 수정	
 	@RequestMapping(value = "/mypageModi", method = RequestMethod.POST)
@@ -170,9 +179,10 @@ public class HomeController {
 	// 예약취소
 	@RequestMapping(value = "/deleteInn", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> deleteInnPost(@RequestBody Integer data, HttpServletRequest r ) throws Exception {
+	public Map<String,Object> deleteInnPost(@RequestBody InnVo inn, HttpServletRequest r ) throws Exception {
+		System.out.println(inn);
 		Map<String, Object> map = new HashMap<String, Object>();
-		innService.deleteInn(data);
+		innService.deleteInn(inn);
 		return map;
 
 	}
@@ -190,6 +200,23 @@ public class HomeController {
 			PageMaker pm = innService.getPageMakerByAdmin(cri);
 			mv.addObject("adminInn",adminInn);
 			mv.addObject("pm", pm);
+			return mv;
+		}
+		
+	// 사용자 환불 요청에 관한 관리자와 사용자만 접근 가능한 페이지 
+		@RequestMapping(value = "/admin/refund", method = RequestMethod.GET)
+		public ModelAndView refund(ModelAndView mv, HttpServletRequest r, InnVo inn, Criteria cri) {
+			mv.setViewName("/admin/refund");
+			cri.setPerPageNum(4);
+			ArrayList<InnVo> refund = innService.getRefund(cri);
+			if(refund != null)
+				for(InnVo tmp:refund) {
+					
+				}
+			PageMaker pm = innService.getPageMakerByRefund(cri);
+			mv.addObject("refund", refund);
+			mv.addObject("pm",pm);
+			System.out.println(refund);
 			return mv;
 		}
 	

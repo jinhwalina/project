@@ -132,8 +132,8 @@ public class InnServiceImp implements InnService {
 	
 	// 예약 취소  
 	@Override
-	public void deleteInn(Integer data) {
-		innDao.deleteInn(data);
+	public void deleteInn(InnVo inn) {
+		innDao.deleteInn(inn);
 	}
 	
 	// 관리자 페이지 예약 목록
@@ -155,6 +155,35 @@ public class InnServiceImp implements InnService {
 		PageMaker pm = new PageMaker(); 
 		pm.setCri(cri);
 		pm.setTotalCount(innDao.getTotalCountByAdmin(cri,today));
+		return pm;
+	}
+	
+	
+	// 결제유무 변경
+	@Override
+	public void getUpdatePay(InnVo inn) {
+		innDao.getUpdatePay(inn);
+	}
+	
+	// 환불요청 
+	@Override
+	public ArrayList<InnVo> getRefund(Criteria cri) {
+		final String DATE_PATTERN = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+		Date date = new Date();
+		String today = sdf.format(date);
+		return innDao.getRefund(cri,today);
+	}
+	
+	@Override
+	public PageMaker getPageMakerByRefund(Criteria cri) {
+		final String DATE_PATTERN = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+		Date date = new Date();
+		String today = sdf.format(date);
+		PageMaker pm = new PageMaker(); 
+		pm.setCri(cri);
+		pm.setTotalCount(innDao.getTotalCountByRefund(cri,today));
 		return pm;
 	}
 	

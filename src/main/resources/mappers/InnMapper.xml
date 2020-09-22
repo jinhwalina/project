@@ -31,6 +31,7 @@
 						on inn.inn_petnum = pet.petnum
 						where inn_user_mail = #{mail}
 							and inn_st_date >= #{today}
+							and inn_isRe = 'Y'
 							order by inn_st_date asc
 							limit  #{cri.startPage}, #{cri.perPageNum} <!-- 시작 페이지와 끝 페이지를 제한을 둔다 -->			
 	</select>
@@ -44,16 +45,19 @@
 						on inn.inn_petnum = pet.petnum
 						where inn_user_mail = #{mail}
 							and inn_st_date >= #{today}
+							and inn_isRe = 'Y'
 							order by inn_st_date asc					
 	</select>
 	
 	<!-- 예약 취소 -->
-	<delete id="deleteInn">
-		delete from
-				inn	
-					where inn_num = #{data}
-	</delete>
+	<update id="deleteInn">
+		update inn
+			set inn_isRe = 'N'
+				where inn_num = #{inn.inn_num}
+				
+	</update>
 	
+	<!-- 관리자페이지 예약 현황 불러오는  -->
 	<select id="getAdminInn" resultType="kr.green.project.dto.mypageDto">
 		select * from 
 				inn
@@ -74,5 +78,35 @@
 							order by inn_st_date asc					
 	</select>
 	
+	<!-- 해당하는 숙박 정소에 결제 방식을 넣어주고 결제 유무를 변경해주는  -->
+	<update id="getUpdatePay">
+		update inn
+			set inn_pay_type = #{inn.inn_pay_type},
+				inn_pay = 'Y'
+			where inn_num = #{inn.inn_num}
+	</update>
+	
+	
+	
+	<select id="getRefund" resultType="kr.green.project.Vo.InnVo">
+		select * from 
+				inn
+					join pet
+						on inn.inn_petnum = pet.petnum
+						where inn_st_date >= #{today}
+							order by inn_st_date asc
+							limit  #{cri.startPage}, #{cri.perPageNum}
+	</select>
+	
+	
+	<select id="getTotalCountByRefund" resultType="int">
+		select count(*) 
+			from 
+				inn
+					join pet
+						on inn.inn_petnum = pet.petnum
+						where inn_st_date >= #{today}
+							order by inn_st_date asc			
+	</select>
 	
 </mapper>

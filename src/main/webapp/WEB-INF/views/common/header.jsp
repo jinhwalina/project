@@ -142,7 +142,14 @@
             	</c:if>
             	
             	<c:if test="${user.auth == 'ADMIN' }">
-            		<a href="<%=request.getContextPath()%>/admin/admin">*admin*</a>
+	            	<li class="menu-list">
+	            		<a href="<%=request.getContextPath()%>/admin/admin">*admin*</a>
+	            		<ul class="refund-modal">
+		                    <li class="sub-menu">
+		                         <a class="modal-admin" href="<%=request.getContextPath()%>/admin/refund">환불요청</a>
+		                    </li>
+	                    </ul>
+	            	</li>	
             	</c:if>
             	
             	
