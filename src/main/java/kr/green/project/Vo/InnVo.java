@@ -15,7 +15,38 @@ public class InnVo {
 	private String inn_pay;
 	private String inn_pay_type;
 	private String inn_reIsRe;
+	private String inn_plz_reIsRe;
 	
+	private String refund_name;
+	private String refund_acc;
+	private String refund_accNum;
+	
+	
+
+	public String getRefund_name() {
+		return refund_name;
+	}
+	public void setRefund_name(String refund_name) {
+		this.refund_name = refund_name;
+	}
+	public String getRefund_acc() {
+		return refund_acc;
+	}
+	public void setRefund_acc(String refund_acc) {
+		this.refund_acc = refund_acc;
+	}
+	public String getRefund_accNum() {
+		return refund_accNum;
+	}
+	public void setRefund_accNum(String refund_accNum) {
+		this.refund_accNum = refund_accNum;
+	}
+	public String getInn_plz_reIsRe() {
+		return inn_plz_reIsRe;
+	}
+	public void setInn_plz_reIsRe(String inn_plz_reIsRe) {
+		this.inn_plz_reIsRe = inn_plz_reIsRe;
+	}
 	public String getInn_reIsRe() {
 		return inn_reIsRe;
 	}
@@ -100,8 +131,10 @@ public class InnVo {
 				+ ", inn_isRe=" + inn_isRe + ", inn_time=" + inn_time + ", inn_service=" + inn_service
 				+ ", inn_user_mail=" + inn_user_mail + ", inn_add_name=" + inn_add_name + ", inn_add_num=" + inn_add_num
 				+ ", inn_petnum=" + inn_petnum + ", inn_pay=" + inn_pay + ", inn_pay_type=" + inn_pay_type
-				+ ", inn_reIsRe=" + inn_reIsRe + "]";
+				+ ", inn_reIsRe=" + inn_reIsRe + ", inn_plz_reIsRe=" + inn_plz_reIsRe + ", refund_name=" + refund_name
+				+ ", refund_acc=" + refund_acc + ", refund_accNum=" + refund_accNum + "]";
 	}
+
 	
 	
 	

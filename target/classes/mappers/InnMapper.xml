@@ -87,15 +87,27 @@
 	</update>
 	
 	
-	
+	<!-- 관리자인 경우 -->
 	<select id="getRefund" resultType="kr.green.project.Vo.InnVo">
 		select * from 
 				inn
 					join pet
 						on inn.inn_petnum = pet.petnum
-						where inn_st_date >= #{today}
-							order by inn_st_date asc
-							limit  #{cri.startPage}, #{cri.perPageNum}
+								where inn_st_date >= #{today}
+									and inn_plz_reIsRe = 'Y'
+									order by inn_st_date asc
+									limit  #{cri.startPage}, #{cri.perPageNum}
+	</select>
+	
+	
+	<!-- 관리자가 아닌경우 -->
+	<select id="getRefund2" resultType="kr.green.project.Vo.InnVo">
+		select * from 
+				inn
+					join pet
+						on inn.inn_petnum = pet.petnum
+						where 
+							inn_num = #{inn.inn_num}
 	</select>
 	
 	
@@ -106,7 +118,42 @@
 					join pet
 						on inn.inn_petnum = pet.petnum
 						where inn_st_date >= #{today}
+						and inn_plz_reIsRe = 'Y'
 							order by inn_st_date asc			
+	</select>
+	
+	<!-- 환불 요청시 무통장 입금 정보 insert -->
+	<insert id="insertRefund">
+		insert into 
+				refund(refund_inn_num, refund_name, refund_acc, refund_accNum) 
+				values(#{data.inn_num},#{data.refund_name},#{data.refund_acc},#{data.refund_accNum})
+	</insert>
+
+
+	<update id="updateRefund">
+		update inn
+			set 
+				inn_plz_reIsRe = 'Y'
+			where inn_num = #{data.inn_num}
+	</update>
+	
+	<!-- 관리자 입장에서의 환불요청 처리에 따른 데이터 update -->
+	<update id="updateRefund2">
+		update inn
+			set 
+				inn_isRe = 'N',
+				inn_reIsRe = 'Y'
+			where inn_num = #{data}
+	</update>
+	
+	
+	<select id="getRefund3" resultType="kr.green.project.Vo.InnVo">
+		select *
+			from inn
+					join refund
+								on inn.inn_num = refund.refund_inn_num
+										where inn_num = #{inn_num}
+
 	</select>
 	
 </mapper>

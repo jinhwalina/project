@@ -64,8 +64,6 @@ public class HomeController {
 		UserVo dbUser = userService.isLogin(user);
 		
 		// 밑에 이렇게 두 줄 추가해줄 경우 콘솔 창에는 login: 로그인 한 사람의 디비 정보를 다 불러오게되고, user는 비밀번호와 메일만 불러오게된다. 
-		System.out.println("login:" + dbUser);
-		System.out.println(user);
 		if(dbUser != null) {
 			mv.setViewName("redirect:/"); //성공
 			mv.addObject("user",dbUser);
@@ -95,7 +93,6 @@ public class HomeController {
 			mv.setViewName("redirect:/");
 		} else
 			mv.setViewName("redirect:user/signup");
-		System.out.println(user);
 		return mv;
 	}
 	
@@ -110,9 +107,7 @@ public class HomeController {
 		//ArrayList<String> list2 = innService.getDateList2(list); //arraylist에 담아서 innService로 getDateList를 보내줌
 		// 현재로는 9월달에 해당하는 값들만 작동시키지만, Calendar.getInstance()부분은 ( 현재 오늘에 해당하는 날임 ) 부분을 수정해서 10, 11, 12월 등 다른 달도 적용시킬수있어햐한다. > ajax 이용하기.
 		//list에 list를 넣어주는 코드 
-		mv.addObject("list",list);
-		System.out.println(list);
-		
+		mv.addObject("list",list);	
 		return mv;
 	}
 	
@@ -160,7 +155,6 @@ public class HomeController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		innService.getUpdatePay(inn);
 		return map;
-
 	}
 	
 	// 회원정보 수정	
@@ -207,17 +201,59 @@ public class HomeController {
 		@RequestMapping(value = "/admin/refund", method = RequestMethod.GET)
 		public ModelAndView refund(ModelAndView mv, HttpServletRequest r, InnVo inn, Criteria cri) {
 			mv.setViewName("/admin/refund");
-			cri.setPerPageNum(4);
-			ArrayList<InnVo> refund = innService.getRefund(cri);
-			if(refund != null)
-				for(InnVo tmp:refund) {
-					
+			cri.setPerPageNum(2);
+			UserVo user = userService.getUser(r);
+			
+			ArrayList<InnVo> refund = null;
+			
+			if(user == null) {
+				mv.setViewName("redirect:/");
+			}
+			// 관리자인 경우 
+			if(user.getAuth().equals("ADMIN") ) {
+				refund = innService.getRefund(cri); // 관리자인 경우에는 리스트 목록을 전체 다 불러오기때문에 페이지네이션이 필요하다.
+			}
+			// 관리자가 아닌경우 
+			else{
+				// inn의 기본키로 검색을 하고 
+				// null 이면 ( 잘못된 접근이기때문에 다른 화면으로 ) 
+				if( inn.getInn_num() == null || !user.getMail().equals(innService.getinn(inn).getInn_user_mail())) {
+					// null이 아니면 user.mail 과 refund.inn_user_mail 이 일치하지 않으면 잘못된 접근 
+					mv.setViewName("redirect:/");
+				} else {
+					// 일치하는 경우 
+					refund = innService.getRefund(inn); // 사용자는 환불요청건 자체가 페이지에서 하나만 보여지기때문에 페이지네이션은 필요가 없다. 
 				}
-			PageMaker pm = innService.getPageMakerByRefund(cri);
+			}
+			PageMaker pm = innService.getPageMakerByRefund(cri,user);
 			mv.addObject("refund", refund);
 			mv.addObject("pm",pm);
-			System.out.println(refund);
 			return mv;
 		}
-	
+		
+		// 환불정보 입력 
+		@RequestMapping(value = "/insertRefund", method = RequestMethod.POST)
+		@ResponseBody
+		public Map<String,Object> insertRefund(@RequestBody InnVo data, HttpServletRequest r ) throws Exception {
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			if(data.getRefund_name() == null) {//예금주이름이 null값이면 > 요청 여부만 바꾸고, 
+				innService.updateRefund(data);
+			} else {//예금주이름이 null값이 아니면 > 위에 두개 다 보내주기 
+				innService.insertRefund(data); 
+				innService.updateRefund(data);
+			}
+			return map;
+
+		}
+		
+		@RequestMapping(value = "/updateRefund2", method = RequestMethod.POST)
+		@ResponseBody
+		public Map<String,Object> updateRefund2(@RequestBody int data, HttpServletRequest r ) throws Exception {
+			Map<String, Object> map = new HashMap<String, Object>();
+			innService.updateRefund2(data);
+			return map;
+
+		}
+		
 }

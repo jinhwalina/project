@@ -165,28 +165,73 @@ public class InnServiceImp implements InnService {
 		innDao.getUpdatePay(inn);
 	}
 	
-	// 환불요청 
+	// 환불요청 ( 관리자인 경우 ) 
 	@Override
 	public ArrayList<InnVo> getRefund(Criteria cri) {
 		final String DATE_PATTERN = "yyyy-MM-dd";
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
 		Date date = new Date();
 		String today = sdf.format(date);
-		return innDao.getRefund(cri,today);
+		
+		ArrayList<InnVo> list = innDao.getRefund(cri,today);
+		for(InnVo tmp:list) {
+			
+			InnVo list2 = innDao.getRefund3(tmp.getInn_num());
+			if(list2 != null) {
+				tmp.setRefund_name(list2.getRefund_name());
+				tmp.setRefund_acc(list2.getRefund_acc());
+				tmp.setRefund_accNum(list2.getRefund_accNum());
+			}
+		}
+		return list;
 	}
 	
+	// 환불요청 ( 관리자가 아닌경우 )
+	public ArrayList<InnVo> getRefund(InnVo inn) {
+		final String DATE_PATTERN = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+		Date date = new Date();
+		String today = sdf.format(date);
+		return innDao.getRefund2(inn); // 관리자가 아닌경우 
+	}
+
 	@Override
-	public PageMaker getPageMakerByRefund(Criteria cri) {
+	public PageMaker getPageMakerByRefund(Criteria cri, UserVo user) {
 		final String DATE_PATTERN = "yyyy-MM-dd";
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
 		Date date = new Date();
 		String today = sdf.format(date);
 		PageMaker pm = new PageMaker(); 
 		pm.setCri(cri);
-		pm.setTotalCount(innDao.getTotalCountByRefund(cri,today));
+		pm.setTotalCount(innDao.getTotalCountByRefund(cri,today,user));
+		
 		return pm;
 	}
 	
+	// 관리자가 아닐경우, 환불요청 버튼 클릭시 해당하는 요청 정보만 보여주는 
+	@Override
+	public InnVo getinn(InnVo inn) {
+		return innDao.getRefund2(inn).get(0);
+	}
+	// 무통장 입금 시 환불받을 정보 
+	@Override
+	public void insertRefund(InnVo data) {
+		innDao.insertRefund(data);
+	
+	// 환불 요청 여부 update
+	}
+	@Override
+	public void updateRefund(InnVo data) {
+		innDao.updateRefund(data);
+		
+	}
+	// 관리자 입장에서의 환불요청 처리 
+	@Override
+	public void updateRefund2(int data) {
+		innDao.updateRefund2(data);
+		
+	}
+
 	
 
 	

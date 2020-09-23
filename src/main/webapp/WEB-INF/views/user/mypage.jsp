@@ -252,6 +252,11 @@
     		border-color: silver;
        	}
        	
+       	.refund-info-img{
+       		margin-left: 710px;
+       		width:350px;
+       	}
+       	
        	/* 체크박스 */
        	.custom-checkbox{
      		    float: left;
@@ -334,15 +339,18 @@
                 </div>
             </c:if>
 			<c:if test="${myInn.size() != 0}">
-			<div class="page-box">
-			<ul class="pagination justify-content-center">
-			    <li class="page-item <c:if test="${!pm.prev }">disabled</c:if>" ><a class="page-link" href="<%=request.getContextPath()%>/user/mypage?page=${pm.startPage-1}&type=${pm.cri.type}&search=${pm.cri.search}">Previous</a></li>
-			    <c:forEach var= "index" begin="${pm.startPage}" end="${pm.endPage}">
-			    	<li class="page-item <c:if test="${pm.cri.page == index}">active</c:if> "><a class="page-link" href="<%=request.getContextPath()%>/user/mypage?page=${index}&type=${pm.cri.type}&search=${pm.cri.search}">${index}</a></li>
-			    </c:forEach>
-			    <li class="page-item <c:if test="${!pm.next }">disabled</c:if>" ><a class="page-link" href="<%=request.getContextPath()%>/user/mypage?page=${pm.endPage+1}&type=${pm.cri.type}&search=${pm.cri.search}">Next</a></li>
-		  	</ul>
-		  	</div>
+			
+			
+				<div class="page-box">
+				<ul class="pagination justify-content-center">
+				    <li class="page-item <c:if test="${!pm.prev }">disabled</c:if>" ><a class="page-link" href="<%=request.getContextPath()%>/user/mypage?page=${pm.startPage-1}&type=${pm.cri.type}&search=${pm.cri.search}">Previous</a></li>
+				    <c:forEach var= "index" begin="${pm.startPage}" end="${pm.endPage}">
+				    	<li class="page-item <c:if test="${pm.cri.page == index}">active</c:if> "><a class="page-link" href="<%=request.getContextPath()%>/user/mypage?page=${index}&type=${pm.cri.type}&search=${pm.cri.search}">${index}</a></li>
+				    </c:forEach>
+				    <li class="page-item <c:if test="${!pm.next }">disabled</c:if>" ><a class="page-link" href="<%=request.getContextPath()%>/user/mypage?page=${pm.endPage+1}&type=${pm.cri.type}&search=${pm.cri.search}">Next</a></li>
+			  	</ul>
+			  	</div>
+
 			
 			<c:forEach items="${myInn}" var= "myInn" varStatus="status">
 				<div class="div-box">
@@ -359,6 +367,7 @@
 		                        <th>예약자이름</th>
 		                        <th>휴대전화</th>
 		                        <th>결제유무</th>
+		                        <th>환불요청여부</th>
 		                    </tr>
 		                    </thead>
 		                    <tbody>
@@ -371,6 +380,7 @@
 		                        <td>${myInn.inn_add_name }</td>
 		                        <td>${user.pnum }</td>
 		                        <td>${myInn.inn_pay }</td>
+		                        <td>${myInn.inn_plz_reIsRe }</td>
 		                    </tr>
 		                    </tbody>
 		                </table>
@@ -398,10 +408,12 @@
 	                    </div>
 	                </div>
 	                
-	
+					<c:if test="${myInn.inn_pay == 'Y' && myInn.inn_plz_reIsRe == 'N'}">
 	                 <div class="mypage-status-btn-box">
 		                <input type="hidden" class="delete_inn_num" value="${myInn.inn_num }"><button class="mypage-status-btn" type="button">예약취소</button>
 		            </div>
+	                </c:if>
+	                
 	                
 	  				<c:if test="${myInn.inn_pay == 'N'}">
 		  				 <div class="mypage-pay-btn-box">
@@ -409,12 +421,17 @@
 			            </div>
 	  				</c:if>
 	  				
-	               	<c:if test="${myInn.inn_pay == 'Y'}">
+	               	<c:if test="${myInn.inn_pay == 'Y' && myInn.inn_plz_reIsRe == 'N'}">
 			            <div class="mypage-re-btn-box">
-			            	<a href="<%=request.getContextPath()%>/admin/refund"><button class="mypage-re-btn" type="button">환불요청</button></a>
+			            	<a href="<%=request.getContextPath()%>/admin/refund?inn_num=${myInn.inn_num }"><button class="mypage-re-btn" type="button">환불요청</button></a>
 			            </div >
 		            </c:if>
-	               
+		            
+	               <c:if test="${myInn.inn_plz_reIsRe == 'Y'}">
+		               <div class="refund-info-img">
+		               		<img src="<%=request.getContextPath()%>/resources/css/image/환불요청중안내.jpg" alt="">	
+		               </div>
+	               </c:if>
 	               
 					<c:if test="${myInn.inn_pay == 'N'}">
 		  				<div class="status-pet-price-box">
@@ -450,20 +467,14 @@
 					    </div>
 	                </c:if>
 	                
-	                <c:if test="${myInn.inn_pay == 'Y'}">
+	                <c:if test="${myInn.inn_pay == 'Y' && myInn.inn_plz_reIsRe == 'N'}">
 	                	<img class="pay-type-img2" src="<%=request.getContextPath()%>/resources/css/image/결제완료.jpg">
-	                	<img class="pay-type-img3" alt="" src="<%=request.getContextPath()%>/resources/css/image/환불요청.jpg">
-	                	<img class="pay-type-img4" alt="" src="<%=request.getContextPath()%>/resources/css/image/환불요청2.jpg">
 	                </c:if>
 				</div>
             </c:forEach>
 
             </c:if>
         </div>
-        
-        
-         
-		
     
     <script>
     // 회원정보 수정 

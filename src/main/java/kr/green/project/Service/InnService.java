@@ -36,8 +36,17 @@ public interface InnService {
 	void getUpdatePay(InnVo inn);
 
 	ArrayList<InnVo> getRefund(Criteria cri);
+	ArrayList<InnVo> getRefund(InnVo inn);
 
-	PageMaker getPageMakerByRefund(Criteria cri);
+	PageMaker getPageMakerByRefund(Criteria cri, UserVo user);
+
+	InnVo getinn(InnVo inn);
+
+	void insertRefund(InnVo data);
+
+	void updateRefund(InnVo data);
+
+	void updateRefund2(int data);
 
 
 }

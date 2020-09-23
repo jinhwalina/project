@@ -25,8 +25,15 @@ public class mypageDto {
 	private String inn_pay;
 	private String inn_pay_type;
 	private String inn_reIsRe;
+	private String inn_plz_reIsRe;
 	
 	
+	public String getInn_plz_reIsRe() {
+		return inn_plz_reIsRe;
+	}
+	public void setInn_plz_reIsRe(String inn_plz_reIsRe) {
+		this.inn_plz_reIsRe = inn_plz_reIsRe;
+	}
 	public String getInn_reIsRe() {
 		return inn_reIsRe;
 	}
@@ -167,7 +174,8 @@ public class mypageDto {
 				+ ", inn_st_date=" + inn_st_date + ", inn_isRe=" + inn_isRe + ", inn_time=" + inn_time
 				+ ", inn_service=" + inn_service + ", inn_user_mail=" + inn_user_mail + ", inn_add_name=" + inn_add_name
 				+ ", inn_add_num=" + inn_add_num + ", inn_petnum=" + inn_petnum + ", inn_pay=" + inn_pay
-				+ ", inn_pay_type=" + inn_pay_type + ", inn_reIsRe=" + inn_reIsRe + "]";
+				+ ", inn_pay_type=" + inn_pay_type + ", inn_reIsRe=" + inn_reIsRe + ", inn_plz_reIsRe=" + inn_plz_reIsRe
+				+ "]";
 	}
 	
 
