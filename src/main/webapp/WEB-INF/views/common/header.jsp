@@ -9,7 +9,7 @@
     .modal {
         display: none; /* Hidden by default */
         position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
+        z-index: 1000; /* Sit on top */
         left: 0;
         top: 0;
         width: 100%; /* Full width */
@@ -82,6 +82,120 @@
    .nav-menu{ /*데이트 피커 밑으로 서브메뉴 열리는거 방지하기 위한 우선순위 설정*/
    z-index:10;
    }
+   
+   body{margin: 0;}
+        .main-logo{
+            height: 220px;
+            background-color: white;
+        }
+        .logo-box{
+            margin: 0 auto;
+            width: 340px;
+        }
+        .logo-image{
+            margin-top: 30px;
+        }
+        .nav-menu{
+            height: 52px;
+            background-color: white;
+            border-top: 2px solid rgb(0, 0, 0);
+            border-bottom: 2px solid rgb(0, 0, 0);
+            position: relative;
+        }
+        .menu-list{
+            list-style: none;
+            text-decoration: none;
+            float: left;
+            text-align: center;
+            width: 140px;
+        }
+        a{
+            color: rgb(0, 0, 0);
+            font-size: 20px;
+            font-weight: 500;
+        }
+        
+        
+        .menu-list a:hover{
+            color: rgb(114, 114, 114);
+            text-decoration: none;
+            
+        }
+        .user-menu>a:hover{
+            color: rgb(114, 114, 114);
+            text-decoration: none;
+        }
+        
+        .menu-ul{
+            text-align: center;
+            line-height: 50px;
+            padding: 0px;
+            margin: 0px;
+            display: inline-block;
+        }
+        .menu-ul::after{ 
+            clear: both;
+            content: '';
+            display: block;
+        }
+        .menu-item{
+            text-align: center;
+            margin: 0 auto;
+            width: 1000px;
+            height: 52px;
+
+        }
+        .user-menu{
+            float: right;
+            line-height: 50px;
+            position: absolute;
+            right: 100px;
+            top:0px;
+        }
+        .user-menu>a{
+            color: rgb(0, 0, 0);
+            display: inline-block;
+            width: 95px;
+        }
+
+        .sub-menu{
+            list-style: none;
+            text-decoration: none;
+            height: 50px;
+            width: 140px;
+            background-color: rgb(255, 255, 255);
+            box-sizing: border-box;
+        }
+        .sub-menu2{
+         list-style: none;
+            text-decoration: none;
+            height: 50px;
+            width: 140px;
+            background-color: rgb(255, 255, 255);
+            box-sizing: border-box;
+        }
+        .menu-list>ul{
+            display: none;
+            padding: 0px;
+        }
+        .sub-menu>a,.sub-menu2>a {
+            display: block;
+            height: 100%;
+            width: 100%;
+            color: rgb(93, 93, 93);
+            text-align: center;
+            line-height: 48px;
+            font-size: 17px;
+            box-sizing: border-box;
+        }
+        .sub-menu>a:hover,.sub-menu2>a:hover{
+        	color: black;
+        	font-weight: bold;
+        }
+        
+        
+   
+   
 </style>
 <!-- ------------------------------------------------------------------------------------------------------------------------------- -->
 
@@ -97,8 +211,14 @@
         <div class="menu-item">
             <ul class="menu-ul">
         		<li class="menu-list">
-        			<a href="">SERVICES</a>
+        			<a href="<%=request.getContextPath()%>/">SERVICES</a>
+        			<ul>
+	                    <li class="sub-menu2">
+	                         <a href="<%=request.getContextPath()%>/main/info">이용안내</a>
+	                    </li>
+                    </ul>
         		</li>
+        		
         		<li class="menu-list">
         			<a href="">RESERVATION</a>
         			<ul class="reservation-modal">
@@ -109,10 +229,10 @@
                             <a href="<%=request.getContextPath()%>/qna_board/qna_register">예약변경</a>
                         </li>
                         <li class="sub-menu">
-                            <a href="">예약취소</a>
+                            <a href="<%=request.getContextPath()%>/user/mypage">예약취소</a>
                         </li>
                         <li class="sub-menu">
-                            <a href="">예약확인</a>
+                            <a href="<%=request.getContextPath()%>/user/mypage">예약확인</a>
                         </li>
                     </ul>
         		</li>
@@ -271,7 +391,7 @@
 	   	            var span = document.getElementsByClassName("close")[0];          
 	   	            span.onclick = function() {
 	   	                modal.style.display = "none";
-	   	            
+	   	         	} 
 
 	   	            function yes_close(obj){
 	   	                obj.click(function(){
@@ -293,9 +413,7 @@
 	   	            yes_close($('#yes'));
 	   	            no_close($('#no')); 
 	   	            
-	   			}
-
-		   			
+	  			   				
 	    </script>
     </c:if>
 

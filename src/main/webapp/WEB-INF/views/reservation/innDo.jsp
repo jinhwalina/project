@@ -43,9 +43,6 @@
             <div class="inn-info-ment">
               <img src="<%=request.getContextPath()%>/resources/css/image/예약안내문구.jpg" alt="">
             </div>
-            
-            
-
 
         </div>
 
@@ -55,9 +52,7 @@
 
           <div class="inn-user-box">
             <input type="text" name="inn_add_name" class="name" value= "${user.name }" placeholder="성명">
-            
             <input type="text" name="inn_add_num" class="phone" value= "${user.pnum }" placeholder="연락처 ( '-' 없이 입력해주세요 :)">
-            
           </div>
         </div>
 
@@ -115,7 +110,7 @@
   이렇게 써준 코드를 hidden 처리해서 정보를 보내준다-->
 
   <c:forEach items="${list}" var="date">
-  	<input type="text" class="tt" value="${date}">
+  	<input type="hidden" class="tt" value="${date}">
   	<!-- 이부분도 원래는 hidden 처리 해주는게 맞음. -->
   </c:forEach>
 

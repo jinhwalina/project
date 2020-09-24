@@ -7,8 +7,7 @@
 		.review-regi{
             width: 700px;
             margin: 0 auto;
-
-            height: 500px;
+            height: 450px;
 	    }
 
         /* 별점평가 관련 css*/
@@ -29,7 +28,7 @@
 		/* 집에서 작업한 코드 */
 		/* 게시판쪽 css*/
 		.r-detail-box{
-			margin-top:15px;
+			margin-top:20px;
 			width: 100%;
 			height: 80px;
 		}

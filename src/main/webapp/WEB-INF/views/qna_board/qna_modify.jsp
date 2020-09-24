@@ -6,8 +6,7 @@
 		.qna-regi{
             width: 700px;
             margin: 0 auto;
-
-            height: 500px;
+            height: 450px;
 	    }
         .q-group1{
             height: 40px;
@@ -19,7 +18,7 @@
 		
 		/* 게시판쪽 css*/
 		.q-detail-box{
-			margin-top:15px;
+			margin-top:20px;
 			width: 100%;
 			height: 80px;
 		}
@@ -136,7 +135,7 @@
 		<h1>해당 게시물은 삭제 되었습니다.</h1>
 	</c:if>
 		<c:if test="${qna_board.qna_isDel == 'N'.charAt(0)}">
-			<form action="<%=request.getContextPath() %>/qna_board/qna_register" method="post">
+			<form method="post">
 					
 			  <div class="qna-regi">
 			  

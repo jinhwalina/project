@@ -39,7 +39,6 @@ public class QnaServiceImp implements QnaService {
 	@Override
 	public ArrayList<QnaBoardVo> getBoardList2(Criteria cri) {
 		ArrayList<QnaBoardVo> replycnt = boardQnaDao.getBoardList2(cri);
-		System.out.println(replycnt);
 		for(QnaBoardVo tmp : replycnt) {// 향상된 for 문 (배열쓸때 사용하면 편하다)
 			tmp.setQna_recnt(boardQnaDao.replycnt(tmp.getQna_num()));
 		}

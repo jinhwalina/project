@@ -51,6 +51,10 @@ public interface InnDao {
 
 	public void updateRefund2(@Param("data")int data);
 
+	public void adminInnUpdate(@Param("data")mypageDto data);
+
+	public void adminInnUpdate2(@Param("data")mypageDto data);
+
 
 
 }

@@ -114,9 +114,26 @@
     		color: rgb(170, 170, 170);
 			float: right;
        	}
+       	.inn_service,.inn_time,.inn_st_date,.pcau{
+       		border:none;
+       		text-align:center;
+       		color:fe6061;
+       		font-weight:bold;
+       	}
+    	.inn_service{
+    		width:85px;
+    	}
+    	.inn_st_date{
+    		width:95px;
+    	}
+    	.inn_time{
+    		width:50px;
+    	}
+    	.pcau{
+    		height: 35px;
+    		width: 580px;
+    	}
 </style>
-
-
 <div class="admin">
 	<div class="admin-img">
 	    <img src="<%=request.getContextPath()%>/resources/css/image/관리자페이지입니다.jpg" alt="">
@@ -139,7 +156,6 @@
 	                    <thead>
 	                    <tr>
 	                        <th>숙박번호</th>
-	                        <th class="pet-info">반려견정보</th>
 	                        <th>체크인</th>   
 	                        <th>숙박일수</th>
 	                        <th>부가서비스</th>
@@ -152,10 +168,9 @@
 	                    <tbody>
 	                    <tr>
 	                        <td><%-- ${status.count} --%>${adminInn.inn_num }</td>
-	                        <td>${adminInn.petnum }</td>
-	                        <td>${adminInn.inn_st_date }</td>
-	                        <td>${adminInn.inn_time }</td>
-	                        <td>${adminInn.inn_service }</td>
+	                        <td><input type="text" name="inn_st_date" class="inn_st_date" value="${adminInn.inn_st_date }"></td>
+	                        <td><input type="text" name="inn_time" class="inn_time" value="${adminInn.inn_time }"></td>
+	                        <td><input type="text" name="inn_service" class="inn_service" value="${adminInn.inn_service }"></td>
 	                        <td>${adminInn.inn_add_name }</td>
 	                        <td>${adminInn.inn_add_num }</td>
 	                        <td>${adminInn.inn_pay }</td>
@@ -182,14 +197,14 @@
                     <div class="status-pet-pcau-box">
                         <label>* 주의사항 *</label>
                         <div class="status-pet-pcau">
-                            ${adminInn.pcau }
+                        	<input type="text" name="pcau" class="pcau" value="${adminInn.pcau }">
                         </div>
                     </div>
                 </div>
                 
 	            
                 <div class="admin-status-btn-box">
-	                <button class="admin-status-btn" type="button">예약변경</button>
+	                <input class="adminPet_num" type="hidden" value="${adminInn.petnum }"><button class="admin-status-btn" type="button">예약변경</button>
 	            </div>
 
             </c:forEach>
@@ -206,4 +221,39 @@
 	<li class="page-item <c:if test="${!pm.next }">disabled</c:if>" ><a class="page-link" href="<%=request.getContextPath()%>/admin/admin?page=${pm.endPage+1}&type=${pm.cri.type}&search=${pm.cri.search}">Next</a></li>
 </ul>
 
+<script>
 
+
+// 숙박정보 수정 
+$('.admin-status-btn').click(function(e){
+	e.preventDefault();
+	var input = confirm('숙박정보를 수정하시겠습니까 ?');
+	var petnum = $(this).prev().val();
+	var inn_st_date = $(this).parent('.admin-status-btn-box').prev().prev().find('.inn_st_date').val();
+	var inn_time = $(this).parent('.admin-status-btn-box').prev().prev().find('.inn_time').val();
+	var inn_service = $(this).parent('.admin-status-btn-box').prev().prev().find('.inn_service').val();
+	var pcau = $(this).parent('.admin-status-btn-box').prev().find('.pcau').val();
+	var data = {"petnum":petnum, "inn_st_date":inn_st_date, "inn_time":inn_time, "inn_service":inn_service,"pcau":pcau}
+	
+		console.log(data);
+	
+		if (input == true){
+			
+			$.ajax({
+		        async:true,
+		        type:'POST',
+		        data: JSON.stringify(data),
+		        url:"<%=request.getContextPath()%>/adminInnUpdate",
+		        dataType:"json",
+		        contentType:"application/json; charset=UTF-8",
+		        success : function(){
+		        	alert('수정이 완료되었습니다 :)');
+		        	location.reload();
+		        }
+	        	
+		    });
+		}
+		
+})
+
+</script>

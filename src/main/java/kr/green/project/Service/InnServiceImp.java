@@ -231,6 +231,12 @@ public class InnServiceImp implements InnService {
 		innDao.updateRefund2(data);
 		
 	}
+	//관리자 입장에서 숙박정보 수정 
+	@Override
+	public void adminInnUpdate(mypageDto data) {
+		innDao.adminInnUpdate(data); // inn정보
+		innDao.adminInnUpdate2(data); // pet정보
+	}
 
 	
 

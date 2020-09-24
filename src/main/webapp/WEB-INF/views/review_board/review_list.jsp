@@ -6,8 +6,7 @@
 
     .review{
         margin: 50px;
-        border: solid 1px black;
-        height: 800px;
+        height: 700px;
     }
     .review-box{
         width: 1000px;
@@ -71,7 +70,7 @@
     .modal {
         display: none; /* Hidden by default */
         position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
+        z-index: 100; /* Sit on top */
         left: 0;
         top: 0;
         width: 100%; /* Full width */

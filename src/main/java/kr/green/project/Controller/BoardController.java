@@ -82,7 +82,8 @@ public class BoardController {
 	
 	// 후기 게시판 글쓰기 get, post
 	@RequestMapping(value = "/review_board/review_register", method = RequestMethod.GET)
-	public ModelAndView boardRegisterGet(ModelAndView mv) {
+	public ModelAndView boardRegisterGet(ModelAndView mv, Criteria cri) {
+		mv.addObject("cri",cri);
 		mv.setViewName("/review_board/review_register"); 
 		return mv;
 	}
@@ -254,6 +255,8 @@ public class BoardController {
 		mv.setViewName("redirect:/qna_board/qna_list");
 		qna.setQna_u_mail(userService.getUser(r).getMail());
 		qnaService.updateBoard2(qna);
+		
+		System.out.println(1);
 		return mv;
 	}
 	

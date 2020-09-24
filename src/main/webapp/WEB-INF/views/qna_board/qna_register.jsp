@@ -6,8 +6,7 @@
 		.qna-regi{
             width: 700px;
             margin: 0 auto;
-
-            height: 500px;
+            height: 400px;
 	    }
         .q-group1{
             height: 40px;
@@ -18,7 +17,7 @@
 		
 		/* 게시판쪽 css*/
 		.q-detail-box{
-			margin-top:15px;
+			margin-top:20px;
 			width: 100%;
 			height: 80px;
 		}

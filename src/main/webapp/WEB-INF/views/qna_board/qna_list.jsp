@@ -5,8 +5,7 @@
 
     .qna{
         margin: 50px;
-        border: solid 1px black;
-        height: 800px;
+        height: 700px;
     }
     .qna-box{
         width: 1000px;

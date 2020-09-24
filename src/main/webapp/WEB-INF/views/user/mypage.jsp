@@ -225,9 +225,9 @@
        		margin-left:20px;
        		margin-top: -4px;
        	}
-       	.pay-type-img2{
+       .pay-type-img2{
        		margin-left:-48px;
-       		margin-top: -10px;
+       		margin-top: -5px;
        	}
        	.pay-type-img3{
        		margin-left: 220px;
@@ -262,7 +262,7 @@
      		    float: left;
 			    width: 300;
 			    font-size: 15px;
-			    margin-left: 15;
+			    margin-left: 25px;
        	}
         
 
@@ -408,7 +408,7 @@
 	                    </div>
 	                </div>
 	                
-					<c:if test="${myInn.inn_pay == 'Y' && myInn.inn_plz_reIsRe == 'N'}">
+					<c:if test="${myInn.inn_plz_reIsRe == 'N'}">
 	                 <div class="mypage-status-btn-box">
 		                <input type="hidden" class="delete_inn_num" value="${myInn.inn_num }"><button class="mypage-status-btn" type="button">예약취소</button>
 		            </div>

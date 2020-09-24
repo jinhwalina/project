@@ -163,6 +163,12 @@
         width: 210px;
         text-align: center;
     }
+    
+    .refund-box-img-in{
+    	width:350px;
+    	margin-left:170px;
+    	margin-top:20px;
+    }
     </style>
 
   	<div class="refund">
@@ -170,8 +176,12 @@
         <div class="refund-box-img">
             <img src="<%=request.getContextPath()%>/resources/css/image/환불요청페이지.jpg">
             <img src="<%=request.getContextPath()%>/resources/css/image/절취선2.jpg">
+            <c:if test="${user.auth == 'ADMIN' && refund.size() == 0}">
+            	<img class="refund-box-img-in" src="<%=request.getContextPath()%>/resources/css/image/환불요청존재노.jpg">
+            </c:if>
         </div>
-        <c:if test="${user.auth == 'ADMIN' }">
+		
+        <c:if test="${user.auth == 'ADMIN' && refund.size() != 0}"> 
 	        <div class="page-box">
 				<ul class="pagination justify-content-center">
 				    <li class="page-item <c:if test="${!pm.prev }">disabled</c:if>" ><a class="page-link" href="<%=request.getContextPath()%>/admin/refund?page=${pm.startPage-1}&type=${pm.cri.type}&search=${pm.cri.search}">Previous</a></li>
@@ -219,7 +229,12 @@
             <c:if test="${ refund.inn_reIsRe == 'N'}">
 	            <div class="refund-price-box">
 	                <div class="refund-price-img">
-	                    <img src="<%=request.getContextPath()%>/resources/css/image/환불금액.jpg" alt="">
+	                	<c:if test="${user.auth == 'USER'}">
+	                    	<img src="<%=request.getContextPath()%>/resources/css/image/환불금액.jpg" alt="">
+	                    </c:if>
+	                    <c:if test="${user.auth == 'ADMIN'}">
+	                    	<img src="<%=request.getContextPath()%>/resources/css/image/환불금액2.jpg" alt="">
+	                    </c:if>
 	                </div>
 	                <div class="refund-price">
 	                    ${refund.inn_total_price }
@@ -251,8 +266,12 @@
 	           <div class="refund-user-info">
 
 	               <div class="refund-user-info-img">
-	                   <img src="<%=request.getContextPath()%>/resources/css/image/무통장입금안내.jpg" alt="">
-	                   
+	               		<c:if test="${user.auth == 'USER'}">
+	                   		<img src="<%=request.getContextPath()%>/resources/css/image/무통장입금안내.jpg" alt="">
+	                   </c:if>
+	                   <c:if test="${user.auth == 'ADMIN'}">
+	                   		<img class="" src="<%=request.getContextPath()%>/resources/css/image/환불처리할계좌.jpg" alt="">
+	                   </c:if>
 	               </div>
 
 	               <div class="refund-user-info-box">

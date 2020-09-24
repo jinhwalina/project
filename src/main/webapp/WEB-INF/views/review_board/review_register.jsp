@@ -6,7 +6,8 @@
         .review-regi{
             width: 700px;
             margin: 0 auto;
-            height: 800px;
+            height: 500px;
+            margin-top:20px;
         }
         .review-regi-box{
             margin-bottom: 10px;
@@ -211,6 +212,7 @@
             
 
             <a href="<%=request.getContextPath()%>/review_board/review_list?page=${cri.page}&search=${cri.search}&type=${cri.type}"><button type="button" class="r-list">LIST <i class="fas fa-stream"></i></button></a>
+            
 			<button type="submit" class="r-write">WRITE <i class="fas fa-pencil-alt"></i></button>
       		<button type="submit" hidden="" class="r-write">WRITE <i class="fas fa-pencil-alt"></i></button>
         </div>

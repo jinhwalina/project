@@ -156,4 +156,22 @@
 
 	</select>
 	
+	<update id="adminInnUpdate">
+		update inn 
+			set
+				inn_st_date = #{data.inn_st_date},
+				inn_service = #{data.inn_service},
+				inn_time = #{data.inn_time}
+			where inn_petnum = #{data.petnum}
+				
+	</update>
+	
+	<update id="adminInnUpdate2">
+		update pet 
+			set
+				pcau = #{data.pcau}
+			where petnum = #{data.petnum}
+				
+	</update>
+	
 </mapper>

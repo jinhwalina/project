@@ -48,5 +48,7 @@ public interface InnService {
 
 	void updateRefund2(int data);
 
+	void adminInnUpdate(mypageDto data);
+
 
 }
