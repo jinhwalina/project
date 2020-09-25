@@ -232,9 +232,13 @@
 	                	<c:if test="${user.auth == 'USER'}">
 	                    	<img src="<%=request.getContextPath()%>/resources/css/image/환불금액.jpg" alt="">
 	                    </c:if>
-	                    <c:if test="${user.auth == 'ADMIN'}">
+	                    <c:if test="${user.auth == 'ADMIN' && refund.inn_pay_type == '무통장입금'}">
 	                    	<img src="<%=request.getContextPath()%>/resources/css/image/환불금액2.jpg" alt="">
 	                    </c:if>
+	                    <c:if test="${user.auth == 'ADMIN' && refund.inn_pay_type != '무통장입금'}">
+	                    	<img src="<%=request.getContextPath()%>/resources/css/image/환불금액3.jpg" alt="">
+	                    </c:if>
+	                    
 	                </div>
 	                <div class="refund-price">
 	                    ${refund.inn_total_price }
@@ -274,24 +278,25 @@
 	                   </c:if>
 	               </div>
 
+
 	               <div class="refund-user-info-box">
 	                   <label>예금주</label>
 	                   <div>
-	                       <input class="refund-user-info-text" type="text" name="" class="" value="${refund.refund_name }" readonly>
+	                       <input class="refund-user-info-text" type="text" name="" class="" value="${refund.refund_name }" <c:if test="${user.auth == 'ADMIN'}">readonly</c:if> >
 	                   </div>
 	               </div>
 	               
 	               <div class="refund-user-info-box2">
 	                   <label>은행명</label>
 	                   <div>
-	                       <input class="refund-user-info-text2" type="text" name="" class="" value="${refund.refund_acc }" readonly>
+	                       <input class="refund-user-info-text2" type="text" name="" class="" value="${refund.refund_acc }" <c:if test="${user.auth == 'ADMIN'}">readonly</c:if>>
 	                   </div>
 	               </div>
 	              
 	               <div class="refund-user-info-box3">
 	                   <label>계좌번호</label>
 	                   <div>
-	                       <input class="refund-user-info-text3" type="text" name="" class="" value="${refund.refund_accNum }" placeholder="' - ' 없이 입력해주세요 :)" readonly>
+	                       <input class="refund-user-info-text3" type="text" name="" class="" value="${refund.refund_accNum }" placeholder="' - ' 없이 입력해주세요 :)" <c:if test="${user.auth == 'ADMIN'}">readonly</c:if>>
 	                   </div>
 	               </div>
 	           </div>

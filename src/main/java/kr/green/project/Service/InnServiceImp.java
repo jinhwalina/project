@@ -38,12 +38,11 @@ public class InnServiceImp implements InnService {
 		innDao.insertInn(inn);
 		
 	}
-	// 예약된 날짜들을 취합해서 보여주기 위한 코드.
+	// 예약된 날짜들을 취합해서 보여주기 위한 코드. ( 사실 이 부분은 구현하려고 했던 코드랑은 다르기때문에 필요가 없다 ) 
 	@Override
 	public ArrayList<String> getDateList(Calendar cal,int max) {
 		// string형식으로 res 에 결과값 저장하도록 새로 선언해줌.
 		ArrayList<String> res = new ArrayList<String>();
-		
 		// 데이터 형식은 이렇게 지정해준다는것
 		SimpleDateFormat transFormat = 
 				new SimpleDateFormat("yyyy-MM-dd");
@@ -64,7 +63,7 @@ public class InnServiceImp implements InnService {
 
 				// 만약 각각의 날짜에 예약된 수가 최대로 예약되어질 수 있는 수와 같다면, res에 strdate저장해주기.
 				if(list.size() >= max) {
-					res.add(tmp);
+					res.add(tmp); // 예약이 불가능한 날짜들
 				}
 			}
 		} catch (ParseException e) {

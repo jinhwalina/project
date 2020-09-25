@@ -367,6 +367,7 @@
 		                        <th>예약자이름</th>
 		                        <th>휴대전화</th>
 		                        <th>결제유무</th>
+		                        <th>결제수단</th>
 		                        <th>환불요청여부</th>
 		                    </tr>
 		                    </thead>
@@ -380,6 +381,7 @@
 		                        <td>${myInn.inn_add_name }</td>
 		                        <td>${user.pnum }</td>
 		                        <td>${myInn.inn_pay }</td>
+		                        <td>${myInn.inn_pay_type }</td>
 		                        <td>${myInn.inn_plz_reIsRe }</td>
 		                    </tr>
 		                    </tbody>
