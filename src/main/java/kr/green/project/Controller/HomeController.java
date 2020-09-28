@@ -119,8 +119,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/reservation/innDo", method = RequestMethod.POST)
-	public ModelAndView innDoPost(ModelAndView mv, InnVo inn, PetVo pet, HttpServletRequest request) {
-		mv.setViewName("/reservation/innDo"); 
+	public ModelAndView innDoPost(ModelAndView mv, InnVo inn, PetVo pet, HttpServletRequest request) { 
 		UserVo user = userService.getUser(request);
 		// sys로 로그인 한 유저 정보가 찍히는지.. (세션에 저장된 정보를 가져오는지 확인하기 )
 		 innService.insertInnDo(user, pet, inn); // 괄호 안에는 정보를 보내주려는 변수(?) 속성(?)
