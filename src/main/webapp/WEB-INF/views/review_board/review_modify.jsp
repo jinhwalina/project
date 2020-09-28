@@ -5,7 +5,7 @@
 		.review-regi{
             width: 700px;
             margin: 0 auto;
-            height: 450px;
+            height: 500px;
 	    }
 		.filebox{
 			float: left;
